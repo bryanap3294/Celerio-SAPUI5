@@ -21,81 +21,22 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 }
             }
         },
-        doNavigate: function (sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
-
-            var sPath = (oBindingContext) ? oBindingContext.getPath() : null;
-            var oModel = (oBindingContext) ? oBindingContext.getModel() : null;
-
-            var sEntityNameSet;
-            if (sPath !== null && sPath !== "") {
-                if (sPath.substring(0, 1) === "/") {
-                    sPath = sPath.substring(1);
-                }
-                sEntityNameSet = sPath.split("(")[0];
-            }
-            var sNavigationPropertyName;
-            var sMasterContext = this.sMasterContext ? this.sMasterContext : sPath;
-
-            if (sEntityNameSet !== null) {
-                sNavigationPropertyName = sViaRelation || this.getOwnerComponent().getNavigationPropertyForNavigationWithContext(sEntityNameSet, sRouteName);
-            }
-            if (sNavigationPropertyName !== null && sNavigationPropertyName !== undefined) {
-                if (sNavigationPropertyName === "") {
-                    this.oRouter.navTo(sRouteName, {
-                        context: sPath,
-                        masterContext: sMasterContext
-                    }, false);
-                } else {
-                    oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function (bindingContext) {
-                        if (bindingContext) {
-                            sPath = bindingContext.getPath();
-                            if (sPath.substring(0, 1) === "/") {
-                                sPath = sPath.substring(1);
-                            }
-                        }
-                        else {
-                            sPath = "undefined";
-                        }
-
-                        // If the navigation is a 1-n, sPath would be "undefined" as this is not supported in Build
-                        if (sPath === "undefined") {
-                            this.oRouter.navTo(sRouteName);
-                        } else {
-                            this.oRouter.navTo(sRouteName, {
-                                context: sPath,
-                                masterContext: sMasterContext
-                            }, false);
-                        }
-                    }.bind(this));
-                }
-            } else {
-                this.oRouter.navTo(sRouteName);
-            }
-
-            if (typeof fnPromiseResolve === "function") {
-                fnPromiseResolve();
-            }
-        },
-        llenarCampos: function(arg1,arg2, f){
+        putFields: function(arg1,arg2, f){
             debugger;
+			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
 
-            this.getView().byId("txtModulo").setValue(arg1.modulo);
-            this.getView().byId("txtLabel").setValue(arg1.label);
-            this.getView().byId("txtDescription").setValue(arg1.description);
-            this.getView().byId("txtValue1").setValue(arg1.value1);
-            this.getView().byId("txtValue2").setValue(arg1.value2);
-            this.getView().byId("txtValue3").setValue(arg1.value3);
-            this.getView().byId("cmbStatus").setSelectedKey(arg1.status);
+					this.getView().byId("txt${attribute.var}").setValue(arg1.${attribute.var});
+				#end
+			#end
         },
         removerEstilos: function() {
-            Utilities.removerStateError(this.getView().byId("txtModulo"));
-            Utilities.removerStateError(this.getView().byId("txtLabel"));
-            Utilities.removerStateError(this.getView().byId("txtDescription"));
-            Utilities.removerStateError(this.getView().byId("txtValue1"));
-            Utilities.removerStateError(this.getView().byId("txtValue2"));
-            Utilities.removerStateError(this.getView().byId("txtValue3"));
-            Utilities.removerStateError(this.getView().byId("cmbStatus"));
+			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
 
+					Utilities.removerStateError(this.getView().byId("txt${attribute.var}"));
+				#end
+			#end
         },
         elegirCategoria: function(oEvent){
             var oDialog = undefined;
@@ -203,7 +144,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
             //json["descripcion"]=this.getView().byId("txtStatusPlan").getValue();
         },
-        doGet: function (context, uri, name, namefunct, arg1, arg2){
+        doGet: function (context, uri, name, callFunction, namefunct, arg1){
             jQuery.ajax({
                 context: this,
                 type : "GET",
@@ -211,25 +152,24 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 url : Utilities.getDomain()+ uri,
                 dataType : "json",
                 success : function(data) {
-                    if(namefunct===undefined){
-                        this.model = new sap.ui.model.json.JSONModel (data);
-                        //debugger;
+                    if(callFunction==="Y"){
+						this.model = new sap.ui.model.json.JSONModel (data);
                         context.setModel(this.model, name);
+                        var fun= namefunct+"(data,arg1)";
+                        eval(fun);
                     }
                     else{
-                        //debugger;
                         this.model = new sap.ui.model.json.JSONModel (data);
                         context.setModel(this.model, name);
-                        var fun= namefunct+"(data,arg1, arg2)";
-                        eval(fun);
                     }
                 },
                 error: function (e) {
-                    console.log("Error");
+                    console.log("Error:" + e);
+					MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
                 }
             });
         },
-        doGetLoading: function (context, uri, name, namefunct, arg1, arg2){
+        doGetLoading: function (context, uri, name, callFunction, namefunct, arg1, arg2){
             jQuery.ajax({
                 context: this,
                 type : "GET",
@@ -241,54 +181,36 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     this.getView().setBusy(true);
                 },
                 success : function(data) {
-                    if(namefunct===undefined){
-                        this.model = new sap.ui.model.json.JSONModel (data);
-                        //debugger;
+                    if(callFunction==="Y"){
+						this.model = new sap.ui.model.json.JSONModel (data);
                         context.setModel(this.model, name);
+                        var fun= namefunct+"(data,arg1)";
+                        eval(fun);
                     }
                     else{
-                        //debugger;
                         this.model = new sap.ui.model.json.JSONModel (data);
                         context.setModel(this.model, name);
-                        var fun= namefunct+"(data,arg1, arg2)";
-                        eval(fun);
                     }
                 },
                 error: function (e) {
-                    console.log("Error");
+                    console.log("Error:" + e);
+					MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
                 },
                 complete: function() {
                     this.getView().setBusy(false);
                 }
             });
         },
-        onPress: function (evt) {
-            debugger;
-            var arrFn = evt.getSource().getModel("tiles").oData;
-            var title = evt.getSource().getTitle();
-            var label = evt.getSource().mProperties.info;
-            var oBindingContext = evt.getSource().getBindingContext();
-            for (var i = 0; i < arrFn.length; i++) {
-                var item = arrFn[i];
-                if (item.descripcion === title && item.label === label) {
-                    return new Promise(function(fnResolve) {
-                        this.doNavigate(item.accion, oBindingContext, fnResolve, ""
-                        );
-                    }.bind(this)).catch(function (err) { if (err !== undefined) { MessageBox.error(err.message); }});
-                }
-            }
-        },
-        _regresar: function(evt){
+        goBack: function(evt){
             this.oRouter.navTo("MantenimientoTablas");
         },
         clearData: function(){
-            this.getView().byId("txtModulo").setValue(null);
-            this.getView().byId("txtLabel").setValue(null);
-            this.getView().byId("txtDescription").setValue(null);
-            this.getView().byId("txtValue1").setValue(null);
-            this.getView().byId("txtValue2").setValue(null);
-            this.getView().byId("txtValue3").setValue(null);
-            this.getView().byId("cmbStatus").setSelectedKey(null);
+			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+
+					this.getView().byId("txt${attribute.var}").setValue(null);
+				#end
+			#end
         },
         doPostPost: function (model, uriPost, uriModel, nameModel, argModel, fn, value){
             var thiis = this.getView();
@@ -312,8 +234,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 error: function (e) {
                     debugger;
                     MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
-                    //MessageBox.alert("Hubo un Error, por favor consultar en el Log del Sistema", {title: "Ventana de Aviso"});
-                    console.log("Error");
                     console.log(e);
                 },
                 complete: function() {
@@ -321,18 +241,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 }
             });
         },
-        selectedRow: function(oEvent){
-            this.oRouter.navTo("Detalle");
-            //this.do
-        },
         onChange: function(oEvent){
             debugger;
             this.doGet(this.getView(),"dummyCentro/_getListaCentro/"+oEvent.mParameters.selectedItem.mProperties.key,"ListaCentroPorPais")
         },
         onInit: function () {
             var that = this;
-            //debugger;
-
             this.mBindingOptions = {};
             this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             this.oRouter.getTarget("Detalle").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
@@ -341,29 +255,31 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 {
                     onBeforeShow: function (e) {
                         //this.removerEstilos();
-                        //var edit = sessionStorage.getItem("editform");
-                        //this.doGet(this.getView(),"appParametria/_getListaPais","ListaPais");
-                        //this.doGet(this.getView(),"appParametria/_getListaCategoria","ListaCategoria");
-                        //this.doGet(this.getView(),"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
-                        //this.doGet(this.getView(),"appParametria/_getListaVersion","ListaVersion");
-                        //this.doGet(this.getView(),"appParametria/_getListaMes","ListaMes");
+                        var typeForm${entity} = sessionStorage.getItem("typeForm${entity}");
+                        this.doGet(this.getView(),"appParametria/_getListaPais","ListaPais");
+                        this.doGet(this.getView(),"appParametria/_getListaCategoria","ListaCategoria");
+                        this.doGet(this.getView(),"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
+                        this.doGet(this.getView(),"appParametria/_getListaVersion","ListaVersion");
+                        this.doGet(this.getView(),"appParametria/_getListaMes","ListaMes");
                         //var idVersion= sessionStorage.getItem("idVersion");
-                        //if(edit==="1"){
-//
-                        //    this.doGetLoading(this.getView(),
-                        //        "appParametria/findById/"+sessionStorage.getItem("idRowDatosConfig"),"datosConfig","this.llenarCampos");
-                        //    sessionStorage.setItem("editform",0);
-                        //    sessionStorage.setItem("update",1);
-                        //}
-                        //else{
-                        //    that.clearData();
-//
-                        //    sessionStorage.setItem("update",0);
-                        //}
+
+						switch(typeForm${entity}){
+							case "0":
+							that.clearData();
+							break
+							case "1":
+							this.doGetLoading(this.getView(),
+                                "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", "this.putFields");
+                            sessionStorage.setItem("typeForm${entity}",0);
+                            sessionStorage.setItem("update",1);
+							break
+							case "2":
+							that.clearData();
+							break
+						}
                     }
                 },that
             );
-
         }
     });
 }, /* bExport= */true);

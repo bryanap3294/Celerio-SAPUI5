@@ -186,6 +186,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 contentType : "application/json",
                 url : Utilities.getDomain()+ uri,
                 dataType : "json",
+                beforeSend: function() {
+                                    this.getView().setBusyIndicatorDelay(0);
+                                    this.getView().setBusy(true);
+                                },
                 success : function(data) {
                     if(callFunction==="Y"){
 						this.model = new sap.ui.model.json.JSONModel (data);
@@ -201,6 +205,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 error: function (e) {
                     console.log("Error:" + e);
 					MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                },
+                complete: function() {
+                    this.getView().setBusy(false);
                 }
             });
         },

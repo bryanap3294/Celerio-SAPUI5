@@ -63,7 +63,7 @@ $output.file("web/src/app/entities/${entity.model.var}/Detail${entity}.view.xml"
                                 <m:OverflowToolbarLayoutData priority="Low" />
                             </m:layoutData>
                         </m:Button>
-                        <m:Button text="Regresar" type="Reject" icon="sap-icon://undo" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_regresar">
+                        <m:Button text="Regresar" type="Reject" icon="sap-icon://undo" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="goBack">
                             <m:layoutData>
                                 <m:OverflowToolbarLayoutData priority="Low" />
                             </m:layoutData>
