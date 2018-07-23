@@ -89,8 +89,8 @@ $output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.view.
                                             </m:HBox>
                                             <m:ToolbarSpacer/>
                                             <m:HBox justifyContent="End">
-                                                <m:Button hAlign="Right" icon="sap-icon://upload" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="uploadExcel$entity"/>
-                                                <m:Button hAlign="Right" icon="sap-icon://download" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="downloadExcel$entity"/>
+                                                <m:Button hAlign="Right" icon="sap-icon://upload" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="uploadExcel${entity}"/>
+                                                <m:Button hAlign="Right" icon="sap-icon://download" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="downloadExcel${entity}"/>
 
                                                 <m:Button hAlign="Right" icon="sap-icon://add" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="add$entity"/>
                                                 <m:Button id="idButtonSearch" icon="sap-icon://search" type="Accept" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false" text="Buscar" press="filter$entity"/>

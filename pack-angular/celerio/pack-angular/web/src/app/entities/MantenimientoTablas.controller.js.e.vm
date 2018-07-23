@@ -13,9 +13,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
     return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.MantenimientoTablas", {
         handleRouteMatched: function (oEvent) {
-
             var oParams = {};
-
             if (oEvent.mParameters.data.context) {
                 this.sContext = oEvent.mParameters.data.context;
                 var oPath;
@@ -43,8 +41,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var oModel = oArg.getSource().getModel("${entity}List");
             var idRow${entity}= oModel.getData()[path].id;
             sessionStorage.setItem("idRow${entity}",idRow${entity});
-            sessionStorage.setItem("editForm${entity}",1);
-            //this.oRouter.navTo("Detail${entity}");
+            sessionStorage.setItem("typeForm${entity}",1);
+            this.oRouter.navTo("Detail${entity}");
         },
 		deleteRow${entity}: function(oArg){
 			debugger;
@@ -66,7 +64,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 });
         },
 		detailRow${entity}: function(oArg){
-
+            var path = oEvent.getSource().getBindingContext("${entity}List").getPath().substr(1);
+            var oModel = oEvent.getSource().getModel("${entity}List");
+            var idRow${entity}= oModel.getData()[path].id;
+            sessionStorage.setItem("idRow${entity}",idRow${entity});
+            sessionStorage.setItem("typeForm${entity}",2);
+            this.oRouter.navTo("Detail${entity}");
 		},
 		doDelete: function(uri, index, updateModel, uriModel, nameModel, nameFunc, arg){
             var thiis = this.getView();
@@ -85,81 +88,44 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 }
             });
         },
-        doNavigate: function (sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
-
-            var sPath = (oBindingContext) ? oBindingContext.getPath() : null;
-            var oModel = (oBindingContext) ? oBindingContext.getModel() : null;
-
-            var sEntityNameSet;
-            if (sPath !== null && sPath !== "") {
-                if (sPath.substring(0, 1) === "/") {
-                    sPath = sPath.substring(1);
-                }
-                sEntityNameSet = sPath.split("(")[0];
-            }
-            var sNavigationPropertyName;
-            var sMasterContext = this.sMasterContext ? this.sMasterContext : sPath;
-
-            if (sEntityNameSet !== null) {
-                sNavigationPropertyName = sViaRelation || this.getOwnerComponent().getNavigationPropertyForNavigationWithContext(sEntityNameSet, sRouteName);
-            }
-            if (sNavigationPropertyName !== null && sNavigationPropertyName !== undefined) {
-                if (sNavigationPropertyName === "") {
-                    this.oRouter.navTo(sRouteName, {
-                        context: sPath,
-                        masterContext: sMasterContext
-                    }, false);
-                } else {
-                    oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function (bindingContext) {
-                        if (bindingContext) {
-                            sPath = bindingContext.getPath();
-                            if (sPath.substring(0, 1) === "/") {
-                                sPath = sPath.substring(1);
-                            }
-                        }
-                        else {
-                            sPath = "undefined";
-                        }
-                        if (sPath === "undefined") {
-                            this.oRouter.navTo(sRouteName);
-                        } else {
-                            this.oRouter.navTo(sRouteName, {
-                                context: sPath,
-                                masterContext: sMasterContext
-                            }, false);
-                        }
-                    }.bind(this));
-                }
-            } else {
-                this.oRouter.navTo(sRouteName);
-            }
-
-            if (typeof fnPromiseResolve === "function") {
-                fnPromiseResolve();
-            }
-        },
-        onPress: function (evt) {
-            //debugger;
-            var arrFn = evt.getSource().getModel("tiles").oData;
-            var title = evt.getSource().getTitle();
-            var label = evt.getSource().mProperties.info;
-            var oBindingContext = evt.getSource().getBindingContext();
-            for (var i = 0; i < arrFn.length; i++) {
-                var item = arrFn[i];
-                if (item.descripcion === title && item.label === label) {
-                    return new Promise(function(fnResolve) {
-                        this.doNavigate(item.accion, oBindingContext, fnResolve, ""
-                        );
-                    }.bind(this)).catch(function (err) { if (err !== undefined) { MessageBox.error(err.message); }});
-                }
-            }
-        },
         doPostPost: function (model, uriPost, uriModel, nameModel, argModel, fn, value){
-            var thiis = this.getView();
+            //var thiis = this.getView();
 
         },
-        doPostGet: function (context, model, uri, name, namefunct, arg1){
-
+        doPostGet: function (context, model, uri, name, callFunction, namefunct, arg1){
+			jQuery.ajax({
+                context: this,
+                url: Utilities.getDomain() + uri,
+                type:"POST",
+                data: JSON.stringify(model),
+                dataType: "json",
+                contentType:"application/json",
+                headers:{"Accept": "application/json"},
+                beforeSend: function() {
+                    this.getView().setBusyIndicatorDelay(0);
+                    this.getView().setBusy(true);
+                },
+                success: function(result){
+                	console.log(result);
+                    if(callFunction==="Y"){
+						this.model = new sap.ui.model.json.JSONModel (result);
+                        context.setModel(this.model, name);
+                        var fun= namefunct+"(arg1,result)";
+                        eval(fun);
+                    }
+                    else{
+                        this.model = new sap.ui.model.json.JSONModel (result);
+                        context.setModel(this.model, name);
+                    }
+                },
+                complete: function() {
+                    this.getView().setBusy(false);
+                },
+                error: function (e) {
+                    console.log("Error:" + e);
+					MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                }
+            });
         },
         clearFilterDatosConfig: function(){
         	//debugger;
@@ -182,18 +148,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             //console.log(json);
             //this.doPostGet(this.getView(),json,"appParametria/find", "datosConfig");
         },
-        filterGlobalTipoCambio: function(oEvent){
-        },
-        filterByCell: function(oEvent){
-            return;
-        },
         agregarDatoConfig: function(oEvent){
             //this.oRouter.navTo("DetalleDatosConfig");
         },
         uploadExcelTipoCambio : function(){
             //this.oRouter.navTo("UploadTipoCambio");
         },
-        doGet: function (context, uri, name, namefunct, arg1){
+        doGet: function (context, uri, name, callFunction, namefunct, arg1){
             jQuery.ajax({
                 context: this,
                 type : "GET",
@@ -201,34 +162,22 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 url : Utilities.getDomain()+ uri,
                 dataType : "json",
                 success : function(data) {
-                    if(namefunct===undefined){
-                        this.model = new sap.ui.model.json.JSONModel (data);
-                        //debugger;
-                        context.setModel(this.model, name);
-                    }
-                    else{
-                        //debugger;
-                        this.model = new sap.ui.model.json.JSONModel (data);
-                        //debugger;
+                    if(callFunction==="Y"){
+						this.model = new sap.ui.model.json.JSONModel (data);
                         context.setModel(this.model, name);
                         var fun= namefunct+"(data,arg1)";
                         eval(fun);
                     }
+                    else{
+                        this.model = new sap.ui.model.json.JSONModel (data);
+                        context.setModel(this.model, name);
+                    }
                 },
                 error: function (e) {
-                    console.log("Error");
+                    console.log("Error:" + e);
+					MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
                 }
             });
-        },
-        onFinished: function(oEvent) {
-            //var oList = oEvent.getSource();
-            //var oItems = oList.getItems();
-            //for (var i = 0; i < oItems.length; i++) {
-            //    var oItem = oItems[i];
-            //    var oDeleteControl = oItem.getDeleteControl();
-            //    oDeleteControl.setIcon("sap-icon://delete");
-            //    oDeleteControl.setTooltip("delete");
-            //}
         },
         dateTime: function(arg1, arg2){
             //debugger;
@@ -315,10 +264,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             //    );
             //}
         },
-        downloadExcel : function(){
-        	//var url = Utilities.getDomain() + 'tipoCambio/downloadCompleteExcelXLSX' ;
-            //var encodeUrl = encodeURI(url);
-			//sap.m.URLHelper.redirect(encodeUrl,true);
+        downloadExcel${entity} : function(){
+        	var url = Utilities.getDomain() + '${entity.model.var}/downloadCompleteExcelXLSX' ;
+            var encodeUrl = encodeURI(url);
+			sap.m.URLHelper.redirect(encodeUrl,true);
         },
         onInit: function () {
             //debugger;
@@ -329,7 +278,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.getView().addDelegate(
                 {
                     onBeforeShow: function (e) {
-                    	this.doGet(this.getView(),"appParametria/_getSessionConfiguracionPeriodo","sessionVersion","this.getVersion",this);
+                    	this.doGet(this.getView(),"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "this.getVersion",this);
 
                     }
                 },that
