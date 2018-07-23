@@ -125,7 +125,14 @@ $output.file("web/src/app/entities/${entity.model.var}/manifest.json")##
 					"viewId": "Detalle",
 					"viewLevel": 1,
 					"transition": "slide"
-				}
+				},
+				"Detail${entity}": {
+                	"controlAggregation": "pages",
+                	"viewName": "${entity.model.var}.Detail${entity}",
+                	"viewId": "Detail${entity}",
+                	"viewLevel": 1,
+                	"transition": "slide"
+                }
 			},
 			"routes": [
 				{
@@ -141,7 +148,14 @@ $output.file("web/src/app/entities/${entity.model.var}/manifest.json")##
 					"target": [
 						"Detalle"
 					]
-				}
+				},
+                {
+                	"pattern": "Detail${entity}/:context:",
+                	"name": "Detail${entity}",
+                	"target": [
+                		"Detail${entity}"
+                	]
+                }
 			]
 		}
 	},
