@@ -30,7 +30,7 @@ $output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.view.
                 </m:content>
                 <m:tooltip/>
             </m:Toolbar>
-            <form:Form editable="true" id="idFormSearch" visible="false">
+            <form:Form editable="true" id="idFormSearch${entity}" visible="false">
                 <form:formContainers>
                     <form:FormContainer>
                         <form:formElements>
@@ -85,15 +85,15 @@ $output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.view.
                                         <m:Toolbar>
                                             <m:Label text="Filtro Avanzado :"/>
                                             <m:HBox justifyContent="Start">
-                                                <m:Switch id="idSwitch" state="false" customTextOff="Off" customTextOn="On" type="Default" enabled="true" visible="true" change="closeFormSearch"/>
+                                                <m:Switch id="idSwitch${entity}" state="false" customTextOff="Off" customTextOn="On" type="Default" enabled="true" visible="true" change="closeFormSearch${entity}"/>
                                             </m:HBox>
                                             <m:ToolbarSpacer/>
                                             <m:HBox justifyContent="End">
                                                 <m:Button hAlign="Right" icon="sap-icon://upload" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="uploadExcel${entity}"/>
                                                 <m:Button hAlign="Right" icon="sap-icon://download" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="downloadExcel${entity}"/>
 
-                                                <m:Button hAlign="Right" icon="sap-icon://add" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="add$entity"/>
-                                                <m:Button id="idButtonSearch" icon="sap-icon://search" type="Accept" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false" text="Buscar" press="filter$entity"/>
+                                                <m:Button hAlign="Right" icon="sap-icon://add" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="add${entity}"/>
+                                                <m:Button id="idBtnSearch${entity}" icon="sap-icon://search" type="Accept" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false" text="Buscar" press="filter$entity"/>
                                                 <m:Button icon="sap-icon://clear-filter" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" text="Limpiar" press="clearFilter$entity"/>
                                             </m:HBox>
                                         </m:Toolbar>
