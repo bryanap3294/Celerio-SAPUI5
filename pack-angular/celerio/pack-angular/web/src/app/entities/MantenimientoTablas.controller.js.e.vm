@@ -2,16 +2,16 @@ $output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.contr
 sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "./utilities",
-    "portal/valorizacion/tipocambio/formatter/FormatterFloatNumber2",
-    "portal/valorizacion/tipocambio/formatter/FormatterFloatNumber5",
+    "portal/valorizacion/${entity.model.var.toLowerCase()}/formatter/FormatterFloatNumber2",
+    "portal/valorizacion/${entity.model.var.toLowerCase()}/formatter/FormatterFloatNumber5",
     "sap/ui/core/routing/History",
-    "portal/valorizacion/tipocambio/js/moment",
+    "portal/valorizacion/${entity.model.var.toLowerCase()}/js/moment",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
 ], function(BaseController, MessageBox, Utilities, FormatterFloatNumber2, FormatterFloatNumber5 , History, Moment, Filter, FilterOperator) {
     "use strict";
 
-    return BaseController.extend("portal.valorizacion.tipocambio.controller.MantenimientoTablas", {
+    return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.MantenimientoTablas", {
         handleRouteMatched: function (oEvent) {
 
             var oParams = {};
