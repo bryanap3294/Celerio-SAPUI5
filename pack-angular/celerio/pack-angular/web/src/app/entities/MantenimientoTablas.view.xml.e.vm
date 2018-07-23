@@ -99,19 +99,19 @@ $output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.view.
                                         </m:Toolbar>
                                     </toolbar>
                                     <columns>
-										#foreach ($attribute in $entity.nonCpkAttributes.list)
-											#if(!$attribute.isInFk() || $attribute.isSimplePk())
+										#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+											#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
 
 											<Column width="10rem"
 													hAlign="Left">
 												<multiLabels>
 													<m:ObjectStatus
 															icon=""
-															text="$attribute.var"
+															text="${attribute.var}"
 															state="none" />
 												</multiLabels>
 												<template>
-													<m:Text text="{${entity}List>$attribute.var}" />
+													<m:Text text="{${entity}List>${attribute.var}}" />
 												</template>
 											</Column>
 											#end
