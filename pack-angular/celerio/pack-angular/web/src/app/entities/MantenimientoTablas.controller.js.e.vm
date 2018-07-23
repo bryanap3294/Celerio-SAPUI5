@@ -38,36 +38,53 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.byId("idTbl${entity}").setRowActionCount(3);
         },
 		editRow${entity}: function(oArg){
-            //debugger;
-            //var path = oEvent.getSource().getBindingContext("datosConfig").getPath().substr(1);
-            //var oModel = oEvent.getSource().getModel("datosConfig");
-            //var idRow= oModel.getData()[path].id;
-            //sessionStorage.setItem("idRowDatosConfig",idRow);
-            //sessionStorage.setItem("editform",1);
-            //this.oRouter.navTo("DetalleDatosConfig");
+            debugger;
+            var path = oEvent.getSource().getBindingContext("${entity}").getPath().substr(1);
+            var oModel = oEvent.getSource().getModel("${entity}");
+            var idRow= oModel.getData()[path].id;
+            sessionStorage.setItem("idRow${entity}",idRow${entity});
+            sessionStorage.setItem("editForm${entity}",1);
+            //this.oRouter.navTo("Detail${entity}");
         },
 		deleteRow${entity}: function(oArg){
-            //var path = oArg.getSource().getBindingContext("datosConfig").getPath().substr(1);
-            //var oModel = oArg.getSource().getModel("datosConfig");
-            //var idRow= oModel.getData()[path].id;
-            //var that = this;
-            //MessageBox.show("¿Desea eliminar el Registro?",
-            //    MessageBox.Icon.WARNING,
-            //    "Ventana de aviso",
-            //    [MessageBox.Action.YES, MessageBox.Action.NO],
-            //    function(oAction){
-            //        //debugger;
-            //        switch(oAction){
-            //            case 'YES':
-            //                that.doDelete("appParametria",idRow,"Y","appParametria/findAll","datosConfig");
-            //            case 'NO':
-            //                break;
-            //        }
-            //    });
+			debugger;
+            var path = oArg.getSource().getBindingContext("${entity}List").getPath().substr(1);
+            var oModel = oArg.getSource().getModel("${entity}List");
+            var idRow= oModel.getData()[path].id;
+            var that = this;
+            MessageBox.show("¿Desea eliminar el Registro?",
+                MessageBox.Icon.WARNING,
+                "Ventana de aviso",
+                [MessageBox.Action.YES, MessageBox.Action.NO],
+                function(oAction){
+                    switch(oAction){
+                        case 'YES':
+                            that.doDelete("${entity.model.var}",idRow,"Y","${entity.model.var}/findAll","${entity}List");
+                        case 'NO':
+                            break;
+                    }
+                });
         },
 		detailRow${entity}: function(oArg){
 
 		},
+		doDelete: function(uri, index, updateModel, uriModel, nameModel, nameFunc, arg){
+            var thiis = this.getView();
+            jQuery.ajax({
+                context : this,
+                url: Utilities.getDomain() + uri +'/'+index,
+                type: 'DELETE',
+                success: function(result) {
+                    console.log("Se eliminó correctamente id:"+index);
+                    if(updateModel==="Y"){
+                        this.doGet(thiis,uriModel,nameModel, nameFunc, arg);
+                    }
+                },
+                error: function(e){
+                    MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                }
+            });
+        },
         doNavigate: function (sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
 
             var sPath = (oBindingContext) ? oBindingContext.getPath() : null;
@@ -166,27 +183,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             //this.doPostGet(this.getView(),json,"appParametria/find", "datosConfig");
         },
         filterGlobalTipoCambio: function(oEvent){
-            //debugger;
-            //var sQuery = oEvent.getParameter("query");
-            //this._oGlobalFilter = null;
-            //
-            //if (sQuery) {
-            //    this._oGlobalFilter = new Filter([
-            //        new Filter("pais", FilterOperator.Contains, sQuery),
-            //        new Filter("codigoMoneda", FilterOperator.Contains, sQuery)
-            //    ], false);
-            //}
-            //var oFilter = null;
-            //debugger;
-            //if (this._oGlobalFilter) {
-            //    oFilter = this._oGlobalFilter;
-            //}
-            //this.byId("idTblTipoCambio").getBinding("rows").filter(oFilter, "Application");
-            ////this.doFilter();
         },
         filterByCell: function(oEvent){
-            //debugger;
-            //var oColumn = oEvent.getParameter("column");
             return;
         },
         agregarDatoConfig: function(oEvent){
@@ -231,10 +229,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             //    oDeleteControl.setIcon("sap-icon://delete");
             //    oDeleteControl.setTooltip("delete");
             //}
-        },
-        doDelete: function(uri, index, updateModel, uriModel, nameModel, nameFunc, arg){
-            //var thiis = this.getView();
-
         },
         dateTime: function(arg1, arg2){
             //debugger;
