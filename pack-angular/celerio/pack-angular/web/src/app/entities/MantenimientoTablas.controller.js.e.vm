@@ -64,8 +64,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 });
         },
 		detailRow${entity}: function(oArg){
-            var path = oEvent.getSource().getBindingContext("${entity}List").getPath().substr(1);
-            var oModel = oEvent.getSource().getModel("${entity}List");
+            var path = oArg.getSource().getBindingContext("${entity}List").getPath().substr(1);
+            var oModel = oArg.getSource().getModel("${entity}List");
             var idRow${entity}= oModel.getData()[path].id;
             sessionStorage.setItem("idRow${entity}",idRow${entity});
             sessionStorage.setItem("typeForm${entity}",2);
