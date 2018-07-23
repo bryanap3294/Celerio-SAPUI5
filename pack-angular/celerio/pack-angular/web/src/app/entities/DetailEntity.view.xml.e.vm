@@ -1,0 +1,149 @@
+$output.file("web/src/app/entities/${entity.model.var}/Detail${entity}.view.xml")##
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Detail${entity}" xmlns:uxap="sap.uxap" xmlns:m="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="false" showAnchorBar="true" showFooter="true" subSectionLayout="TitleOnTop">
+        <uxap:headerTitle>
+            <uxap:ObjectPageHeader objectImageURI="sap-icon://travel-itinerary" objectTitle="Detalle Datos Configuración" objectSubtitle="" headerDesign="Dark" objectImageShape="Circle" isObjectIconAlwaysVisible="true" isObjectTitleAlwaysVisible="true" isObjectSubtitleAlwaysVisible="true" isActionAreaAlwaysVisible="true">
+                <uxap:breadCrumbsLinks/>
+                <uxap:navigationBar/>
+            </uxap:ObjectPageHeader>
+        </uxap:headerTitle>
+        <uxap:sections>
+            <uxap:ObjectPageSection showTitle="false" title="" titleUppercase="true" visible="true">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection title="" mode="Expanded">
+                        <uxap:blocks>
+                            <form:Form width="100%" editable="true" visible="true">
+                                <form:title/>
+                                <form:formContainers>
+                                    <form:FormContainer visible="true">
+                                        <form:title>
+                                            <core:Title text="Datos Generales" level="Auto" icon="sap-icon://collections-management"/>
+                                        </form:title>
+                                        <form:formElements>
+                                            <form:FormElement visible="true">
+                                                <form:label>
+                                                    <m:Label wrapping="true" text="Módulo"   design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"/>
+                                                </form:label>
+                                                <form:fields>
+                                                    <m:Input id="txtModulo" type="Text"
+                                                             placeholder="Ingrese Módulo"
+                                                             showValueHelp="false" enabled="true"
+                                                             visible="true" width="auto" HelpOnly="false"/>
+                                                </form:fields>
+                                            </form:FormElement>
+                                            <form:FormElement visible="true">
+                                                <form:label>
+                                                    <m:Label wrapping="true" text="Label"   design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"/>
+                                                </form:label>
+                                                <form:fields>
+                                                    <m:Input id="txtLabel" type="Text"
+                                                             placeholder="Ingrese Label"
+                                                             showValueHelp="false" enabled="true"
+                                                             visible="true" width="auto" HelpOnly="false"/>
+                                                </form:fields>
+                                            </form:FormElement>
+                                            <form:FormElement visible="true">
+                                                <form:label>
+                                                    <m:Label wrapping="true" text="Descripción"   design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"/>
+                                                </form:label>
+                                                <form:fields>
+                                                    <m:Input id="txtDescription" type="Text"
+                                                             placeholder="Ingrese Descripción"
+                                                             showValueHelp="false" enabled="true"
+                                                             visible="true" width="auto" HelpOnly="false"/>
+                                                </form:fields>
+                                            </form:FormElement>
+                                            <form:FormElement visible="true">
+                                                <form:label>
+                                                    <m:Label wrapping="true" text="Valor 1"   design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"/>
+                                                </form:label>
+                                                <form:fields>
+                                                    <m:Input id="txtValue1" type="Text"
+                                                             placeholder="Ingrese Valor 1"
+                                                             showValueHelp="false" enabled="true"
+                                                             visible="true" width="auto" HelpOnly="false"/>
+                                                </form:fields>
+                                            </form:FormElement>
+                                            <form:FormElement visible="true">
+                                                <form:label>
+                                                    <m:Label wrapping="true" text="Valor 2"   design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"/>
+                                                </form:label>
+                                                <form:fields>
+                                                    <m:Input id="txtValue2" type="Text"
+                                                             placeholder="Ingrese Valor 2"
+                                                             showValueHelp="false" enabled="true"
+                                                             visible="true" width="auto" HelpOnly="false"/>
+                                                </form:fields>
+                                            </form:FormElement>
+                                            <form:FormElement visible="true">
+                                                <form:label>
+                                                    <m:Label wrapping="true" text="Valor 3"   design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"/>
+                                                </form:label>
+                                                <form:fields>
+                                                    <m:Input id="txtValue3" type="Text"
+                                                             placeholder="Ingrese Valor 2"
+                                                             showValueHelp="false" enabled="true"
+                                                             visible="true" width="auto" HelpOnly="false"/>
+                                                </form:fields>
+                                            </form:FormElement>
+                                            <form:FormElement visible="true">
+                                                <form:label>
+                                                    <m:Label wrapping="true" text="Status"   design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"/>
+                                                </form:label>
+                                                <form:fields>
+                                                	<m:Select
+                                                	        id="cmbStatus"
+                                                	        editable="true" visible="true" width="auto"
+                                                	        valueState="None" maxWidth="100%"
+                                                	        enabled="true"
+                                                	        forceSelection="true"
+                                                	        placeholder="Seleccionar Status">
+                                                	    <m:items>
+                                                	        <core:Item key="1" text="1 - Activo" enabled="true"/>
+                                                	        <core:Item key="0" text="0 - Inactivo" enabled="true"/>
+                                                	    </m:items>
+                                                	</m:Select>
+                                                </form:fields>
+                                                    <!--<m:Input id="txtStatus" type="Text"
+                                                             placeholder="Ingrese Status"
+                                                             showValueHelp="false" enabled="true"
+                                                             visible="true" width="auto" HelpOnly="false"/>-->
+                                            </form:FormElement>
+                                        </form:formElements>
+                                    </form:FormContainer>
+                                </form:formContainers>
+                                <form:layout>
+                                    <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                                </form:layout>
+                            </form:Form>
+                        </uxap:blocks>
+                        <uxap:moreBlocks/>
+                        <uxap:actions/>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+                <uxap:customAnchorBarButton/>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
+        <uxap:footer>
+            <m:Bar design="Auto">
+                <m:contentLeft/>
+                <m:contentMiddle/>
+                <m:contentRight>
+                    <m:OverflowToolbar >
+                        <m:ToolbarSpacer/>
+                        <m:Button text="Guardar" type="Accept" icon="sap-icon://save" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="saveData">
+                            <m:layoutData>
+                                <m:OverflowToolbarLayoutData priority="Low" />
+                            </m:layoutData>
+                        </m:Button>
+                        <m:Button text="Regresar" type="Reject" icon="sap-icon://undo" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_regresar">
+                            <m:layoutData>
+                                <m:OverflowToolbarLayoutData priority="Low" />
+                            </m:layoutData>
+                        </m:Button>
+                    </m:OverflowToolbar>
+                </m:contentRight>
+            </m:Bar>
+        </uxap:footer>
+    </uxap:ObjectPageLayout>
+</mvc:View>

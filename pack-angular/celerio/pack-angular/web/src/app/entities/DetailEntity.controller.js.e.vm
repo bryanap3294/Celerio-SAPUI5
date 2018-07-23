@@ -1,0 +1,369 @@
+$output.file("web/src/app/entities/${entity.model.var}/Detail${entity}.controller.js")##
+sap.ui.define(["sap/ui/core/mvc/Controller",
+    "sap/m/MessageBox",
+    "../utilities",
+    "sap/ui/core/routing/History",
+    "portal/valorizacion/${entity.model.var.toLowerCase()}/js/moment",
+], function(BaseController, MessageBox, Utilities, History) {
+    "use strict";
+
+    return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Detail${entity}", {
+        handleRouteMatched: function (oEvent) {
+
+            var oParams = {};
+
+            if (oEvent.mParameters.data.context) {
+                this.sContext = oEvent.mParameters.data.context;
+                var oPath;
+                if (this.sContext) {
+                    oPath = {path: "/" + this.sContext, parameters: oParams};
+                    this.getView().bindObject(oPath);
+                }
+            }
+        },
+        doNavigate: function (sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
+
+            var sPath = (oBindingContext) ? oBindingContext.getPath() : null;
+            var oModel = (oBindingContext) ? oBindingContext.getModel() : null;
+
+            var sEntityNameSet;
+            if (sPath !== null && sPath !== "") {
+                if (sPath.substring(0, 1) === "/") {
+                    sPath = sPath.substring(1);
+                }
+                sEntityNameSet = sPath.split("(")[0];
+            }
+            var sNavigationPropertyName;
+            var sMasterContext = this.sMasterContext ? this.sMasterContext : sPath;
+
+            if (sEntityNameSet !== null) {
+                sNavigationPropertyName = sViaRelation || this.getOwnerComponent().getNavigationPropertyForNavigationWithContext(sEntityNameSet, sRouteName);
+            }
+            if (sNavigationPropertyName !== null && sNavigationPropertyName !== undefined) {
+                if (sNavigationPropertyName === "") {
+                    this.oRouter.navTo(sRouteName, {
+                        context: sPath,
+                        masterContext: sMasterContext
+                    }, false);
+                } else {
+                    oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function (bindingContext) {
+                        if (bindingContext) {
+                            sPath = bindingContext.getPath();
+                            if (sPath.substring(0, 1) === "/") {
+                                sPath = sPath.substring(1);
+                            }
+                        }
+                        else {
+                            sPath = "undefined";
+                        }
+
+                        // If the navigation is a 1-n, sPath would be "undefined" as this is not supported in Build
+                        if (sPath === "undefined") {
+                            this.oRouter.navTo(sRouteName);
+                        } else {
+                            this.oRouter.navTo(sRouteName, {
+                                context: sPath,
+                                masterContext: sMasterContext
+                            }, false);
+                        }
+                    }.bind(this));
+                }
+            } else {
+                this.oRouter.navTo(sRouteName);
+            }
+
+            if (typeof fnPromiseResolve === "function") {
+                fnPromiseResolve();
+            }
+        },
+        llenarCampos: function(arg1,arg2, f){
+            debugger;
+
+            this.getView().byId("txtModulo").setValue(arg1.modulo);
+            this.getView().byId("txtLabel").setValue(arg1.label);
+            this.getView().byId("txtDescription").setValue(arg1.description);
+            this.getView().byId("txtValue1").setValue(arg1.value1);
+            this.getView().byId("txtValue2").setValue(arg1.value2);
+            this.getView().byId("txtValue3").setValue(arg1.value3);
+            this.getView().byId("cmbStatus").setSelectedKey(arg1.status);
+        },
+        removerEstilos: function() {
+            Utilities.removerStateError(this.getView().byId("txtModulo"));
+            Utilities.removerStateError(this.getView().byId("txtLabel"));
+            Utilities.removerStateError(this.getView().byId("txtDescription"));
+            Utilities.removerStateError(this.getView().byId("txtValue1"));
+            Utilities.removerStateError(this.getView().byId("txtValue2"));
+            Utilities.removerStateError(this.getView().byId("txtValue3"));
+            Utilities.removerStateError(this.getView().byId("cmbStatus"));
+
+        },
+        elegirCategoria: function(oEvent){
+            var oDialog = undefined;
+            this.mDialogs = this.mDialogs || {};
+            //debugger;
+            var oView;
+            var oSource = oEvent.getSource();
+            var oBindingContext = oSource.getBindingContext();
+            var sPath = (oBindingContext) ? oBindingContext.getPath() : null;
+            this.getOwnerComponent().runAsOwner(function () {
+                oView = sap.ui.xmlview({viewName: "portal.valorizacion.datosconfig.view." + "listas.ElegirCategoria"});
+                this.getView().addDependent(oView);
+                //debugger;
+                oView.getController().setRouter(this.oRouter);
+                oDialog = oView.getContent()[0];
+                this.mDialogs["ElegirCategoria"] = oDialog;
+            }.bind(this));
+
+            return new Promise(function(fnResolve) {
+                oDialog.attachEventOnce("afterOpen", null, fnResolve);
+                //debugger;
+                oDialog.open();
+                if (oView) {
+                    oDialog.attachAfterOpen(function () {
+                        oDialog.rerender();
+                    });
+                } else {
+                    oView = oDialog.getParent();
+                }
+
+                var oModel = this.getView().getModel();
+                if (oModel) {
+                }
+                if (sPath) {
+                    var oParams = oView.getController().getBindingParameters();
+                }
+            }.bind(this)).catch(function (err) { if (err !== undefined) { MessageBox.error(err.message); }});
+        },
+        validarDatos: function(oArg){
+            debugger;
+            if(oArg!==undefined){
+                if(oArg.getId()==="liveChange"){
+                    if(this.getView().byId(oArg.oSource.getName()).getValue()===undefined || this.getView().byId(oArg.oSource.getName()).getValue()===null || this.getView().byId(oArg.oSource.getName()).getValue()===""){
+                        //requiredEmpty =1;
+                        this.getView().byId(oArg.oSource.getName()).addStyleClass("inputRequired");
+                    }else{
+                        this.getView().byId(oArg.oSource.getName()).removeStyleClass("inputRequired");
+                    }
+                    //this.getView().byId("txtVersion").removeStyleClass("inputRequired");
+                }
+            }else{
+                var requiredEmpty = 0;
+                var validar = true;
+
+                /* Removiendo estilos */
+                this.removerEstilos();
+
+                /* Realizando validaciones */
+
+                //validar = Utilities.validarRequerido(this.getView().byId("cmbListaPais"),'C');
+                //if (!validar) requiredEmpty =1;
+                validar = Utilities.validarRequerido(this.getView().byId("txtModulo"));
+                if (!validar) requiredEmpty =1;
+                validar = Utilities.validarRequerido(this.getView().byId("txtLabel"));
+                if (!validar) requiredEmpty =1;
+                validar = Utilities.validarRequerido(this.getView().byId("txtDescription"));
+                if (!validar) requiredEmpty =1;
+                validar = Utilities.validarRequerido(this.getView().byId("txtValue1"));
+                if (!validar) requiredEmpty =1;
+
+                return requiredEmpty;
+            }
+        },
+        saveData: function(evt){
+            var validar = this.validarDatos();
+            if(validar === 0){
+                var json={};
+                json["modulo"]=this.getView().byId("txtModulo").getValue();
+                json["label"]=this.getView().byId("txtLabel").getValue();
+                json["description"]=this.getView().byId("txtDescription").getValue();
+                json["value1"]=this.getView().byId("txtValue1").getValue();
+                json["value2"]=this.getView().byId("txtValue2").getValue();
+                json["value3"]=this.getView().byId("txtValue3").getValue();
+                json["status"]=this.getView().byId("cmbStatus").getSelectedKey();
+                json["fechaCreacion"]=1526533200000;
+                json["usuarioCreacion"]="Bryan Aguilar";
+
+                var s = sessionStorage.getItem("update");
+                if(s==="1"){
+                    //json["id"]=1;
+                    debugger;
+                    var id = sessionStorage.getItem("idRowDatosConfig");
+                    json["id"]= id;
+                    var myJSON = JSON.stringify(json);
+                    this.doPostPost(json,"appParametria/save","appParametria/findAll","datosConfig");
+                }else{
+                    json["usuarioCreacion"]="Bryan Aguilar";
+                    debugger;
+                    var myJSON = JSON.stringify(json);
+                    this.doPostPost(json,"appParametria/create","appParametria/findAll","datosConfig");
+                }
+            }else{
+                MessageBox.alert("Debe llenar todos los campos requeridos", {title: "Ventana de Aviso"});
+            }
+
+            //json["descripcion"]=this.getView().byId("txtStatusPlan").getValue();
+        },
+        doGet: function (context, uri, name, namefunct, arg1, arg2){
+            jQuery.ajax({
+                context: this,
+                type : "GET",
+                contentType : "application/json",
+                url : Utilities.getDomain()+ uri,
+                dataType : "json",
+                success : function(data) {
+                    if(namefunct===undefined){
+                        this.model = new sap.ui.model.json.JSONModel (data);
+                        //debugger;
+                        context.setModel(this.model, name);
+                    }
+                    else{
+                        //debugger;
+                        this.model = new sap.ui.model.json.JSONModel (data);
+                        context.setModel(this.model, name);
+                        var fun= namefunct+"(data,arg1, arg2)";
+                        eval(fun);
+                    }
+                },
+                error: function (e) {
+                    console.log("Error");
+                }
+            });
+        },
+        doGetLoading: function (context, uri, name, namefunct, arg1, arg2){
+            jQuery.ajax({
+                context: this,
+                type : "GET",
+                contentType : "application/json",
+                url : Utilities.getDomain()+ uri,
+                dataType : "json",
+                beforeSend: function() {
+                    this.getView().setBusyIndicatorDelay(0);
+                    this.getView().setBusy(true);
+                },
+                success : function(data) {
+                    if(namefunct===undefined){
+                        this.model = new sap.ui.model.json.JSONModel (data);
+                        //debugger;
+                        context.setModel(this.model, name);
+                    }
+                    else{
+                        //debugger;
+                        this.model = new sap.ui.model.json.JSONModel (data);
+                        context.setModel(this.model, name);
+                        var fun= namefunct+"(data,arg1, arg2)";
+                        eval(fun);
+                    }
+                },
+                error: function (e) {
+                    console.log("Error");
+                },
+                complete: function() {
+                    this.getView().setBusy(false);
+                }
+            });
+        },
+        onPress: function (evt) {
+            debugger;
+            var arrFn = evt.getSource().getModel("tiles").oData;
+            var title = evt.getSource().getTitle();
+            var label = evt.getSource().mProperties.info;
+            var oBindingContext = evt.getSource().getBindingContext();
+            for (var i = 0; i < arrFn.length; i++) {
+                var item = arrFn[i];
+                if (item.descripcion === title && item.label === label) {
+                    return new Promise(function(fnResolve) {
+                        this.doNavigate(item.accion, oBindingContext, fnResolve, ""
+                        );
+                    }.bind(this)).catch(function (err) { if (err !== undefined) { MessageBox.error(err.message); }});
+                }
+            }
+        },
+        _regresar: function(evt){
+            this.oRouter.navTo("MantenimientoTablas");
+        },
+        clearData: function(){
+            this.getView().byId("txtModulo").setValue(null);
+            this.getView().byId("txtLabel").setValue(null);
+            this.getView().byId("txtDescription").setValue(null);
+            this.getView().byId("txtValue1").setValue(null);
+            this.getView().byId("txtValue2").setValue(null);
+            this.getView().byId("txtValue3").setValue(null);
+            this.getView().byId("cmbStatus").setSelectedKey(null);
+        },
+        doPostPost: function (model, uriPost, uriModel, nameModel, argModel, fn, value){
+            var thiis = this.getView();
+            jQuery.ajax({
+                context : this,
+                url: Utilities.getDomain() + uriPost,
+                type:"POST",
+                data: JSON.stringify(model),
+                dataType: "json",
+                contentType:"application/json",
+                headers:{"Accept": "application/json"},
+                beforeSend: function() {
+                    this.getView().setBusyIndicatorDelay(0);
+                    this.getView().setBusy(true);
+                },
+                success: function(result){
+                    console.log(result);
+                    MessageBox.alert("Se Guardó Correctamente", {title: "Ventana de Aviso"});
+                    this.doGet(thiis, uriModel, nameModel, fn, value);
+                },
+                error: function (e) {
+                    debugger;
+                    MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                    //MessageBox.alert("Hubo un Error, por favor consultar en el Log del Sistema", {title: "Ventana de Aviso"});
+                    console.log("Error");
+                    console.log(e);
+                },
+                complete: function() {
+                    this.getView().setBusy(false);
+                }
+            });
+        },
+        selectedRow: function(oEvent){
+            this.oRouter.navTo("Detalle");
+            //this.do
+        },
+        onChange: function(oEvent){
+            debugger;
+            this.doGet(this.getView(),"dummyCentro/_getListaCentro/"+oEvent.mParameters.selectedItem.mProperties.key,"ListaCentroPorPais")
+        },
+        onInit: function () {
+            var that = this;
+            //debugger;
+
+            this.mBindingOptions = {};
+            this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            this.oRouter.getTarget("Detalle").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+
+            this.getView().addDelegate(
+                {
+                    onBeforeShow: function (e) {
+                        //this.removerEstilos();
+                        //var edit = sessionStorage.getItem("editform");
+                        //this.doGet(this.getView(),"appParametria/_getListaPais","ListaPais");
+                        //this.doGet(this.getView(),"appParametria/_getListaCategoria","ListaCategoria");
+                        //this.doGet(this.getView(),"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
+                        //this.doGet(this.getView(),"appParametria/_getListaVersion","ListaVersion");
+                        //this.doGet(this.getView(),"appParametria/_getListaMes","ListaMes");
+                        //var idVersion= sessionStorage.getItem("idVersion");
+                        //if(edit==="1"){
+//
+                        //    this.doGetLoading(this.getView(),
+                        //        "appParametria/findById/"+sessionStorage.getItem("idRowDatosConfig"),"datosConfig","this.llenarCampos");
+                        //    sessionStorage.setItem("editform",0);
+                        //    sessionStorage.setItem("update",1);
+                        //}
+                        //else{
+                        //    that.clearData();
+//
+                        //    sessionStorage.setItem("update",0);
+                        //}
+                    }
+                },that
+            );
+
+        }
+    });
+}, /* bExport= */true);

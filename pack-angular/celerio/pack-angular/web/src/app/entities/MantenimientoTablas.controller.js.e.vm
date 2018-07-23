@@ -39,9 +39,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         },
 		editRow${entity}: function(oArg){
             debugger;
-            var path = oEvent.getSource().getBindingContext("${entity}").getPath().substr(1);
-            var oModel = oEvent.getSource().getModel("${entity}");
-            var idRow= oModel.getData()[path].id;
+            var path = oArg.getSource().getBindingContext("${entity}List").getPath().substr(1);
+            var oModel = oArg.getSource().getModel("${entity}List");
+            var idRow${entity}= oModel.getData()[path].id;
             sessionStorage.setItem("idRow${entity}",idRow${entity});
             sessionStorage.setItem("editForm${entity}",1);
             //this.oRouter.navTo("Detail${entity}");
