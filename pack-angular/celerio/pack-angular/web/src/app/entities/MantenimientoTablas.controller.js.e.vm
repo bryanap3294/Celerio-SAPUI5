@@ -1,0 +1,346 @@
+$output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.controller.js")##
+sap.ui.define(["sap/ui/core/mvc/Controller",
+    "sap/m/MessageBox",
+    "./utilities",
+    "portal/valorizacion/tipocambio/formatter/FormatterFloatNumber2",
+    "portal/valorizacion/tipocambio/formatter/FormatterFloatNumber5",
+    "sap/ui/core/routing/History",
+    "portal/valorizacion/tipocambio/js/moment",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+], function(BaseController, MessageBox, Utilities, FormatterFloatNumber2, FormatterFloatNumber5 , History, Moment, Filter, FilterOperator) {
+    "use strict";
+
+    return BaseController.extend("portal.valorizacion.tipocambio.controller.MantenimientoTablas", {
+        handleRouteMatched: function (oEvent) {
+
+            var oParams = {};
+
+            if (oEvent.mParameters.data.context) {
+                this.sContext = oEvent.mParameters.data.context;
+                var oPath;
+                if (this.sContext) {
+                    oPath = {path: "/" + this.sContext, parameters: oParams};
+                    this.getView().bindObject(oPath);
+                }
+            }
+        },
+        onAfterRendering: function() {
+            var fnPressEdit${entity} = this.editRow${entity}.bind(this); // Edita
+            var fnPressDelete${entity} = this.deleteRow${entity}.bind(this); // Elimina
+			var fnPressDetail${entity} = this.detailRow${entity}.bind(this); // Vista Previa
+            var oTemplate = new sap.ui.table.RowAction({items: [
+                new sap.ui.table.RowActionItem({icon: "sap-icon://edit", text: "Editar", press: fnPressEdit${entity}})
+				, new sap.ui.table.RowActionItem({icon: "sap-icon://delete", text: "Eliminar", press: fnPressDelete${entity}})
+				, new sap.ui.table.RowActionItem({icon: "sap-icon://detail-view", text: "Vista Previa", press: fnPressDetail${entity}})
+            ]});
+            this.byId("idTbl${entity}").setRowActionTemplate(oTemplate);
+            this.byId("idTbl${entity}").setRowActionCount(3);
+        },
+		editRow${entity}: function(oArg){
+            //debugger;
+            //var path = oEvent.getSource().getBindingContext("datosConfig").getPath().substr(1);
+            //var oModel = oEvent.getSource().getModel("datosConfig");
+            //var idRow= oModel.getData()[path].id;
+            //sessionStorage.setItem("idRowDatosConfig",idRow);
+            //sessionStorage.setItem("editform",1);
+            //this.oRouter.navTo("DetalleDatosConfig");
+        },
+		deleteRow${entity}: function(oArg){
+            //var path = oArg.getSource().getBindingContext("datosConfig").getPath().substr(1);
+            //var oModel = oArg.getSource().getModel("datosConfig");
+            //var idRow= oModel.getData()[path].id;
+            //var that = this;
+            //MessageBox.show("¿Desea eliminar el Registro?",
+            //    MessageBox.Icon.WARNING,
+            //    "Ventana de aviso",
+            //    [MessageBox.Action.YES, MessageBox.Action.NO],
+            //    function(oAction){
+            //        //debugger;
+            //        switch(oAction){
+            //            case 'YES':
+            //                that.doDelete("appParametria",idRow,"Y","appParametria/findAll","datosConfig");
+            //            case 'NO':
+            //                break;
+            //        }
+            //    });
+        },
+		detailRow${entity}: function(oArg){
+
+		},
+        doNavigate: function (sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
+
+            var sPath = (oBindingContext) ? oBindingContext.getPath() : null;
+            var oModel = (oBindingContext) ? oBindingContext.getModel() : null;
+
+            var sEntityNameSet;
+            if (sPath !== null && sPath !== "") {
+                if (sPath.substring(0, 1) === "/") {
+                    sPath = sPath.substring(1);
+                }
+                sEntityNameSet = sPath.split("(")[0];
+            }
+            var sNavigationPropertyName;
+            var sMasterContext = this.sMasterContext ? this.sMasterContext : sPath;
+
+            if (sEntityNameSet !== null) {
+                sNavigationPropertyName = sViaRelation || this.getOwnerComponent().getNavigationPropertyForNavigationWithContext(sEntityNameSet, sRouteName);
+            }
+            if (sNavigationPropertyName !== null && sNavigationPropertyName !== undefined) {
+                if (sNavigationPropertyName === "") {
+                    this.oRouter.navTo(sRouteName, {
+                        context: sPath,
+                        masterContext: sMasterContext
+                    }, false);
+                } else {
+                    oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function (bindingContext) {
+                        if (bindingContext) {
+                            sPath = bindingContext.getPath();
+                            if (sPath.substring(0, 1) === "/") {
+                                sPath = sPath.substring(1);
+                            }
+                        }
+                        else {
+                            sPath = "undefined";
+                        }
+                        if (sPath === "undefined") {
+                            this.oRouter.navTo(sRouteName);
+                        } else {
+                            this.oRouter.navTo(sRouteName, {
+                                context: sPath,
+                                masterContext: sMasterContext
+                            }, false);
+                        }
+                    }.bind(this));
+                }
+            } else {
+                this.oRouter.navTo(sRouteName);
+            }
+
+            if (typeof fnPromiseResolve === "function") {
+                fnPromiseResolve();
+            }
+        },
+        onPress: function (evt) {
+            //debugger;
+            var arrFn = evt.getSource().getModel("tiles").oData;
+            var title = evt.getSource().getTitle();
+            var label = evt.getSource().mProperties.info;
+            var oBindingContext = evt.getSource().getBindingContext();
+            for (var i = 0; i < arrFn.length; i++) {
+                var item = arrFn[i];
+                if (item.descripcion === title && item.label === label) {
+                    return new Promise(function(fnResolve) {
+                        this.doNavigate(item.accion, oBindingContext, fnResolve, ""
+                        );
+                    }.bind(this)).catch(function (err) { if (err !== undefined) { MessageBox.error(err.message); }});
+                }
+            }
+        },
+        doPostPost: function (model, uriPost, uriModel, nameModel, argModel, fn, value){
+            var thiis = this.getView();
+
+        },
+        doPostGet: function (context, model, uri, name, namefunct, arg1){
+
+        },
+        clearFilterDatosConfig: function(){
+        	//debugger;
+            //var json = {};
+            //this.getView().byId("txtModulo").setValue(null);
+            //this.getView().byId("txtLabel").setValue(null);
+            //this.doPostGet(this.getView(),json,"appParametria/find", "datosConfig");
+        },
+        removerEstilos: function() {
+            //Utilities.removerStateError(this.getView().byId("cmbMes"));
+            //Utilities.removerStateError(this.getView().byId("txtEjercicioTipoCambio"));
+        },
+        filterStandarDatosConfig: function(oEvent){
+            //var json = {};
+            //var modulo= this.getView().byId("txtModulo").getValue().toUpperCase();
+            //var label= this.getView().byId("txtLabel").getValue().toUpperCase();
+            //json["modulo"]=modulo;
+            //json["label"]=label;
+            //debugger;
+            //console.log(json);
+            //this.doPostGet(this.getView(),json,"appParametria/find", "datosConfig");
+        },
+        filterGlobalTipoCambio: function(oEvent){
+            //debugger;
+            //var sQuery = oEvent.getParameter("query");
+            //this._oGlobalFilter = null;
+            //
+            //if (sQuery) {
+            //    this._oGlobalFilter = new Filter([
+            //        new Filter("pais", FilterOperator.Contains, sQuery),
+            //        new Filter("codigoMoneda", FilterOperator.Contains, sQuery)
+            //    ], false);
+            //}
+            //var oFilter = null;
+            //debugger;
+            //if (this._oGlobalFilter) {
+            //    oFilter = this._oGlobalFilter;
+            //}
+            //this.byId("idTblTipoCambio").getBinding("rows").filter(oFilter, "Application");
+            ////this.doFilter();
+        },
+        filterByCell: function(oEvent){
+            //debugger;
+            //var oColumn = oEvent.getParameter("column");
+            return;
+        },
+        agregarDatoConfig: function(oEvent){
+            //this.oRouter.navTo("DetalleDatosConfig");
+        },
+        uploadExcelTipoCambio : function(){
+            //this.oRouter.navTo("UploadTipoCambio");
+        },
+        doGet: function (context, uri, name, namefunct, arg1){
+            jQuery.ajax({
+                context: this,
+                type : "GET",
+                contentType : "application/json",
+                url : Utilities.getDomain()+ uri,
+                dataType : "json",
+                success : function(data) {
+                    if(namefunct===undefined){
+                        this.model = new sap.ui.model.json.JSONModel (data);
+                        //debugger;
+                        context.setModel(this.model, name);
+                    }
+                    else{
+                        //debugger;
+                        this.model = new sap.ui.model.json.JSONModel (data);
+                        //debugger;
+                        context.setModel(this.model, name);
+                        var fun= namefunct+"(data,arg1)";
+                        eval(fun);
+                    }
+                },
+                error: function (e) {
+                    console.log("Error");
+                }
+            });
+        },
+        onFinished: function(oEvent) {
+            //var oList = oEvent.getSource();
+            //var oItems = oList.getItems();
+            //for (var i = 0; i < oItems.length; i++) {
+            //    var oItem = oItems[i];
+            //    var oDeleteControl = oItem.getDeleteControl();
+            //    oDeleteControl.setIcon("sap-icon://delete");
+            //    oDeleteControl.setTooltip("delete");
+            //}
+        },
+        doDelete: function(uri, index, updateModel, uriModel, nameModel, nameFunc, arg){
+            //var thiis = this.getView();
+
+        },
+        dateTime: function(arg1, arg2){
+            //debugger;
+            //this.model = new sap.ui.model.json.JSONModel (arg2);
+            //arg1.getView().setModel(this.model, "tipoCambio");
+            //var oModel = this.getView().getModel("tipoCambio");
+            //var jsonModel = oModel.getData();
+            //for(var i=0 ; i < jsonModel.length ; i++ ){
+            //    //debugger;
+            //    if(jsonModel[i]["fecha"]!== undefined){
+            //        jsonModel[i]["fecha"]= moment.utc(jsonModel[i]["fecha"]).format('DD/MM/YYYY');
+            //    }
+            //}
+            //var datemodel = new sap.ui.model.json.JSONModel(jsonModel);
+            //arg1.getView().setModel(datemodel, "tipoCambio");
+        },
+        closeFormSearch: function(oEvent){
+            //debugger;
+            //if(this.getView().byId("idSwitch").getState()){
+            //    this.getView().byId("idFormSearch").setVisible(true);
+            //    this.getView().byId("idButtonSearch").setVisible(true);
+            //}else{
+            //    this.getView().byId("idFormSearch").setVisible(false);
+            //    this.getView().byId("idButtonSearch").setVisible(false);
+            //}
+        },
+        setStatus: function(arg1, arg2){
+        	//this.model = new sap.ui.model.json.JSONModel (arg2);
+            //arg1.getView().setModel(this.model, "datosConfig");
+            //var oModel = this.getView().getModel("datosConfig");
+            //var jsonModel = oModel.getData();
+            //for(var i=0 ; i < jsonModel.length ; i++ ){
+            //    //debugger;
+            //    var status = jsonModel[i]["status"];
+            //    if(status!== undefined){
+            //    	switch(status){
+            //    		case "0":
+            //    			jsonModel[i]["status"]= "0 - Inactivo";
+            //    			break;
+            //    		case "1":
+            //    			jsonModel[i]["status"]= "1 - Activo";
+            //    			break;
+            //    	}
+            //    }
+            //}
+            //var datemodel = new sap.ui.model.json.JSONModel(jsonModel);
+            //arg1.getView().setModel(datemodel, "datosConfig");
+        },
+        getVersion: function (arg1, arg2){
+        	//sessionStorage.setItem("idVersion", arg2.version);
+        	//sessionStorage.setItem("descripcionVersion", arg2.value2);
+        	//var descripcionVersion="";
+        	//switch(arg2.version){
+        	//	case "R":
+        	//		descripcionVersion= "Real";
+        	//		sessionStorage.setItem("descripcionVersion", descripcionVersion);
+        	//	break;
+        	//	case "S":
+        	//		descripcionVersion= "Simulación";
+        	//		sessionStorage.setItem("descripcionVersion", descripcionVersion);
+        	//	break;
+        	//}
+        	//if(arg2!==null || arg2!==undefined){
+            //    sessionStorage.setItem("editform",0);
+            //    debugger;
+            //    //console.log(jsonVersion);
+            //    this._oBusyDialog = new sap.m.BusyDialog();
+			//	//this.doGet(this.getView(),"appParametria/_getListaMes","ListaMes");
+                this.doGet(this.getView(), "${entity.model.var}/findAll","${entity}List");
+
+            //
+            //    console.log(this.getView());
+            //}else{
+            //    MessageBox.show(
+            //        "Por favor seleccione una Versión para poder entrar a esta pagina.", {
+            //            icon: sap.m.MessageBox.Icon.WARNING,
+            //            title: "Sin Versión",
+            //            styleClass: "titleMessageBox",
+            //            actions: [sap.m.MessageBox.Action.CLOSE],
+            //            onClose: function(oAction) {
+            //                window.history.go(-1);
+            //            }
+            //        }
+            //    );
+            //}
+        },
+        downloadExcel : function(){
+        	//var url = Utilities.getDomain() + 'tipoCambio/downloadCompleteExcelXLSX' ;
+            //var encodeUrl = encodeURI(url);
+			//sap.m.URLHelper.redirect(encodeUrl,true);
+        },
+        onInit: function () {
+            //debugger;
+            var that = this;
+            this.mBindingOptions = {};
+            this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            this.oRouter.getTarget("MantenimientoTablas").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+            this.getView().addDelegate(
+                {
+                    onBeforeShow: function (e) {
+                    	this.doGet(this.getView(),"appParametria/_getSessionConfiguracionPeriodo","sessionVersion","this.getVersion",this);
+
+                    }
+                },that
+            );
+
+        }
+    });
+}, /* bExport= */true);

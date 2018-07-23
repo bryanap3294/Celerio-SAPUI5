@@ -22,4 +22,5 @@ hs_err_pid*
 quickstart/src/main/webapp/node_modules
 quickstart/src/main/webapp/typings
 quickstart/src/main/generated-java
+quickstart/src/main/resources
 quickstart/web

@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.jaxio.com/schema/celerio">
+  <jdbcConnectivity driver="org.postgresql.Driver" url="jdbc:postgresql://ivaloracion.coovnqw2scof.us-east-1.rds.amazonaws.com:5432/ivaloracion" user="valoracion" password="valoracion" schemaName="" oracleRetrieveRemarks="false" oracleRetrieveSynonyms="true" reverseIndexes="true" reverseOnlyUniqueIndexes="true" catalog="">
+    <tableNamePatterns/>
+    <tableTypes>
+      <tableType>TABLE</tableType>
+    </tableTypes>
+  </jdbcConnectivity>
+  <databaseInfo databaseMajorVersion="9" databaseMinorVersion="6" databaseProductName="PostgreSQL" databaseProductVersion="9.6.6" driverMajorVersion="9" driverMinorVersion="4" driverName="PostgreSQL Native Driver" driverVersion="PostgreSQL 9.4.1212.jre7" extraInfo=""/>
+  <tables>
+    <table name="app_parametria" type="TABLE">
+      <columns>
+        <column name="id_parametria" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="10" type="INTEGER"/>
+        <column name="modulo" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="30" type="VARCHAR"/>
+        <column name="label" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="3" size="100" type="VARCHAR"/>
+        <column name="description" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="4" size="100" type="VARCHAR"/>
+        <column name="value_1" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="5" size="255" type="VARCHAR"/>
+        <column name="value_2" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="6" size="255" type="VARCHAR"/>
+        <column name="value_3" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="7" size="2147483647" type="VARCHAR"/>
+        <column name="status" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="8" size="1" type="CHAR"/>
+      </columns>
+      <indexes>
+        <indexe columnName="id_parametria" indexName="app_parametria_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys/>
+      <primaryKeys>
+        <primaryKey>id_parametria</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="campanna_dias_anticipacion" type="TABLE">
+      <columns>
+        <column name="id_campanna_dias_anticipacion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="10" type="INTEGER"/>
+        <column name="pais" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="3" type="VARCHAR"/>
+        <column name="centro" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="3" size="4" type="VARCHAR"/>
+        <column name="unidad_negocio" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="4" size="3" type="VARCHAR"/>
+        <column name="campanna" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="5" size="6" type="VARCHAR"/>
+        <column name="tipo" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="6" size="4" type="VARCHAR"/>
+        <column name="dias_anticipacion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="7" size="10" type="INTEGER"/>
+      </columns>
+      <indexes>
+        <indexe columnName="pais" indexName="campanna_dias_anticipacion_ak01" nonUnique="false"/>
+        <indexe columnName="centro" indexName="campanna_dias_anticipacion_ak01" nonUnique="false"/>
+        <indexe columnName="unidad_negocio" indexName="campanna_dias_anticipacion_ak01" nonUnique="false"/>
+        <indexe columnName="campanna" indexName="campanna_dias_anticipacion_ak01" nonUnique="false"/>
+        <indexe columnName="tipo" indexName="campanna_dias_anticipacion_ak01" nonUnique="false"/>
+        <indexe columnName="id_campanna_dias_anticipacion" indexName="campanna_dias_anticipacion_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys/>
+      <primaryKeys>
+        <primaryKey>id_campanna_dias_anticipacion</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="centro_valoracion" type="TABLE">
+      <columns>
+        <column name="id_centro_valoracion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="10" type="INTEGER"/>
+        <column name="version" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="1" type="CHAR"/>
+        <column name="pais" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="3" size="3" type="VARCHAR"/>
+        <column name="centro" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="4" size="4" type="VARCHAR"/>
+        <column name="secuencia" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="5" size="10" type="INTEGER"/>
+        <column name="descripcion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="6" size="50" type="VARCHAR"/>
+        <column name="sociedad_sap" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="7" size="4" type="VARCHAR"/>
+        <column name="sociedad_profit" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="8" size="4" type="VARCHAR"/>
+        <column name="usuario_creacion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="9" size="100" type="VARCHAR"/>
+        <column name="fecha_creacion" decimalDigits="6" autoIncrement="false" nullable="false" ordinalPosition="10" size="29" type="TIMESTAMP"/>
+        <column name="usuario_modificacion" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="11" size="100" type="VARCHAR"/>
+        <column name="fecha_modificacion" decimalDigits="6" autoIncrement="false" nullable="true" ordinalPosition="12" size="29" type="TIMESTAMP"/>
+      </columns>
+      <indexes>
+        <indexe columnName="version" indexName="centro_valoracion_ak01" nonUnique="false"/>
+        <indexe columnName="pais" indexName="centro_valoracion_ak01" nonUnique="false"/>
+        <indexe columnName="centro" indexName="centro_valoracion_ak01" nonUnique="false"/>
+        <indexe columnName="id_centro_valoracion" indexName="centro_valoracion_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys/>
+      <primaryKeys>
+        <primaryKey>id_centro_valoracion</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="configuracion_periodo" type="TABLE">
+      <columns>
+        <column name="id_configuracion_periodo" columnDef="nextval('seq_configuracion_periodo'::regclass)" decimalDigits="0" autoIncrement="true" nullable="false" ordinalPosition="1" size="10" type="INTEGER"/>
+        <column name="version" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="1" type="CHAR"/>
+        <column name="ejercicio" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="3" size="10" type="INTEGER"/>
+        <column name="mes" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="4" size="2" type="CHAR"/>
+        <column name="fecha_inicio" decimalDigits="6" autoIncrement="false" nullable="true" ordinalPosition="5" size="29" type="TIMESTAMP"/>
+        <column name="fecha_fin" decimalDigits="6" autoIncrement="false" nullable="true" ordinalPosition="6" size="29" type="TIMESTAMP"/>
+        <column name="fecha_tc_corriente" decimalDigits="6" autoIncrement="false" nullable="true" ordinalPosition="7" size="29" type="TIMESTAMP"/>
+        <column name="fecha_tc_constante" decimalDigits="6" autoIncrement="false" nullable="true" ordinalPosition="8" size="29" type="TIMESTAMP"/>
+        <column name="status_plan" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="9" size="2" type="CHAR"/>
+        <column name="usuario_creacion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="10" size="100" type="VARCHAR"/>
+        <column name="fecha_creacion" decimalDigits="6" autoIncrement="false" nullable="false" ordinalPosition="11" size="29" type="TIMESTAMP"/>
+        <column name="usuario_modificacion" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="12" size="100" type="VARCHAR"/>
+        <column name="fecha_modificacion" decimalDigits="6" autoIncrement="false" nullable="true" ordinalPosition="13" size="29" type="TIMESTAMP"/>
+        <column name="indicador_corriente" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="14" size="1" type="CHAR"/>
+      </columns>
+      <indexes>
+        <indexe columnName="version" indexName="configuracion_periodo_ak01" nonUnique="false"/>
+        <indexe columnName="id_configuracion_periodo" indexName="configuracion_periodo_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys/>
+      <primaryKeys>
+        <primaryKey>id_configuracion_periodo</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="datos_profit" type="TABLE">
+      <columns>
+        <column name="id_datos_profit" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="10" type="INTEGER"/>
+        <column name="ejercicio_proceso" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="10" type="INTEGER"/>
+        <column name="mes_proceso" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="3" size="2" type="CHAR"/>
+        <column name="version" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="4" size="1" type="CHAR"/>
+        <column name="pais" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="5" size="3" type="VARCHAR"/>
+        <column name="sociedad" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="6" size="4" type="VARCHAR"/>
+        <column name="centro" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="7" size="4" type="VARCHAR"/>
+        <column name="unidad_negocio" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="8" size="3" type="VARCHAR"/>
+        <column name="categoria" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="9" size="9" type="VARCHAR"/>
+        <column name="marca" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="10" size="2" type="VARCHAR"/>
+        <column name="tipo_profit" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="11" size="2" type="VARCHAR"/>
+        <column name="tipo_periodo" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="12" size="1" type="CHAR"/>
+        <column name="periodo_proceso" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="13" size="6" type="VARCHAR"/>
+        <column name="fecha_inicio_periodo" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="14" size="13" type="DATE"/>
+        <column name="dias_anticipacion_profit" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="15" size="10" type="INTEGER"/>
+        <column name="fecha_compra" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="16" size="13" type="DATE"/>
+        <column name="mes_compra" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="17" size="2" type="CHAR"/>
+        <column name="anho_compra" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="18" size="10" type="INTEGER"/>
+        <column name="unidades_profit" decimalDigits="3" autoIncrement="false" nullable="true" ordinalPosition="19" size="18" type="NUMERIC"/>
+        <column name="costo_venta_usd" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="20" size="18" type="NUMERIC"/>
+        <column name="costo_venta_mlocal" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="21" size="18" type="NUMERIC"/>
+        <column name="importe_venta_usd" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="22" size="18" type="NUMERIC"/>
+        <column name="importe_venta_mlocal" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="23" size="18" type="NUMERIC"/>
+        <column name="version_profit" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="24" size="3" type="VARCHAR"/>
+        <column name="participacion_dec" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="25" size="18" type="NUMERIC"/>
+        <column name="markup_dec" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="26" size="18" type="NUMERIC"/>
+        <column name="traspaso" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="27" size="18" type="NUMERIC"/>
+        <column name="markup_traspaso" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="28" size="18" type="NUMERIC"/>
+        <column name="cst_vta_base_fiscal" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="29" size="18" type="NUMERIC"/>
+        <column name="bias" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="30" size="18" type="NUMERIC"/>
+        <column name="inv" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="31" size="18" type="NUMERIC"/>
+        <column name="otros_canales" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="32" size="18" type="NUMERIC"/>
+        <column name="peak_season" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="33" size="18" type="NUMERIC"/>
+        <column name="ayudas_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="34" size="18" type="NUMERIC"/>
+        <column name="suavizacion" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="35" size="18" type="NUMERIC"/>
+        <column name="cst_vta_ajustado_usd" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="36" size="18" type="NUMERIC"/>
+        <column name="cst_vta_ajustado_mlocal" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="37" size="18" type="NUMERIC"/>
+        <column name="cst_vta_corriente_usd" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="38" size="18" type="NUMERIC"/>
+        <column name="cst_vta_constante_usd" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="39" size="18" type="NUMERIC"/>
+        <column name="unidad_ajustada" decimalDigits="3" autoIncrement="false" nullable="true" ordinalPosition="40" size="18" type="NUMERIC"/>
+        <column name="usuario_creacion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="41" size="100" type="VARCHAR"/>
+        <column name="fecha_creacion" decimalDigits="6" autoIncrement="false" nullable="false" ordinalPosition="42" size="29" type="TIMESTAMP"/>
+        <column name="usuario_modificacion" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="43" size="100" type="VARCHAR"/>
+        <column name="fecha_modificacion" decimalDigits="6" autoIncrement="false" nullable="true" ordinalPosition="44" size="29" type="TIMESTAMP"/>
+        <column name="costo_no_dec" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="45" size="18" type="NUMERIC"/>
+      </columns>
+      <indexes>
+        <indexe columnName="ejercicio_proceso" indexName="datos_profit_ak01" nonUnique="false"/>
+        <indexe columnName="mes_proceso" indexName="datos_profit_ak01" nonUnique="false"/>
+        <indexe columnName="version" indexName="datos_profit_ak01" nonUnique="false"/>
+        <indexe columnName="pais" indexName="datos_profit_ak01" nonUnique="false"/>
+        <indexe columnName="sociedad" indexName="datos_profit_ak01" nonUnique="false"/>
+        <indexe columnName="centro" indexName="datos_profit_ak01" nonUnique="false"/>
+        <indexe columnName="unidad_negocio" indexName="datos_profit_ak01" nonUnique="false"/>
+        <indexe columnName="categoria" indexName="datos_profit_ak01" nonUnique="false"/>
+        <indexe columnName="marca" indexName="datos_profit_ak01" nonUnique="false"/>
+        <indexe columnName="tipo_profit" indexName="datos_profit_ak01" nonUnique="false"/>
+        <indexe columnName="tipo_periodo" indexName="datos_profit_ak01" nonUnique="false"/>
+        <indexe columnName="periodo_proceso" indexName="datos_profit_ak01" nonUnique="false"/>
+        <indexe columnName="id_datos_profit" indexName="datos_profit_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys/>
+      <primaryKeys>
+        <primaryKey>id_datos_profit</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="datos_profit_temp" type="TABLE">
+      <columns>
+        <column name="id_datos_profit" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="10" type="INTEGER"/>
+        <column name="ejercicio_proceso" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="10" type="INTEGER"/>
+        <column name="mes_proceso" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="3" size="2" type="CHAR"/>
+        <column name="version" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="4" size="1" type="CHAR"/>
+        <column name="pais" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="5" size="3" type="VARCHAR"/>
+        <column name="sociedad" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="6" size="4" type="VARCHAR"/>
+        <column name="centro" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="7" size="4" type="VARCHAR"/>
+        <column name="unidad_negocio" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="8" size="3" type="VARCHAR"/>
+        <column name="categoria" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="9" size="9" type="VARCHAR"/>
+        <column name="marca" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="10" size="2" type="VARCHAR"/>
+        <column name="tipo_profit" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="11" size="2" type="VARCHAR"/>
+        <column name="tipo_periodo" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="12" size="1" type="CHAR"/>
+        <column name="periodo_proceso" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="13" size="6" type="VARCHAR"/>
+        <column name="fecha_inicio_periodo" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="14" size="100" type="VARCHAR"/>
+        <column name="unidades_profit" decimalDigits="3" autoIncrement="false" nullable="true" ordinalPosition="15" size="18" type="NUMERIC"/>
+        <column name="costo_venta_usd" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="16" size="18" type="NUMERIC"/>
+        <column name="costo_venta_mlocal" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="17" size="18" type="NUMERIC"/>
+        <column name="importe_venta_usd" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="18" size="18" type="NUMERIC"/>
+        <column name="importe_venta_mlocal" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="19" size="18" type="NUMERIC"/>
+        <column name="version_profit" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="20" size="3" type="VARCHAR"/>
+        <column name="participacion_dec" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="21" size="18" type="NUMERIC"/>
+        <column name="markup_dec" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="22" size="18" type="NUMERIC"/>
+        <column name="traspaso" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="23" size="18" type="NUMERIC"/>
+        <column name="markup_traspaso" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="24" size="18" type="NUMERIC"/>
+        <column name="cst_vta_base_fiscal" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="25" size="18" type="NUMERIC"/>
+        <column name="bias" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="26" size="18" type="NUMERIC"/>
+        <column name="inv" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="27" size="18" type="NUMERIC"/>
+        <column name="otros_canales" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="28" size="18" type="NUMERIC"/>
+        <column name="peak_season" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="29" size="18" type="NUMERIC"/>
+        <column name="ayudas_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="30" size="18" type="NUMERIC"/>
+        <column name="suavizacion" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="31" size="18" type="NUMERIC"/>
+        <column name="cst_vta_ajustado_usd" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="32" size="18" type="NUMERIC"/>
+        <column name="cst_vta_ajustado_mlocal" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="33" size="18" type="NUMERIC"/>
+        <column name="cst_vta_corriente_usd" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="34" size="18" type="NUMERIC"/>
+        <column name="cst_vta_constante_usd" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="35" size="18" type="NUMERIC"/>
+        <column name="unidad_ajustada" decimalDigits="3" autoIncrement="false" nullable="true" ordinalPosition="36" size="18" type="NUMERIC"/>
+        <column name="id_proceso" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="37" size="10" type="INTEGER"/>
+        <column name="costo_no_dec" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="38" size="18" type="NUMERIC"/>
+      </columns>
+      <indexes>
+        <indexe columnName="id_datos_profit" indexName="datos_profit_temp_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys/>
+      <primaryKeys>
+        <primaryKey>id_datos_profit</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="dummy_centro" type="TABLE">
+      <columns>
+        <column name="codigo_centro" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="4" type="VARCHAR"/>
+        <column name="descripcion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="60" type="VARCHAR"/>
+        <column name="codigo_pais" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="3" size="3" type="VARCHAR"/>
+        <column name="tipo_centro" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="4" size="10" type="VARCHAR"/>
+        <column name="sociedad" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="5" size="4" type="VARCHAR"/>
+      </columns>
+      <indexes>
+        <indexe columnName="codigo_centro" indexName="dummy_centro_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys/>
+      <primaryKeys>
+        <primaryKey>codigo_centro</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="dummy_sociedad_sap" type="TABLE">
+      <columns>
+        <column name="codigo_sociedad" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="4" type="VARCHAR"/>
+        <column name="descripcion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="60" type="VARCHAR"/>
+        <column name="codigo_pais" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="3" size="3" type="VARCHAR"/>
+      </columns>
+      <indexes>
+        <indexe columnName="codigo_sociedad" indexName="dummy_sociedad_sap_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys/>
+      <primaryKeys>
+        <primaryKey>codigo_sociedad</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="dummy_ws_tipo_cambio" type="TABLE">
+      <columns>
+        <column name="LAND1" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="3" type="CHAR"/>
+        <column name="BUKRS" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="4" type="CHAR"/>
+        <column name="GJAHR" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="3" size="4" type="CHAR"/>
+        <column name="VERSION" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="4" size="4" type="CHAR"/>
+        <column name="MES" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="5" size="2" type="CHAR"/>
+        <column name="STSTIPC" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="6" size="1" type="CHAR"/>
+        <column name="DIASLAB" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="7" size="10" type="INTEGER"/>
+        <column name="DIAACUM" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="8" size="10" type="INTEGER"/>
+        <column name="TCFINAL" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="9" size="14" type="NUMERIC"/>
+        <column name="TCFINPR" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="10" size="14" type="NUMERIC"/>
+        <column name="TCSUMFI" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="11" size="14" type="NUMERIC"/>
+        <column name="TCPROME" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="12" size="14" type="NUMERIC"/>
+        <column name="DEVMENSUAL" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="13" size="14" type="NUMERIC"/>
+        <column name="DEVACUMUL" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="14" size="14" type="NUMERIC"/>
+        <column name="VARMESDEV" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="15" size="14" type="NUMERIC"/>
+        <column name="VARDIADEV" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="16" size="14" type="NUMERIC"/>
+        <column name="INFMENSUAL" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="17" size="14" type="NUMERIC"/>
+        <column name="INFACUMUL" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="18" size="14" type="NUMERIC"/>
+        <column name="VARMESINF" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="19" size="14" type="NUMERIC"/>
+        <column name="VARDIAINF" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="20" size="14" type="NUMERIC"/>
+        <column name="FACTCORR" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="21" size="14" type="NUMERIC"/>
+        <column name="TCAMCORR" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="22" size="14" type="NUMERIC"/>
+        <column name="DEVACUREA" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="23" size="14" type="NUMERIC"/>
+        <column name="DEVACUFOR" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="24" size="14" type="NUMERIC"/>
+        <column name="DEVRESANO" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="25" size="14" type="NUMERIC"/>
+        <column name="DEVANUFOR" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="26" size="14" type="NUMERIC"/>
+      </columns>
+      <indexes>
+        <indexe columnName="LAND1" indexName="dummy_ws_tipo_cambio_pkey" nonUnique="false"/>
+        <indexe columnName="BUKRS" indexName="dummy_ws_tipo_cambio_pkey" nonUnique="false"/>
+        <indexe columnName="GJAHR" indexName="dummy_ws_tipo_cambio_pkey" nonUnique="false"/>
+        <indexe columnName="VERSION" indexName="dummy_ws_tipo_cambio_pkey" nonUnique="false"/>
+        <indexe columnName="MES" indexName="dummy_ws_tipo_cambio_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys/>
+      <primaryKeys>
+        <primaryKey>LAND1</primaryKey>
+        <primaryKey>BUKRS</primaryKey>
+        <primaryKey>GJAHR</primaryKey>
+        <primaryKey>VERSION</primaryKey>
+        <primaryKey>MES</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="generacion_plan" type="TABLE">
+      <columns>
+        <column name="id_generacion_plan" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="10" type="INTEGER"/>
+        <column name="tipo_estrategia" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="2" type="VARCHAR"/>
+        <column name="descripcion_tipo_estrategia" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="3" size="100" type="VARCHAR"/>
+        <column name="version" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="4" size="1" type="CHAR"/>
+        <column name="ejercicio_proceso" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="5" size="10" type="INTEGER"/>
+        <column name="mes_proceso" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="6" size="2" type="CHAR"/>
+        <column name="tipo_plan" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="7" size="20" type="VARCHAR"/>
+        <column name="campanna_plan" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="8" size="6" type="VARCHAR"/>
+        <column name="pais" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="9" size="3" type="VARCHAR"/>
+        <column name="desc_pais" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="10" size="100" type="VARCHAR"/>
+        <column name="sociedad" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="11" size="4" type="VARCHAR"/>
+        <column name="desc_sociedad" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="12" size="100" type="VARCHAR"/>
+        <column name="centro_suministrador" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="13" size="4" type="VARCHAR"/>
+        <column name="desc_centro_suministrador" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="14" size="100" type="VARCHAR"/>
+        <column name="centro" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="15" size="4" type="VARCHAR"/>
+        <column name="desc_centro" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="16" size="100" type="VARCHAR"/>
+        <column name="centro_referencia" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="17" size="4" type="VARCHAR"/>
+        <column name="unidad_negocio" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="18" size="3" type="VARCHAR"/>
+        <column name="desc_unidad_negocio" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="19" size="100" type="VARCHAR"/>
+        <column name="categoria" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="20" size="4" type="VARCHAR"/>
+        <column name="desc_categoria" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="21" size="100" type="VARCHAR"/>
+        <column name="costo_venta_base_usd" decimalDigits="2" autoIncrement="false" nullable="false" ordinalPosition="22" size="18" type="NUMERIC"/>
+        <column name="tasa_cambio_usd" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="23" size="18" type="NUMERIC"/>
+        <column name="ind_corriente" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="24" size="1" type="CHAR"/>
+        <column name="tipo_material" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="25" size="10" type="VARCHAR"/>
+        <column name="ind_importado" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="26" size="1" type="CHAR"/>
+        <column name="ind_filial" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="27" size="1" type="CHAR"/>
+        <column name="lead_time" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="28" size="10" type="INTEGER"/>
+        <column name="mes_compra" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="29" size="2" type="CHAR"/>
+        <column name="fecha_compra" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="30" size="13" type="DATE"/>
+        <column name="fecha_fabrica" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="31" size="13" type="DATE"/>
+        <column name="fecha_compra_insumo" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="32" size="13" type="DATE"/>
+        <column name="monto_compra_nacional" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="33" size="18" type="NUMERIC"/>
+        <column name="monto_importado" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="34" size="18" type="NUMERIC"/>
+        <column name="monto_maquila_tercero" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="35" size="18" type="NUMERIC"/>
+        <column name="monto_fabri_propia" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="36" size="18" type="NUMERIC"/>
+        <column name="monto_traspaso" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="37" size="18" type="NUMERIC"/>
+        <column name="monto_flete" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="38" size="18" type="NUMERIC"/>
+        <column name="monto_seguro" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="39" size="18" type="NUMERIC"/>
+        <column name="monto_arancel" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="40" size="18" type="NUMERIC"/>
+        <column name="monto_otros_gastos" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="41" size="18" type="NUMERIC"/>
+        <column name="monto_fob_importada" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="42" size="18" type="NUMERIC"/>
+        <column name="tipo_plan_expo" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="43" size="20" type="VARCHAR"/>
+        <column name="costo_venta_base_usd_expo" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="44" size="18" type="NUMERIC"/>
+        <column name="sociedad_expo" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="45" size="4" type="VARCHAR"/>
+        <column name="lead_time_expo" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="46" size="10" type="INTEGER"/>
+        <column name="fecha_expo" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="47" size="13" type="DATE"/>
+        <column name="monto_compra_nacional_expo" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="48" size="18" type="NUMERIC"/>
+        <column name="monto_importado_expo" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="49" size="18" type="NUMERIC"/>
+        <column name="monto_maquila_tercero_expo" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="50" size="18" type="NUMERIC"/>
+        <column name="monto_fabri_propia_expo" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="51" size="18" type="NUMERIC"/>
+        <column name="monto_traspaso_expo" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="52" size="18" type="NUMERIC"/>
+        <column name="monto_flete_expo" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="53" size="18" type="NUMERIC"/>
+        <column name="monto_seguro_expo" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="54" size="18" type="NUMERIC"/>
+        <column name="monto_arancel_expo" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="55" size="18" type="NUMERIC"/>
+        <column name="monto_otros_gastos_expo" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="56" size="18" type="NUMERIC"/>
+        <column name="monto_venta_exportacion" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="57" size="18" type="NUMERIC"/>
+        <column name="costo_exportacion" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="58" size="18" type="NUMERIC"/>
+        <column name="costo_traspaso" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="59" size="18" type="NUMERIC"/>
+        <column name="clave01" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="60" size="100" type="VARCHAR"/>
+        <column name="clave02" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="61" size="100" type="VARCHAR"/>
+        <column name="clave03" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="62" size="100" type="VARCHAR"/>
+        <column name="id_padre" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="63" size="10" type="INTEGER"/>
+      </columns>
+      <indexes>
+        <indexe columnName="version" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="ejercicio_proceso" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="mes_proceso" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="tipo_plan" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="campanna_plan" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="pais" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="tipo_estrategia" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="centro_referencia" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="centro" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="sociedad" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="unidad_negocio" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="categoria" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="centro_suministrador" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="mes_compra" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="fecha_compra" indexName="generacion_plan_ak01" nonUnique="false"/>
+        <indexe columnName="id_generacion_plan" indexName="generacion_plan_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys/>
+      <primaryKeys>
+        <primaryKey>id_generacion_plan</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="lead_time" type="TABLE">
+      <columns>
+        <column name="id_lead_time" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="10" type="INTEGER"/>
+        <column name="cadena01" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="2" size="8" type="VARCHAR"/>
+        <column name="cadena02" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="3" size="8" type="VARCHAR"/>
+        <column name="cadena03" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="4" size="8" type="VARCHAR"/>
+        <column name="centro_abastecedor" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="5" size="4" type="VARCHAR"/>
+        <column name="centro_triangulador" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="6" size="4" type="VARCHAR"/>
+        <column name="centro" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="7" size="4" type="VARCHAR"/>
+        <column name="lead_time01" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="8" size="10" type="INTEGER"/>
+        <column name="lead_time02" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="9" size="10" type="INTEGER"/>
+        <column name="lead_time03" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="10" size="10" type="INTEGER"/>
+      </columns>
+      <indexes>
+        <indexe columnName="id_lead_time" indexName="lead_time_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys/>
+      <primaryKeys>
+        <primaryKey>id_lead_time</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="mapa_abastecimiento" type="TABLE">
+      <columns>
+        <column name="id_mapa_abastecimiento" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="10" type="INTEGER"/>
+        <column name="id_centro_valoracion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="10" type="INTEGER"/>
+        <column name="version" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="3" size="1" type="CHAR"/>
+        <column name="pais" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="4" size="3" type="VARCHAR"/>
+        <column name="centro" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="5" size="4" type="VARCHAR"/>
+        <column name="unidad_negocio" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="6" size="3" type="VARCHAR"/>
+        <column name="categoria" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="7" size="9" type="VARCHAR"/>
+        <column name="centro_suministrador" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="8" size="4" type="VARCHAR"/>
+        <column name="mes" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="9" size="2" type="CHAR"/>
+        <column name="porc_compra_nacional_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="10" size="6" type="NUMERIC"/>
+        <column name="porc_importado_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="11" size="6" type="NUMERIC"/>
+        <column name="porc_maquila_tercero_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="12" size="6" type="NUMERIC"/>
+        <column name="porc_fabricado_propio_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="13" size="6" type="NUMERIC"/>
+        <column name="porc_traspaso_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="14" size="6" type="NUMERIC"/>
+        <column name="porc_flete_gasto" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="15" size="6" type="NUMERIC"/>
+        <column name="porc_seguro_gasto" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="16" size="6" type="NUMERIC"/>
+        <column name="porc_arancel_gasto" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="17" size="6" type="NUMERIC"/>
+        <column name="porc_otros_gasto" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="18" size="6" type="NUMERIC"/>
+        <column name="usuario_creacion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="19" size="100" type="VARCHAR"/>
+        <column name="fecha_creacion" decimalDigits="6" autoIncrement="false" nullable="false" ordinalPosition="20" size="29" type="TIMESTAMP"/>
+        <column name="usuario_modificacion" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="21" size="100" type="VARCHAR"/>
+        <column name="fecha_modificacion" decimalDigits="6" autoIncrement="false" nullable="true" ordinalPosition="22" size="29" type="TIMESTAMP"/>
+        <column name="porc_markup_expo" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="23" size="6" type="NUMERIC"/>
+      </columns>
+      <indexes>
+        <indexe columnName="version" indexName="mapa_abastecimiento_ak01" nonUnique="false"/>
+        <indexe columnName="pais" indexName="mapa_abastecimiento_ak01" nonUnique="false"/>
+        <indexe columnName="centro" indexName="mapa_abastecimiento_ak01" nonUnique="false"/>
+        <indexe columnName="unidad_negocio" indexName="mapa_abastecimiento_ak01" nonUnique="false"/>
+        <indexe columnName="categoria" indexName="mapa_abastecimiento_ak01" nonUnique="false"/>
+        <indexe columnName="centro_suministrador" indexName="mapa_abastecimiento_ak01" nonUnique="false"/>
+        <indexe columnName="id_mapa_abastecimiento" indexName="mapa_abastecimiento_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys>
+        <importedKey fkColumnName="id_centro_valoracion" fkName="mapa_abastecimiento_id_centro_valoracion_fkey" pkColumnName="id_centro_valoracion" pkTableName="centro_valoracion"/>
+      </importedKeys>
+      <primaryKeys>
+        <primaryKey>id_mapa_abastecimiento</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="parametro_ajuste_real_profit" type="TABLE">
+      <columns>
+        <column name="id_parametro_ajuste_real_profit" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="10" type="INTEGER"/>
+        <column name="id_centro_valoracion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="10" type="INTEGER"/>
+        <column name="version" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="3" size="1" type="CHAR"/>
+        <column name="pais" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="4" size="3" type="VARCHAR"/>
+        <column name="centro" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="5" size="4" type="VARCHAR"/>
+        <column name="unidad_negocio" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="6" size="3" type="VARCHAR"/>
+        <column name="categoria" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="7" size="9" type="VARCHAR"/>
+        <column name="mes" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="8" size="2" type="CHAR"/>
+        <column name="mes_corte" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="9" size="10" type="INTEGER"/>
+        <column name="porc_variable_proyecto_top_trans" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="10" size="6" type="NUMERIC"/>
+        <column name="porc_otros_canales_trans" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="11" size="6" type="NUMERIC"/>
+        <column name="porc_ayudas_trans" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="12" size="6" type="NUMERIC"/>
+        <column name="porc_suavizacion_trans" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="13" size="6" type="NUMERIC"/>
+        <column name="dias_anticipacion_profit" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="14" size="10" type="INTEGER"/>
+        <column name="porc_part_dec_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="15" size="6" type="NUMERIC"/>
+        <column name="porc_mark_up_dec_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="16" size="6" type="NUMERIC"/>
+        <column name="porc_part_traspaso_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="17" size="6" type="NUMERIC"/>
+        <column name="porc_mark_up_traspaso_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="18" size="6" type="NUMERIC"/>
+        <column name="porc_bias_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="19" size="6" type="NUMERIC"/>
+        <column name="porc_inv_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="20" size="6" type="NUMERIC"/>
+        <column name="porc_otros_canales_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="21" size="6" type="NUMERIC"/>
+        <column name="porc_peak_season_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="22" size="6" type="NUMERIC"/>
+        <column name="porc_ayudas_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="23" size="6" type="NUMERIC"/>
+        <column name="porc_suavizacion_profit" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="24" size="6" type="NUMERIC"/>
+        <column name="usuario_creacion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="25" size="100" type="VARCHAR"/>
+        <column name="fecha_creacion" decimalDigits="6" autoIncrement="false" nullable="false" ordinalPosition="26" size="29" type="TIMESTAMP"/>
+        <column name="usuario_modificacion" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="27" size="100" type="VARCHAR"/>
+        <column name="fecha_modificacion" decimalDigits="6" autoIncrement="false" nullable="true" ordinalPosition="28" size="29" type="TIMESTAMP"/>
+        <column name="porc_no_dec" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="29" size="6" type="NUMERIC"/>
+      </columns>
+      <indexes>
+        <indexe columnName="version" indexName="parametro_ajuste_real_profit_ak01" nonUnique="false"/>
+        <indexe columnName="pais" indexName="parametro_ajuste_real_profit_ak01" nonUnique="false"/>
+        <indexe columnName="centro" indexName="parametro_ajuste_real_profit_ak01" nonUnique="false"/>
+        <indexe columnName="unidad_negocio" indexName="parametro_ajuste_real_profit_ak01" nonUnique="false"/>
+        <indexe columnName="categoria" indexName="parametro_ajuste_real_profit_ak01" nonUnique="false"/>
+        <indexe columnName="mes" indexName="parametro_ajuste_real_profit_ak01" nonUnique="false"/>
+        <indexe columnName="id_parametro_ajuste_real_profit" indexName="parametro_ajuste_real_profit_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys>
+        <importedKey fkColumnName="id_centro_valoracion" fkName="parametro_ajuste_real_profit_id_centro_valoracion_fkey" pkColumnName="id_centro_valoracion" pkTableName="centro_valoracion"/>
+      </importedKeys>
+      <primaryKeys>
+        <primaryKey>id_parametro_ajuste_real_profit</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="tipo_cambio" type="TABLE">
+      <columns>
+        <column name="id_tipo_cambio" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="1" size="10" type="INTEGER"/>
+        <column name="version" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="2" size="1" type="CHAR"/>
+        <column name="pais" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="3" size="3" type="VARCHAR"/>
+        <column name="ejercicio" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="4" size="10" type="INTEGER"/>
+        <column name="codigo_moneda" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="5" size="5" type="VARCHAR"/>
+        <column name="fecha" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="6" size="13" type="DATE"/>
+        <column name="tipo_cambio_mes_01" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="7" size="18" type="NUMERIC"/>
+        <column name="tipo_cambio_mes_02" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="8" size="18" type="NUMERIC"/>
+        <column name="tipo_cambio_mes_03" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="9" size="18" type="NUMERIC"/>
+        <column name="tipo_cambio_mes_04" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="10" size="18" type="NUMERIC"/>
+        <column name="tipo_cambio_mes_05" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="11" size="18" type="NUMERIC"/>
+        <column name="tipo_cambio_mes_06" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="12" size="18" type="NUMERIC"/>
+        <column name="tipo_cambio_mes_07" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="13" size="18" type="NUMERIC"/>
+        <column name="tipo_cambio_mes_08" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="14" size="18" type="NUMERIC"/>
+        <column name="tipo_cambio_mes_09" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="15" size="18" type="NUMERIC"/>
+        <column name="tipo_cambio_mes_10" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="16" size="18" type="NUMERIC"/>
+        <column name="tipo_cambio_mes_11" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="17" size="18" type="NUMERIC"/>
+        <column name="tipo_cambio_mes_12" decimalDigits="5" autoIncrement="false" nullable="true" ordinalPosition="18" size="18" type="NUMERIC"/>
+        <column name="usuario_creacion" decimalDigits="0" autoIncrement="false" nullable="false" ordinalPosition="19" size="100" type="VARCHAR"/>
+        <column name="fecha_creacion" decimalDigits="6" autoIncrement="false" nullable="false" ordinalPosition="20" size="29" type="TIMESTAMP"/>
+        <column name="usuario_modificacion" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="21" size="100" type="VARCHAR"/>
+        <column name="fecha_modificacion" decimalDigits="6" autoIncrement="false" nullable="true" ordinalPosition="22" size="29" type="TIMESTAMP"/>
+      </columns>
+      <indexes>
+        <indexe columnName="version" indexName="tipo_cambio_ak01" nonUnique="false"/>
+        <indexe columnName="pais" indexName="tipo_cambio_ak01" nonUnique="false"/>
+        <indexe columnName="ejercicio" indexName="tipo_cambio_ak01" nonUnique="false"/>
+        <indexe columnName="codigo_moneda" indexName="tipo_cambio_ak01" nonUnique="false"/>
+        <indexe columnName="fecha" indexName="tipo_cambio_ak01" nonUnique="false"/>
+        <indexe columnName="id_tipo_cambio" indexName="tipo_cambio_pkey" nonUnique="false"/>
+      </indexes>
+      <importedKeys/>
+      <primaryKeys>
+        <primaryKey>id_tipo_cambio</primaryKey>
+      </primaryKeys>
+    </table>
+    <table name="valor_real" type="TABLE">
+      <columns>
+        <column name="ejercicio" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="1" size="4" type="VARCHAR"/>
+        <column name="mes" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="2" size="2" type="CHAR"/>
+        <column name="sociedad" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="3" size="4" type="VARCHAR"/>
+        <column name="centro" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="4" size="4" type="VARCHAR"/>
+        <column name="pais" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="5" size="3" type="VARCHAR"/>
+        <column name="tipo_nodo_grafo" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="6" size="3" type="VARCHAR"/>
+        <column name="numero_material" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="7" size="18" type="VARCHAR"/>
+        <column name="texto_material" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="8" size="40" type="VARCHAR"/>
+        <column name="tipo_compra" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="9" size="10" type="VARCHAR"/>
+        <column name="indft" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="10" size="10" type="VARCHAR"/>
+        <column name="numero_docum_compra" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="11" size="10" type="VARCHAR"/>
+        <column name="numero_posicion_docum_compra" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="12" size="10" type="INTEGER"/>
+        <column name="numero_docum_comercial" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="13" size="10" type="VARCHAR"/>
+        <column name="numero_posicion_docum_comercial" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="14" size="10" type="INTEGER"/>
+        <column name="numero_docum_material" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="15" size="10" type="VARCHAR"/>
+        <column name="clase_movimiento" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="16" size="3" type="VARCHAR"/>
+        <column name="centro_receptor_emisor" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="17" size="4" type="VARCHAR"/>
+        <column name="cantidad_qcont" decimalDigits="3" autoIncrement="false" nullable="true" ordinalPosition="18" size="18" type="NUMERIC"/>
+        <column name="unidad_medida_base_ucont" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="19" size="3" type="VARCHAR"/>
+        <column name="cantidad_qentr" decimalDigits="3" autoIncrement="false" nullable="true" ordinalPosition="20" size="18" type="NUMERIC"/>
+        <column name="unidad_medida_base_uentr" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="21" size="3" type="VARCHAR"/>
+        <column name="cantidad_qentf" decimalDigits="3" autoIncrement="false" nullable="true" ordinalPosition="22" size="18" type="NUMERIC"/>
+        <column name="unidad_medida_base_uentf" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="23" size="3" type="VARCHAR"/>
+        <column name="labo_ofic_proy" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="24" size="3" type="VARCHAR"/>
+        <column name="grupo_articulo" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="25" size="9" type="VARCHAR"/>
+        <column name="deno_grupo_articulo" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="26" size="20" type="VARCHAR"/>
+        <column name="tipo_material" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="27" size="4" type="VARCHAR"/>
+        <column name="status_mat_espec_centro" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="28" size="2" type="VARCHAR"/>
+        <column name="clase_aprovi_especial" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="29" size="2" type="VARCHAR"/>
+        <column name="jerarquia_prod" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="30" size="18" type="VARCHAR"/>
+        <column name="denominacion" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="31" size="20" type="VARCHAR"/>
+        <column name="numero_cta_prove_acred" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="32" size="10" type="VARCHAR"/>
+        <column name="nombre" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="33" size="30" type="VARCHAR"/>
+        <column name="pais_regla_pref" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="34" size="3" type="VARCHAR"/>
+        <column name="centro_suministrador" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="35" size="4" type="VARCHAR"/>
+        <column name="cofob" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="36" size="18" type="NUMERIC"/>
+        <column name="cofle" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="37" size="18" type="NUMERIC"/>
+        <column name="coseg" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="38" size="18" type="NUMERIC"/>
+        <column name="cocif" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="39" size="18" type="NUMERIC"/>
+        <column name="coadv" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="40" size="18" type="NUMERIC"/>
+        <column name="cootr" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="41" size="18" type="NUMERIC"/>
+        <column name="cotot" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="42" size="18" type="NUMERIC"/>
+        <column name="moneda_local" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="43" size="5" type="VARCHAR"/>
+        <column name="importe_moneda_local" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="44" size="18" type="NUMERIC"/>
+        <column name="importe_dmbt2" decimalDigits="2" autoIncrement="false" nullable="true" ordinalPosition="45" size="18" type="NUMERIC"/>
+        <column name="clave_moneda_local" decimalDigits="0" autoIncrement="false" nullable="true" ordinalPosition="46" size="5" type="VARCHAR"/>
+      </columns>
+      <indexes/>
+      <importedKeys/>
+      <primaryKeys/>
+    </table>
+  </tables>
+</metadata>
