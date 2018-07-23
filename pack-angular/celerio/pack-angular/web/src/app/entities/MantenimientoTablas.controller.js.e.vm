@@ -35,6 +35,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.byId("idTbl${entity}").setRowActionTemplate(oTemplate);
             this.byId("idTbl${entity}").setRowActionCount(3);
         },
+		add${entity}: function(oEvent){
+            this.oRouter.navTo("Detail${entity}");
+        },
 		editRow${entity}: function(oArg){
             debugger;
             var path = oArg.getSource().getBindingContext("${entity}List").getPath().substr(1);
@@ -71,6 +74,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             sessionStorage.setItem("typeForm${entity}",2);
             this.oRouter.navTo("Detail${entity}");
 		},
+		uploadExcel${entity} : function(){
+            //this.oRouter.navTo("Upload${entity}");
+        },
+		downloadExcel${entity} : function(){
+        	var url = Utilities.getDomain() + '${entity.model.var}/downloadCompleteExcelXLSX' ;
+            var encodeUrl = encodeURI(url);
+			sap.m.URLHelper.redirect(encodeUrl,true);
+        },
 		doDelete: function(uri, index, updateModel, uriModel, nameModel, nameFunc, arg){
             var thiis = this.getView();
             jQuery.ajax({
@@ -152,34 +163,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 }
             });
         },
-        clearFilterDatosConfig: function(){
-        	//debugger;
-            //var json = {};
-            //this.getView().byId("txtModulo").setValue(null);
-            //this.getView().byId("txtLabel").setValue(null);
-            //this.doPostGet(this.getView(),json,"appParametria/find", "datosConfig");
-        },
-        removerEstilos: function() {
-            //Utilities.removerStateError(this.getView().byId("cmbMes"));
-            //Utilities.removerStateError(this.getView().byId("txtEjercicioTipoCambio"));
-        },
-        filterStandarDatosConfig: function(oEvent){
-            //var json = {};
-            //var modulo= this.getView().byId("txtModulo").getValue().toUpperCase();
-            //var label= this.getView().byId("txtLabel").getValue().toUpperCase();
-            //json["modulo"]=modulo;
-            //json["label"]=label;
-            //debugger;
-            //console.log(json);
-            //this.doPostGet(this.getView(),json,"appParametria/find", "datosConfig");
-        },
-        add${entity}: function(oEvent){
-            this.oRouter.navTo("Detail${entity}");
-        },
-        uploadExcel${entity} : function(){
-            //this.oRouter.navTo("UploadTipoCambio");
-        },
-        doGet: function (context, uri, name, callFunction, namefunct, arg1){
+		doGet: function (context, uri, name, callFunction, namefunct, arg1){
             jQuery.ajax({
                 context: this,
                 type : "GET",
@@ -211,21 +195,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 }
             });
         },
-        dateTime: function(arg1, arg2){
-            //debugger;
-            //this.model = new sap.ui.model.json.JSONModel (arg2);
-            //arg1.getView().setModel(this.model, "tipoCambio");
-            //var oModel = this.getView().getModel("tipoCambio");
-            //var jsonModel = oModel.getData();
-            //for(var i=0 ; i < jsonModel.length ; i++ ){
-            //    //debugger;
-            //    if(jsonModel[i]["fecha"]!== undefined){
-            //        jsonModel[i]["fecha"]= moment.utc(jsonModel[i]["fecha"]).format('DD/MM/YYYY');
-            //    }
-            //}
-            //var datemodel = new sap.ui.model.json.JSONModel(jsonModel);
-            //arg1.getView().setModel(datemodel, "tipoCambio");
-        },
         closeFormSearch${entity}: function(oEvent){
             //debugger;
             if(this.getView().byId("idSwitch${entity}").getState()){
@@ -236,70 +205,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 this.getView().byId("idBtnSearch${entity}").setVisible(false);
             }
         },
-        setStatus: function(arg1, arg2){
-        	//this.model = new sap.ui.model.json.JSONModel (arg2);
-            //arg1.getView().setModel(this.model, "datosConfig");
-            //var oModel = this.getView().getModel("datosConfig");
-            //var jsonModel = oModel.getData();
-            //for(var i=0 ; i < jsonModel.length ; i++ ){
-            //    //debugger;
-            //    var status = jsonModel[i]["status"];
-            //    if(status!== undefined){
-            //    	switch(status){
-            //    		case "0":
-            //    			jsonModel[i]["status"]= "0 - Inactivo";
-            //    			break;
-            //    		case "1":
-            //    			jsonModel[i]["status"]= "1 - Activo";
-            //    			break;
-            //    	}
-            //    }
-            //}
-            //var datemodel = new sap.ui.model.json.JSONModel(jsonModel);
-            //arg1.getView().setModel(datemodel, "datosConfig");
-        },
         getVersion: function (arg1, arg2){
-        	//sessionStorage.setItem("idVersion", arg2.version);
-        	//sessionStorage.setItem("descripcionVersion", arg2.value2);
-        	//var descripcionVersion="";
-        	//switch(arg2.version){
-        	//	case "R":
-        	//		descripcionVersion= "Real";
-        	//		sessionStorage.setItem("descripcionVersion", descripcionVersion);
-        	//	break;
-        	//	case "S":
-        	//		descripcionVersion= "Simulación";
-        	//		sessionStorage.setItem("descripcionVersion", descripcionVersion);
-        	//	break;
-        	//}
-        	//if(arg2!==null || arg2!==undefined){
-            //    sessionStorage.setItem("editform",0);
-            //    debugger;
-            //    //console.log(jsonVersion);
-            //    this._oBusyDialog = new sap.m.BusyDialog();
-			//	//this.doGet(this.getView(),"appParametria/_getListaMes","ListaMes");
                 this.doGet(this.getView(), "${entity.model.var}/findAll","${entity}List");
-
-            //
-            //    console.log(this.getView());
-            //}else{
-            //    MessageBox.show(
-            //        "Por favor seleccione una Versión para poder entrar a esta pagina.", {
-            //            icon: sap.m.MessageBox.Icon.WARNING,
-            //            title: "Sin Versión",
-            //            styleClass: "titleMessageBox",
-            //            actions: [sap.m.MessageBox.Action.CLOSE],
-            //            onClose: function(oAction) {
-            //                window.history.go(-1);
-            //            }
-            //        }
-            //    );
-            //}
-        },
-        downloadExcel${entity} : function(){
-        	var url = Utilities.getDomain() + '${entity.model.var}/downloadCompleteExcelXLSX' ;
-            var encodeUrl = encodeURI(url);
-			sap.m.URLHelper.redirect(encodeUrl,true);
         },
         onInit: function () {
             //debugger;
