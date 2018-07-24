@@ -20,22 +20,24 @@ $output.file("web/src/app/entities/${entity.model.var}/Detail${entity}.view.xml"
                                             <core:Title text="Datos Generales" level="Auto" icon="sap-icon://collections-management"/>
                                         </form:title>
                                         <form:formElements>
-										#foreach ($attribute in $entity.nonCpkAttributes.list)
-											#if(!$attribute.isInFk() || $attribute.isSimplePk())
+                                        #foreach (${attribute} in ${entity.nonCpkAttributes.list})
+                                        	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+                                        		#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 
-											<form:FormElement visible="true">
-                                                <form:label>
-                                                    <m:Label wrapping="true" text="${attribute.var}"   design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"/>
-                                                </form:label>
-                                                <form:fields>
-                                                    <m:Input id="txt${attribute.var}" type="Text"
-                                                             placeholder="Ingrese ${attribute.var}"
-                                                             showValueHelp="false" enabled="true"
-                                                             visible="true" width="auto" HelpOnly="false"/>
-                                                </form:fields>
-                                            </form:FormElement>
-											#end
-										#end
+                                        		<form:FormElement visible="true">
+                                                    <form:label>
+                                                        <m:Label wrapping="true" text="${attribute.var}"   design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"/>
+                                                    </form:label>
+                                                    <form:fields>
+                                                        <m:Input id="txt${attribute.var}" type="Text"
+                                                                 placeholder="Ingrese ${attribute.var}"
+                                                                 showValueHelp="false" enabled="true"
+                                                                 visible="true" width="auto" HelpOnly="false"/>
+                                                    </form:fields>
+                                                </form:FormElement>
+                                        		#end
+                                        	#end
+                                        #end
                                         </form:formElements>
                                     </form:FormContainer>
                                 </form:formContainers>
