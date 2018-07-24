@@ -217,7 +217,18 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.getView().addDelegate(
                 {
                     onBeforeShow: function (e) {
+						var fields = [];
+						#set( $listFields = [] )
+						#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+							#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+								#set(${listFields} = ${listFields.add(${attribute.var})})
+							//${listFields}
+							#end
+						#end
+						${listFields};
+						if(fields.indexOf("version")!==-1){
                     	this.doGet(this.getView(),"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "this.getVersion",this);
+						}
 
                     }
                 },that
