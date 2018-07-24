@@ -6,8 +6,7 @@ sap.ui.define([
 ], function(MessageBox, Service, Utilities) {
     "use strict";
     return {
-        doDelete: function(uri, index, updateModel, uriModel, nameModel, nameFunc, arg){
-            var thiis = this.getView();
+        doDelete: function(context, uri, index, updateModel, uriModel, nameModel, callFunction, nameFunc, arg){
             jQuery.ajax({
                 context : this,
                 url: Utilities.getDomain() + uri +'/'+index,
@@ -15,7 +14,7 @@ sap.ui.define([
                 success: function(result) {
                     console.log("Se eliminó correctamente id:"+index);
                     if(updateModel==="Y"){
-                        this.doGet(thiis,uriModel,nameModel, nameFunc, arg);
+                        this.doGet(context,uriModel,nameModel, callFunction, nameFunc, arg);
                     }
                 },
                 error: function(e){
@@ -23,8 +22,7 @@ sap.ui.define([
                 }
             });
         },
-        doPostPost: function (model, uriPost, uriModel, nameModel, argModel, callFunction, fn, value){
-            var thiis = this.getView();
+        doPostPost: function (context, model, uriPost, uriModel, nameModel, argModel, callFunction, fn, value){
             jQuery.ajax({
                 context : this,
                 url: Utilities.getDomain() + uriPost,
@@ -34,23 +32,22 @@ sap.ui.define([
                 contentType:"application/json",
                 headers:{"Accept": "application/json"},
                 beforeSend: function() {
-                    this.getView().setBusyIndicatorDelay(0);
-                    this.getView().setBusy(true);
+                    context.getView().setBusyIndicatorDelay(0);
+                    context.getView().setBusy(true);
                 },
                 success: function(result){
                     console.log(result);
                     MessageBox.alert("Se Guardó Correctamente", {title: "Ventana de Aviso"});
-                    this.doGet(thiis, uriModel, nameModel, callFunction, fn, value);
+                    this.doGet(context, uriModel, nameModel, callFunction, fn, value);
                 },
                 error: function (e) {
-                    console.log("Error:" + e);
-                    MessageBox.alert("Hubo un Error, por favor consultar en el Log del Sistema", {title: "Ventana de Aviso"});
+                    console.log(e);
+                    MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
                 },
                 complete: function() {
-                    this.getView().setBusy(false);
+                    context.getView().setBusy(false);
                 }
             });
-
         },
         doPostGet: function (context, model, uri, name, callFunction, namefunct, arg1){
             jQuery.ajax({
@@ -62,24 +59,24 @@ sap.ui.define([
                 contentType:"application/json",
                 headers:{"Accept": "application/json"},
                 beforeSend: function() {
-                    this.getView().setBusyIndicatorDelay(0);
-                    this.getView().setBusy(true);
+                    context.getView().setBusyIndicatorDelay(0);
+                    context.getView().setBusy(true);
                 },
                 success: function(result){
                     console.log(result);
                     if(callFunction==="Y"){
                         this.model = new sap.ui.model.json.JSONModel (result);
                         context.setModel(this.model, name);
-                        var fun= namefunct+"(arg1,result)";
+                        var fun= "context."+namefunct+"(arg1,result)";
                         eval(fun);
                     }
                     else{
                         this.model = new sap.ui.model.json.JSONModel (result);
-                        context.setModel(this.model, name);
+                        context.getView().setModel(this.model, name);
                     }
                 },
                 complete: function() {
-                    this.getView().setBusy(false);
+                    context.getView().setBusy(false);
                 },
                 error: function (e) {
                     console.log("Error:" + e);
@@ -119,5 +116,37 @@ sap.ui.define([
                 }
             });
         },
+        doGetLoading: function (context, uri, name, callFunction, namefunct, arg1, arg2){
+            jQuery.ajax({
+                context: this,
+                type : "GET",
+                contentType : "application/json",
+                url : Utilities.getDomain()+ uri,
+                dataType : "json",
+                beforeSend: function() {
+                    context.getView().setBusyIndicatorDelay(0);
+                    context.getView().setBusy(true);
+                },
+                success : function(data) {
+                    if(callFunction==="Y"){
+  				        this.model = new sap.ui.model.json.JSONModel (data);
+                        context.getView().setModel(this.model, name);
+                        var fun= "context."+namefunct+"(data,arg1)";
+                        eval(fun);
+                    }
+                    else{
+                        this.model = new sap.ui.model.json.JSONModel (data);
+                        context.setModel(this.model, name);
+                    }
+                },
+                error: function (e) {
+                    console.log("Error:" + e);
+  			        MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                },
+                complete: function() {
+                    context.getView().setBusy(false);
+                }
+            });
+        }
     };
 });

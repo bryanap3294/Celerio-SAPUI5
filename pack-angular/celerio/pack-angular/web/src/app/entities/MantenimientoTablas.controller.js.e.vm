@@ -123,7 +123,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 this.byId("btnVersion${entity}").setText("Versión: "+descVersion);
                 var jsonVersion= {};
 				//Descomentar el que se necesita
-				//Service.doGet(this, "${entity.model.var}/findAll","${entity}List", "Y", "this.doBefore",this);
+				//Service.doGet(this, "${entity.model.var}/findAll","${entity}List", "Y", "doBefore",this);
                 //Service.doPostGet(this, jsonVersion, "${entity.model.var}/_findDescripcion","${entity}List", "Y", "this.doBefore",this);
                 console.log(this.getView());
             }else{

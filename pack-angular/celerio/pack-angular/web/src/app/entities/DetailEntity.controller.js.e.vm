@@ -1,10 +1,11 @@
 $output.file("web/src/app/entities/${entity.model.var}/Detail${entity}.controller.js")##
 sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
-    "../utilities",
+    "../../utils/utilities",
+	"../../service/Service",
     "sap/ui/core/routing/History",
     "portal/valorizacion/${entity.model.var.toLowerCase()}/js/moment",
-], function(BaseController, MessageBox, Utilities, History) {
+], function(BaseController, MessageBox, Utilities, Service, History) {
     "use strict";
 
     return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Detail${entity}", {
@@ -58,73 +59,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     var id = sessionStorage.getItem("idRow${entity}");
                     json["id"]= id;
                     var myJSON = JSON.stringify(json);
-                    this.doPostPost(json,"${entity.model.var}/save","${entity.model.var}/findAll","${entity}List");
+                    Service.doPostPost(this, json,"${entity.model.var}/save","${entity.model.var}/findAll","${entity}List");
                 }else{
                     json["usuarioCreacion"]="Bryan Aguilar";
                     debugger;
                     var myJSON = JSON.stringify(json);
-                    this.doPostPost(json,"${entity.model.var}/create","${entity.model.var}/findAll","${entity}List");
+                    Service.doPostPost(this, json,"${entity.model.var}/create","${entity.model.var}/findAll","${entity}List");
                 }
             }else{
                 MessageBox.alert("Debe llenar todos los campos requeridos", {title: "Ventana de Aviso"});
             }
-        },
-        doGet: function (context, uri, name, callFunction, namefunct, arg1){
-            jQuery.ajax({
-                context: this,
-                type : "GET",
-                contentType : "application/json",
-                url : Utilities.getDomain()+ uri,
-                dataType : "json",
-                success : function(data) {
-                    if(callFunction==="Y"){
-						this.model = new sap.ui.model.json.JSONModel (data);
-                        context.setModel(this.model, name);
-                        var fun= namefunct+"(data,arg1)";
-                        eval(fun);
-                    }
-                    else{
-                        this.model = new sap.ui.model.json.JSONModel (data);
-                        context.setModel(this.model, name);
-                    }
-                },
-                error: function (e) {
-                    console.log("Error:" + e);
-					MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
-                }
-            });
-        },
-        doGetLoading: function (context, uri, name, callFunction, namefunct, arg1, arg2){
-            jQuery.ajax({
-                context: this,
-                type : "GET",
-                contentType : "application/json",
-                url : Utilities.getDomain()+ uri,
-                dataType : "json",
-                beforeSend: function() {
-                    this.getView().setBusyIndicatorDelay(0);
-                    this.getView().setBusy(true);
-                },
-                success : function(data) {
-                    if(callFunction==="Y"){
-						this.model = new sap.ui.model.json.JSONModel (data);
-                        context.setModel(this.model, name);
-                        var fun= namefunct+"(data,arg1)";
-                        eval(fun);
-                    }
-                    else{
-                        this.model = new sap.ui.model.json.JSONModel (data);
-                        context.setModel(this.model, name);
-                    }
-                },
-                error: function (e) {
-                    console.log("Error:" + e);
-					MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
-                },
-                complete: function() {
-                    this.getView().setBusy(false);
-                }
-            });
         },
         goBack: function(evt){
             this.oRouter.navTo("MantenimientoTablas");
@@ -137,35 +81,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				#end
 			#end
         },
-        doPostPost: function (model, uriPost, uriModel, nameModel, argModel, callFunction, fn, value){
-            var thiis = this.getView();
-            jQuery.ajax({
-                context : this,
-                url: Utilities.getDomain() + uriPost,
-                type:"POST",
-                data: JSON.stringify(model),
-                dataType: "json",
-                contentType:"application/json",
-                headers:{"Accept": "application/json"},
-                beforeSend: function() {
-                    this.getView().setBusyIndicatorDelay(0);
-                    this.getView().setBusy(true);
-                },
-                success: function(result){
-                    console.log(result);
-                    MessageBox.alert("Se Guardó Correctamente", {title: "Ventana de Aviso"});
-                    this.doGet(thiis, uriModel, nameModel, callFunction, fn, value);
-                },
-                error: function (e) {
-                    debugger;
-                    MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
-                    console.log(e);
-                },
-                complete: function() {
-                    this.getView().setBusy(false);
-                }
-            });
-        },
         onInit: function () {
             var that = this;
             this.mBindingOptions = {};
@@ -177,11 +92,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     onBeforeShow: function (e) {
                         //this.removerEstilos();
                         var typeForm${entity} = sessionStorage.getItem("typeForm${entity}");
-                        this.doGet(this.getView(),"appParametria/_getListaPais","ListaPais");
-                        this.doGet(this.getView(),"appParametria/_getListaCategoria","ListaCategoria");
-                        this.doGet(this.getView(),"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
-                        this.doGet(this.getView(),"appParametria/_getListaVersion","ListaVersion");
-                        this.doGet(this.getView(),"appParametria/_getListaMes","ListaMes");
+                        Service.doGet(this,"appParametria/_getListaPais","ListaPais");
+                        Service.doGet(this,"appParametria/_getListaCategoria","ListaCategoria");
+                        Service.doGet(this,"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
+                        Service.doGet(this,"appParametria/_getListaVersion","ListaVersion");
+                        Service.doGet(this,"appParametria/_getListaMes","ListaMes");
                         //var idVersion= sessionStorage.getItem("idVersion");
 
 						switch(typeForm${entity}){
@@ -189,8 +104,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							that.clearData();
 							break
 							case "1":
-							this.doGetLoading(this.getView(),
-                                "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", "this.putFields");
+							Service.doGetLoading(this,
+                                "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", "putFields");
                             sessionStorage.setItem("typeForm${entity}",0);
                             sessionStorage.setItem("update",1);
 							break
