@@ -206,8 +206,44 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
         },
         getVersion: function (arg1, arg2){
+			sessionStorage.setItem("idVersion", arg2.version);
+        	var descVersion="";
+        	switch(arg2.version){
+        		case "R":
+        			descVersion= "Real";
+        			sessionStorage.setItem("descVersion", descVersion);
+        		break;
+        		case "S":
+        			descVersion= "Simulación";
+        			sessionStorage.setItem("descVersion", descVersion);
+        		break;
+        	}
+        	if(arg2.version!==undefined){
+
+                sessionStorage.setItem("typeForm${entity}",0);
+                this.byId("btnVersion${entity}").setText("Versión: "+descVersion);
+                var jsonVersion= {};
+                this.doPostGet(this.getView(), jsonVersion, "${entity.model.var}/_findDescripcion","${entity}List", "Y", "this.doBefore",this);
+                console.log(this.getView());
+            }else{
+                MessageBox.show(
+                    "Por favor seleccione una Versión para poder entrar a esta pagina.", {
+                        icon: sap.m.MessageBox.Icon.WARNING,
+                        title: "Sin Versión",
+                        styleClass: "titleMessageBox",
+                        actions: [sap.m.MessageBox.Action.CLOSE],
+                        onClose: function(oAction) {
+                            window.history.go(-1);
+                        }
+                    }
+                );
+            }
+
                 this.doGet(this.getView(), "${entity.model.var}/findAll","${entity}List");
         },
+		doBefore: function (arg1, arg2){
+
+		},
         onInit: function () {
             //debugger;
             var that = this;
@@ -217,19 +253,24 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.getView().addDelegate(
                 {
                     onBeforeShow: function (e) {
-						var fields = [];
 						#set( $listFields = [] )
 						#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 							#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
 								#set(${listFields} = ${listFields.add(${attribute.var})})
 							#end
 						#end
+
+						this.doGet(this.getView(),"appParametria/_getListaPais","ListaPais");
+						this.doGet(this.getView(),"appParametria/_getListaCategoria","ListaCategoria");
+						this.doGet(this.getView(),"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
+						this.doGet(this.getView(),"appParametria/_getListaMes","ListaMes");
 						#if (${listFields.contains("version")})
 
-							this.doGet(this.getView(),"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "this.getVersion",this);
+						this.doGet(this.getView(),"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "this.getVersion",this);
 						#else
 
-							fields = ${listFields};
+						var jsonFilter = {}
+						this.doPostGet(this.getView(), jsonFilter, "${entity.model.var}/find","${entity}List", "Y", "this.doBefore",this);
 						#end
 
                     }

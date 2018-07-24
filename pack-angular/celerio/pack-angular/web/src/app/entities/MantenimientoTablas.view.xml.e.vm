@@ -25,7 +25,7 @@ $output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.view.
                     <m:Title text="$entity" level="H2" icon="sap-icon://appointment"/>
                     <m:ToolbarSpacer/>
                     <m:HBox justifyContent="End">
-                        <m:Button id="btnVersion$entity" type="Transparent" icon="sap-icon://expense-report" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                        <m:Button id="btnVersion${entity}" type="Transparent" icon="sap-icon://expense-report" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
                     </m:HBox>
                 </m:content>
                 <m:tooltip/>
