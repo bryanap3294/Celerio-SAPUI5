@@ -35,6 +35,7 @@ $output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.view.
 					#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 						#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
 							#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+
 							<form:FormContainer>
 								<form:formElements>
 									<form:FormElement>

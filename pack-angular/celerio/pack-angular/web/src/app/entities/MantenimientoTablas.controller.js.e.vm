@@ -171,8 +171,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 url : Utilities.getDomain()+ uri,
                 dataType : "json",
                 beforeSend: function() {
-                                    this.getView().setBusyIndicatorDelay(0);
-                                    this.getView().setBusy(true);
+                        this.getView().setBusyIndicatorDelay(0);
+                        this.getView().setBusy(true);
                                 },
                 success : function(data) {
                     if(callFunction==="Y"){
@@ -196,7 +196,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             });
         },
         closeFormSearch${entity}: function(oEvent){
-            //debugger;
             if(this.getView().byId("idSwitch${entity}").getState()){
                 this.getView().byId("idFormSearch${entity}").setVisible(true);
                 this.getView().byId("idBtnSearch${entity}").setVisible(true);
@@ -205,10 +204,23 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 this.getView().byId("idBtnSearch${entity}").setVisible(false);
             }
         },
+		filter${entity}: function(oEvent){
+			debugger;
+            var json = {};
+			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+
+					json["${attribute.var}"]=this.getView().byId("txt${entity}${attribute.var}").getValue();
+				#end
+			#end
+
+            console.log(json);
+            //this.doPostGet(this.getView(),json,"${entity.model.var}/find", "${entity}List");
+        },
         getVersion: function (arg1, arg2){
-			sessionStorage.setItem("idVersion", arg2.version);
+			sessionStorage.setItem("idVersion", arg1.version);
         	var descVersion="";
-        	switch(arg2.version){
+        	switch(arg1.version){
         		case "R":
         			descVersion= "Real";
         			sessionStorage.setItem("descVersion", descVersion);
@@ -218,12 +230,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         			sessionStorage.setItem("descVersion", descVersion);
         		break;
         	}
-        	if(arg2.version!==undefined){
-
+        	if(arg1.version!==undefined){
                 sessionStorage.setItem("typeForm${entity}",0);
                 this.byId("btnVersion${entity}").setText("Versión: "+descVersion);
                 var jsonVersion= {};
-                this.doPostGet(this.getView(), jsonVersion, "${entity.model.var}/_findDescripcion","${entity}List", "Y", "this.doBefore",this);
+				//Descomentar el que se necesita
+				//this.doGet(this.getView(), "${entity.model.var}/findAll","${entity}List", "Y", "this.doBefore",this);
+                //this.doPostGet(this.getView(), jsonVersion, "${entity.model.var}/_findDescripcion","${entity}List", "Y", "this.doBefore",this);
                 console.log(this.getView());
             }else{
                 MessageBox.show(
@@ -238,8 +251,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     }
                 );
             }
-
-                this.doGet(this.getView(), "${entity.model.var}/findAll","${entity}List");
         },
 		doBefore: function (arg1, arg2){
 
@@ -271,6 +282,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 						var jsonFilter = {}
 						this.doPostGet(this.getView(), jsonFilter, "${entity.model.var}/find","${entity}List", "Y", "this.doBefore",this);
+						console.log(this.getView());
 						#end
 
                     }
