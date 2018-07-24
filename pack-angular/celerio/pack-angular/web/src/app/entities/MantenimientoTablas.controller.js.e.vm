@@ -222,13 +222,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 							#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
 								#set(${listFields} = ${listFields.add(${attribute.var})})
-							//${listFields}
 							#end
 						#end
-						${listFields};
-						if(fields.indexOf("version")!==-1){
-                    	this.doGet(this.getView(),"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "this.getVersion",this);
-						}
+						#if (${listFields.contains("version")})
+
+							this.doGet(this.getView(),"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "this.getVersion",this);
+						#else
+
+							fields = ${listFields};
+						#end
 
                     }
                 },that
