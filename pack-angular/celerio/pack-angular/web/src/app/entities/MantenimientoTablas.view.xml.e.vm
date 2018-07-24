@@ -111,6 +111,7 @@ $output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.view.
 												#end
 											#end
 										#end
+
                                     </columns>
                                 </Table>
                             </form:FormElement>
