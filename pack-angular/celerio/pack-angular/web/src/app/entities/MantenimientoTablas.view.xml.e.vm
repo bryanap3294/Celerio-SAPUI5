@@ -32,32 +32,24 @@ $output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.view.
             </m:Toolbar>
             <form:Form editable="true" id="idFormSearch${entity}" visible="false">
                 <form:formContainers>
-                    <form:FormContainer>
-                        <form:formElements>
-                            <form:FormElement>
-                                <form:label>
-                                    <m:Label text="Módulo"/>
-                                </form:label>
-                                <form:fields>
-                                    <m:Input id="txtModulo" placeholder="Ingresar Módulo"/>
-                                </form:fields>
-                            </form:FormElement>
-                        </form:formElements>
-                    </form:FormContainer>
-                    <form:FormContainer visible="true">
-                        <form:title>
-                        </form:title>
-                        <form:formElements>
-                        	<form:FormElement>
-                                <form:label>
-                                    <m:Label text="Label"/>
-                                </form:label>
-                                <form:fields>
-                                    <m:Input id="txtLabel" placeholder="Ingresar Label"/>
-                                </form:fields>
-                            </form:FormElement>
-                        </form:formElements>
-                    </form:FormContainer>
+					#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+						#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+							#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+							<form:FormContainer>
+								<form:formElements>
+									<form:FormElement>
+										<form:label>
+											<m:Label text="${attribute.var}"/>
+										</form:label>
+										<form:fields>
+											<m:Input id="txt${entity}${attribute.var}" placeholder="Ingresar ${attribute.var}"/>
+										</form:fields>
+									</form:FormElement>
+								</form:formElements>
+							</form:FormContainer>
+							#end
+						#end
+					#end
                 </form:formContainers>
                 <form:layout>
                     <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
@@ -101,19 +93,21 @@ $output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.view.
                                     <columns>
 										#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 											#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+												#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 
-											<Column width="10rem"
-													hAlign="Left">
-												<multiLabels>
-													<m:ObjectStatus
-															icon=""
-															text="${attribute.var}"
-															state="none" />
-												</multiLabels>
-												<template>
-													<m:Text text="{${entity}List>${attribute.var}}" />
-												</template>
-											</Column>
+												<Column width="10rem"
+														hAlign="Left">
+													<multiLabels>
+														<m:ObjectStatus
+																icon=""
+																text="${attribute.var}"
+																state="none" />
+													</multiLabels>
+													<template>
+														<m:Text text="{${entity}List>${attribute.var}}" />
+													</template>
+												</Column>
+												#end
 											#end
 										#end
                                     </columns>
