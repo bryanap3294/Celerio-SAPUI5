@@ -78,7 +78,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.oRouter.navTo("Detail${entity}");
 		},
 		uploadExcel${entity} : function(){
-            //this.oRouter.navTo("Upload${entity}");
+            this.oRouter.navTo("Upload${entity}");
         },
 		downloadExcel${entity} : function(){
         	var url = Utilities.getDomain() + '${entity.model.var}/downloadCompleteExcelXLSX' ;

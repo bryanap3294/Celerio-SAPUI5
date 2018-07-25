@@ -1,0 +1,158 @@
+$output.file("web/src/app/entities/${entity.model.var}/Upload${entity}.view.xml")##
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+          controllerName="portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Upload${entity}"
+          xmlns:m="sap.m"
+          xmlns:mc="sap.suite.ui.microchart"
+          xmlns:suite="sap.suite.ui.commons"
+          xmlns:l="sap.ui.layout"
+          xmlns="sap.ui.table"
+          xmlns:form="sap.ui.layout.form"
+          xmlns:core="sap.ui.core"
+          xmlns:u="sap.ui.unified"
+          xmlns:html="http://www.w3.org/1999/xhtml" >
+    <m:Page showHeader="false" showFooter="true" showNavButton="false" navButtonPress="atras">
+        <m:content>
+            <html:style>
+                .sapMListTblCell.cellBorderRight, .cellBorderRight {
+                border-right: 1px solid lightgray;
+                }
+
+                .sapMListTblCell.cellBorderLeft, .cellBorderLeft {
+                border-left: 1px solid lightgray;
+                }
+            </html:style>
+            <m:Toolbar width="auto" height="130px" design="Transparent" visible="true" enabled="true">
+                <m:content>
+                    <m:Button text="" type="Transparent" icon="sap-icon://travel-itinerary" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                    <m:Title text="Carga Excel - ${entity}" level="H2" icon="sap-icon://appointment"/>
+                </m:content>
+                <m:tooltip/>
+                <m:FlexBox
+                        width="22rem"
+                        height="5rem"
+                        alignItems="Center"
+                        justifyContent="Center"
+                        direction="Column">
+                    <m:FlexBox width="5rem" height="5rem">
+                        <mc:RadialMicroChart percentage="{dataUploadPorcentaje>/valor}" />
+                        <m:Title
+                                text="% de Exito"
+                                class="sapUiSmallMargin" />
+                    </m:FlexBox>
+                </m:FlexBox>
+                <m:FlexBox width="16rem" height="5rem">
+                    <mc:ComparisonMicroChart
+                            isResponsive="true"
+                            press="press"
+                            data="{path: 'dataUpload>/'}">
+                        <mc:data>
+                            <mc:ComparisonMicroChartData
+                                    title="{dataUpload>display}"
+                                    value="{dataUpload>valor}"
+                                    displayValue="{dataUpload>valor}"
+                                    color="{dataUpload>color}" />
+                        </mc:data>
+                    </mc:ComparisonMicroChart>
+                </m:FlexBox>
+            </m:Toolbar>
+            <form:Form>
+                <form:formContainers>
+                    <form:FormContainer visible="true">
+                         <form:formElements>
+                            <form:FormElement>
+                                <m:HBox justifyContent="End">
+                                    <m:ToolbarSpacer width=""/>
+                                    <u:FileUploader
+                                            id="file"
+                                            name="file"
+                                            uploadOnChange="true"
+                                            uploadUrl="/portal/api/${entity.model.var}/uploadExcel"
+                                            tooltip="Cargar tu archivo"
+                                            maximumFileSize="52"
+                                            buttonOnly="true"
+                                            fileType="xlsx"
+                                            sendXHR="true"
+                                            buttonText="Seleccionar Archivo"
+                                            uploadComplete="uploadComplete"
+                                            uploadStart="uploadStart"
+                                            icon="sap-icon://excel-attachment">
+                                    </u:FileUploader>
+                                    <m:ToolbarSpacer width=""/>
+                                </m:HBox>
+                            </form:FormElement>
+                            <form:FormElement visible="true">
+                                <Table id="idTblUpload${entity}"
+                                       rows="{path: 'Upload${entity}List>/'}"
+                                       visibleRowCountMode="Interactive"
+                                       visibleRowCount="9"
+                                       minAutoRowCount="9"
+                                       fixedColumnCount="3"
+                                       enableColumnReordering="true"
+                                       enableColumnFreeze="true"
+                                       selectionMode="None"
+                                       filter="filterByCell">
+                                    <rowSettingsTemplate>
+                                        <RowSettings highlight="{Upload${entity}List>Status}"/>
+                                    </rowSettingsTemplate>
+                                    <columns>
+                                        <Column width="12rem"
+                                                id="multiheaderBase"
+                                                filterProperty="errorMensaje">
+                                            <multiLabels>
+                                                <m:Label text="" textAlign="Center" width="100%"/>
+                                                <m:ObjectStatus
+                                                        icon="sap-icon://alert"
+                                                        text="Observación"
+                                                        state="Error" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{Upload${entity}List>errorMensaje}"/>
+                                            </template>
+                                        </Column>
+										#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+											#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+												#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+
+										<Column width="10rem"
+												mergeDuplicates="true">
+											<multiLabels>
+												<m:Label text="" textAlign="Center" width="100%"/>
+												<m:ObjectStatus
+														icon=""
+														text="${attribute.var}"
+														state="none"/>
+											</multiLabels>
+											<template>
+												<m:Text text="{Upload${entity}List>bean/${attribute.var}}"/>
+											</template>
+										</Column>
+												#end
+											#end
+										#end
+
+                                    </columns>
+                                </Table>
+                            </form:FormElement>
+                        </form:formElements>
+                    </form:FormContainer>
+                </form:formContainers>
+                <form:layout>
+                    <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                </form:layout>
+            </form:Form>
+        </m:content>
+        <m:footer>
+            <m:Bar design="100%">
+                <m:contentLeft/>
+                <m:contentMiddle/>
+                <m:contentRight>
+                    <m:Button text="Guardar" type="Accept" icon="sap-icon://save" id="ButonSiguiente" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="saveAll"/>
+                    <m:Button text="Regresar" type="Reject" icon="sap-icon://undo" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="goBack"/>
+                </m:contentRight>
+            </m:Bar>
+        </m:footer>
+        <m:headerContent/>
+        <m:subHeader/>
+        <m:customHeader/>
+    </m:Page>
+</mvc:View>
