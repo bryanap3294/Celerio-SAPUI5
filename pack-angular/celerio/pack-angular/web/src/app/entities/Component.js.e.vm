@@ -2,15 +2,9 @@ $output.file("web/src/app/entities/${entity.model.var}/Component.js")##
 sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
-    "portal/valorizacion/${entity.model.var.toLowerCase()}/model/models",
-    "portal/valorizacion/${entity.model.var.toLowerCase()}/localService/mockserver"
+    "portal/valorizacion/${entity.model.var.toLowerCase()}/model/models"
 ], function(UIComponent, Device, models, server) {
     "use strict";
-
-    // TODO remove the following demo code
-    // ---------------------------- TEMP MOCKSERVER CODE------------------------------------------
-    //server.init();
-    // ---------------------------- END TEMP MOCKSERVER CODE--------------------------------------
 
     var navigationWithContext = {
 
@@ -27,7 +21,6 @@ sap.ui.define([
                     "sap.ui.layout"
                 ]
             },
-
         },
 
         /**

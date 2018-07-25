@@ -2,7 +2,7 @@ $output.file("web/src/app/entities/${entity.model.var}/Service.js")##
 sap.ui.define([
     "./Service",
     "sap/m/MessageBox",
-    "../utils/utilities"
+    "../js/utilities"
 ], function(MessageBox, Service, Utilities) {
     "use strict";
     return {

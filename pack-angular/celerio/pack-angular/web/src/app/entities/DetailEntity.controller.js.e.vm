@@ -1,7 +1,7 @@
 $output.file("web/src/app/entities/${entity.model.var}/Detail${entity}.controller.js")##
 sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
-    "../../utils/utilities",
+    "../../js/utilities",
 	"../../service/Service",
     "sap/ui/core/routing/History",
     "portal/valorizacion/${entity.model.var.toLowerCase()}/js/moment",
