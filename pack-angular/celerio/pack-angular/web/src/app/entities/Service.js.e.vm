@@ -66,7 +66,7 @@ sap.ui.define([
                     console.log(result);
                     if(callFunction==="Y"){
                         this.model = new sap.ui.model.json.JSONModel (result);
-                        context.setModel(this.model, name);
+                        context.getView().setModel(this.model, name);
                         var fun= "context."+namefunct+"(arg1,result)";
                         eval(fun);
                     }

@@ -123,10 +123,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 sessionStorage.setItem("typeForm${entity}",0);
                 this.byId("btnVersion${entity}").setText("Versión: "+descVersion);
                 var jsonVersion= {};
-                Customize.callRest();
-				//Descomentar el que se necesita
-				//Service.doGet(this, "${entity.model.var}/findAll","${entity}List", "Y", "doBefore",this);
-                //Service.doPostGet(this, jsonVersion, "${entity.model.var}/_findDescripcion","${entity}List", "Y", "this.doBefore",this);
+                Customize.callRest(this, arg1, arg2);
                 console.log(this.getView());
             }else{
                 MessageBox.show(
@@ -161,17 +158,21 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							#end
 						#end
 
+						var listFields = "${listFields}";
+						var sizeFields = listFields.length;
+						listFields = listFields.substr(1, sizeFields-2);
+						listFields = listFields.split(", ");
 						Service.doGet(this,"appParametria/_getListaPais","ListaPais");
 						Service.doGet(this,"appParametria/_getListaCategoria","ListaCategoria");
 						Service.doGet(this,"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
 						Service.doGet(this,"appParametria/_getListaMes","ListaMes");
 						#if (${listFields.contains("version")})
 
-						Service.doGet(this,"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "getVersion",this);
+						Service.doGet(this,"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "getVersion",listFields);
 						#else
 
 						var jsonFilter = {}
-						Service.doPostGet(this, jsonFilter, "${entity.model.var}/find","${entity}List", "Y", "doBefore",this);
+						Service.doPostGet(this, jsonFilter, "${entity.model.var}/find","${entity}List", "Y", "doBefore",listFields);
 						console.log(this.getView());
 						#end
 
