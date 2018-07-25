@@ -14,7 +14,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "use strict";
 
     return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.MantenimientoTablas", {
-        handleRouteMatched: function (oEvent) {
+        fieldsList: [],
+		handleRouteMatched: function (oEvent) {
             var oParams = {};
             if (oEvent.mParameters.data.context) {
                 this.sContext = oEvent.mParameters.data.context;
@@ -95,15 +96,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         },
 		filter${entity}: function(oEvent){
 			debugger;
-            var json = {};
+            var jsonFilter = {};
 			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
 
-					json["${attribute.var}"]=this.getView().byId("txt${entity}${attribute.var}").getValue();
+					jsonFilter["${attribute.var}"]=this.getView().byId("txt${entity}${attribute.var}").getValue();
 				#end
 			#end
 
             console.log(json);
+			Customize.callFilter(this, jsonFilter);
             //Service.doPostGet(this.getView(),json,"${entity.model.var}/find", "${entity}List");
         },
         getVersion: function (arg1, arg2){
@@ -123,7 +125,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 sessionStorage.setItem("typeForm${entity}",0);
                 this.byId("btnVersion${entity}").setText("Versión: "+descVersion);
                 var jsonVersion= {};
-                Customize.callRest(this, arg1, arg2);
+                Customize.callRest(this, "${entity.model.var}", "${entity}List", arg1, arg2);
                 console.log(this.getView());
             }else{
                 MessageBox.show(
@@ -139,9 +141,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 );
             }
         },
-		doBefore: function (arg1, arg2){
-
-		},
         onInit: function () {
             //debugger;
             var that = this;
@@ -162,17 +161,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						var sizeFields = listFields.length;
 						listFields = listFields.substr(1, sizeFields-2);
 						listFields = listFields.split(", ");
+						this.fieldList = listFields;
 						Service.doGet(this,"appParametria/_getListaPais","ListaPais");
 						Service.doGet(this,"appParametria/_getListaCategoria","ListaCategoria");
 						Service.doGet(this,"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
 						Service.doGet(this,"appParametria/_getListaMes","ListaMes");
 						#if (${listFields.contains("version")})
 
-						Service.doGet(this,"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "getVersion",listFields);
+						Service.doGet(this,"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "getVersion",this.fieldList);
 						#else
 
-						var jsonFilter = {}
-						Service.doPostGet(this, jsonFilter, "${entity.model.var}/find","${entity}List", "Y", "doBefore",listFields);
+						Customize.callRest(this, "${entity.model.var}", "${entity}List", this.fieldList);
 						console.log(this.getView());
 						#end
 
