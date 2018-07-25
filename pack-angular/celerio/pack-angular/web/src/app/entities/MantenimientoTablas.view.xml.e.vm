@@ -51,6 +51,7 @@ $output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.view.
 							#end
 						#end
 					#end
+
                 </form:formContainers>
                 <form:layout>
                     <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
