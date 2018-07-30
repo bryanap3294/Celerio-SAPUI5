@@ -23,10 +23,14 @@ $output.file("web/src/app/entities/${entity.model.var}/Detail${entity}.view.xml"
                                         #foreach (${attribute} in ${entity.nonCpkAttributes.list})
                                         	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
                                         		#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+												#set( $notNull = "false" )
+												#if(${attribute.isNotNullable()})
+												#set( $notNull = "true")
+												#end
 
                                         		<form:FormElement visible="true">
                                                     <form:label>
-                                                        <m:Label wrapping="true" text="${attribute.var}"   design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"/>
+                                                        <m:Label wrapping="true" text="${attribute.var}"   design="Standard" width="100%" required="${notNull}" textAlign="Begin" textDirection="Inherit"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <m:Input id="txt${attribute.var}" type="Text"
