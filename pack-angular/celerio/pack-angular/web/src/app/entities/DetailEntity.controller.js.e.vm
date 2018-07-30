@@ -3,9 +3,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "../../js/utilities",
 	"../../service/Service",
+	"../../customize/Customize",
     "sap/ui/core/routing/History",
     "portal/valorizacion/${entity.model.var.toLowerCase()}/js/moment",
-], function(BaseController, MessageBox, Utilities, Service, History) {
+], function(BaseController, MessageBox, Utilities, Service, Customize, History) {
     "use strict";
 
     return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Detail${entity}", {
@@ -26,7 +27,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             debugger;
 			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-					#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 
 			this.getView().byId("txt${attribute.var}").setValue(arg1.${attribute.var});
 					#end
@@ -54,7 +55,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             /* Realizando validaciones */
 			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-					#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 						#if(${attribute.isNotNullable()})
 
 			validar = Utilities.validarRequerido(this.getView().byId("txt${attribute.var}"),'T');
@@ -73,7 +74,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 var json={};
 				#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-					#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 
 				json["${attribute.var}"]=this.getView().byId("txt${attribute.var}").getValue();
 					#end
@@ -106,7 +107,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         clearData: function(){
 			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-					#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 
 				this.getView().byId("txt${attribute.var}").setValue(null);
 					#end
@@ -122,7 +123,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.getView().addDelegate(
                 {
                     onBeforeShow: function (e) {
-                        //this.removerEstilos();
+                        this.removerEstilos();
                         var typeForm${entity} = sessionStorage.getItem("typeForm${entity}");
                         Service.doGet(this,"appParametria/_getListaPais","ListaPais");
                         Service.doGet(this,"appParametria/_getListaCategoria","ListaCategoria");
@@ -133,6 +134,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						switch(typeForm${entity}){
 							case "0":
 							that.clearData();
+							Customize.doBeforeNew(this, "${entity}");
 							break;
 							case "1":
 							Service.doGetLoading(this,
@@ -142,6 +144,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							break;
 							case "2":
 							that.clearData();
+							Customize.doBeforeDetail(this, "${entity}");
 							break;
 						}
                     }

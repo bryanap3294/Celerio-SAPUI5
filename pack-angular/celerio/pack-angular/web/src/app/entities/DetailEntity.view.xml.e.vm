@@ -22,7 +22,7 @@ $output.file("web/src/app/entities/${entity.model.var}/Detail${entity}.view.xml"
                                         <form:formElements>
                                         #foreach (${attribute} in ${entity.nonCpkAttributes.list})
                                         	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-                                        		#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+                                        		#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 												#set( $notNull = "false" )
 												#if(${attribute.isNotNullable()})
 												#set( $notNull = "true")
