@@ -26,26 +26,57 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             debugger;
 			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 
-					this.getView().byId("txt${attribute.var}").setValue(arg1.${attribute.var});
+			this.getView().byId("txt${attribute.var}").setValue(arg1.${attribute.var});
+					#end
 				#end
 			#end
         },
         removerEstilos: function() {
 			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 
-					Utilities.removerStateError(this.getView().byId("txt${attribute.var}"));
+			Utilities.removerStateError(this.getView().byId("txt${attribute.var}"));
+					#end
 				#end
 			#end
         },
+		validarDatos: function(oArg){
+            debugger;
+            var requiredEmpty = 0;
+            var validar = true;
+
+            /* Removiendo estilos */
+            this.removerEstilos();
+
+            /* Realizando validaciones */
+			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+						#if(${attribute.isNotNullable()})
+
+			validar = Utilities.validarRequerido(this.getView().byId("txt${attribute.var}"),'T');
+			if (!validar)
+				requiredEmpty =1;
+						#end
+					#end
+				#end
+			#end
+
+            return requiredEmpty;
+        },
         saveData: function(evt){
-            if(true){
+			var validar = this.validarDatos();
+            if(validar  === 0){
                 var json={};
 				#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 
-					json["${attribute.var}"]=this.getView().byId("txt${attribute.var}").getValue();
+				json["${attribute.var}"]=this.getView().byId("txt${attribute.var}").getValue();
+					#end
 				#end
 				#end
 
@@ -54,7 +85,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
                 var s = sessionStorage.getItem("update");
                 if(s==="1"){
-                    //json["id"]=1;
                     debugger;
                     var id = sessionStorage.getItem("idRow${entity}");
                     json["id"]= id;
@@ -76,8 +106,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         clearData: function(){
 			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 
-					this.getView().byId("txt${attribute.var}").setValue(null);
+				this.getView().byId("txt${attribute.var}").setValue(null);
+					#end
 				#end
 			#end
         },
@@ -97,21 +129,20 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                         Service.doGet(this,"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
                         Service.doGet(this,"appParametria/_getListaVersion","ListaVersion");
                         Service.doGet(this,"appParametria/_getListaMes","ListaMes");
-                        //var idVersion= sessionStorage.getItem("idVersion");
 
 						switch(typeForm${entity}){
 							case "0":
 							that.clearData();
-							break
+							break;
 							case "1":
 							Service.doGetLoading(this,
                                 "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", "putFields");
                             sessionStorage.setItem("typeForm${entity}",0);
                             sessionStorage.setItem("update",1);
-							break
+							break;
 							case "2":
 							that.clearData();
-							break
+							break;
 						}
                     }
                 },that
