@@ -23,5 +23,5 @@ quickstart/src/main/webapp/node_modules
 quickstart/src/main/webapp/typings
 quickstart/src/main/generated-java
 quickstart/src/main/resources
-quickstart/src/main/celerio-maven-plugin
+quickstart/src/main/config/celerio-maven-plugin
 quickstart/web
