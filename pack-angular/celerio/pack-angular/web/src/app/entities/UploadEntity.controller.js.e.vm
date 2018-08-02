@@ -1,0 +1,142 @@
+$output.file("web/src/app/entities/${entity.model.var}/Upload${entity}.controller.js")##
+sap.ui.define(["sap/ui/core/mvc/Controller",
+    "sap/m/MessageBox",
+    "../../js/utilities",
+    "../../service/Service",
+    "sap/ui/core/routing/History",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+], function(BaseController, MessageBox, Utilities, Service, History, Filter, FilterOperator) {
+    "use strict";
+
+    return BaseController.extend("portal.valorizacion.tipocambio.controller.tipoCambio.UploadTipoCambio", {
+        handleRouteMatched: function (oEvent) {
+            var oParams = {};
+            if (oEvent.mParameters.data.context) {
+                this.sContext = oEvent.mParameters.data.context;
+                var oPath;
+                if (this.sContext) {
+                    oPath = {path: "/" + this.sContext, parameters: oParams};
+                    this.getView().bindObject(oPath);
+                }
+            }
+        },
+        saveAll: function(evt){
+            var oModel = this.getView().getModel("uploadTipoCambio");
+            var jsonModel = oModel.getData();
+            var objParameter=[];
+            debugger;
+            for(var i=0; i<jsonModel.length;i++){
+                if(jsonModel[i]["bean"]["fecha"]!==undefined || jsonModel[i]["bean"]["fecha"]!==""){
+                    jsonModel[i]["bean"]["fecha"]=moment(jsonModel[i]["bean"]["fecha"],"DD/MM/YYYY")._d.getTime();
+                }
+                jsonModel[i]["bean"]["fechaCreacion"]=1526346420000;
+                jsonModel[i]["bean"]["usuarioCreacion"]="Bryan Aguilar";
+                objParameter.push(jsonModel[i].bean);
+            }
+            debugger;
+            var myJSON = JSON.stringify(objParameter);
+            this.doPostPost(objParameter,"tipoCambio/saveMasivo","tipoCambio/findAll","tipoCambio");
+        },
+        uploadStart: function(evt) {
+            var tblCatalogos = this.byId('idTblUploadTipoCambio');
+            tblCatalogos.setBusy(true);
+        },
+        uploadComplete: function(evt){
+            debugger;
+            var s = JSON.parse(evt.mParameters.responseRaw);
+            var objectListModel=[];
+            for(var i=0; i<s.length;i++){
+                objectListModel.push(s[i]);
+            }
+            this.cargarGrilla(this, objectListModel);
+            console.log(this.getView());
+
+            var tblCatalogos = this.byId('idTblUploadTipoCambio');
+            tblCatalogos.setBusy(false);
+
+            var idUpload = this.byId('file');
+            idUpload.clear();
+        },
+        cargarGrilla: function(arg1, arg2){
+            debugger;
+            this.model = new sap.ui.model.json.JSONModel (arg2);
+            arg1.getView().setModel(this.model, "uploadTipoCambio");
+            var oModel = this.getView().getModel("uploadTipoCambio");
+            var jsonModel = oModel.getData();
+            var contadorOK = 0;
+            var contadorError = 0;
+            for(var i=0 ; i < jsonModel.length ; i++ ){
+                if(jsonModel[i]["bean"].fecha!==undefined || jsonModel[i]["bean"].fecha!==''){
+                    jsonModel[i]["bean"].fecha=moment.utc(jsonModel[i]["bean"].fecha).format('DD/MM/YYYY');
+                    }
+                jsonModel[i]["Status"]="Success";
+                if (jsonModel[i]["error"]) {
+                    debugger;
+                    jsonModel[i]["Status"]="Error";
+                    contadorError++;
+                }
+                else {
+                    contadorOK++;
+                }
+            }
+            var datemodel = new sap.ui.model.json.JSONModel(jsonModel);
+            arg1.getView().setModel(datemodel, "uploadTipoCambio");
+            var listacargaUpload=[];
+            var cargaUpload={};
+            cargaUpload.display ="Registros OK";
+            cargaUpload.valor = contadorOK;
+            cargaUpload.color = "Good";
+            listacargaUpload.push(cargaUpload);
+            var cargaUploadError={};
+            cargaUploadError.display ="Registros con Error";
+            cargaUploadError.valor = contadorError;
+            cargaUploadError.color = "Error";
+            listacargaUpload.push(cargaUploadError);
+            var datemodelCarga = new sap.ui.model.json.JSONModel(listacargaUpload);
+            arg1.getView().setModel(datemodelCarga, "dataUpload");
+            var dataUploadPorcentaje={};
+            dataUploadPorcentaje.valor = (contadorOK / (contadorOK + contadorError)) * 100;
+            dataUploadPorcentaje.valor = Math.round(dataUploadPorcentaje.valor);
+            var datemodelUploadPorcentaje = new sap.ui.model.json.JSONModel(dataUploadPorcentaje);
+            arg1.getView().setModel(datemodelUploadPorcentaje, "dataUploadPorcentaje");
+        },
+        goBack: function(evt){
+            this.model = new sap.ui.model.json.JSONModel ({});
+            this.getView().setModel(this.model, "uploadTipoCambio");
+            this.oRouter.navTo("MantenimientoTablas");
+            //sessionStorage.setItem("idRowTablaConfigPeriodo","null");
+        },
+        clearData: function(){
+            this.getView().byId("txtVersion").setValue(null);
+            this.getView().byId("txtPais").setValue(null);
+        },
+
+        onAfterRendering: function() {
+            //this.byId("multiheaderBase").setHeaderSpan([8,1]);
+            //this.byId("multiheader").setHeaderSpan([12,1]);
+        },
+        onInit: function () {
+            var that = this;
+            //debugger;
+            this.mBindingOptions = {};
+            this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            this.oRouter.getTarget("Detalle").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+
+            this.getView().addDelegate(
+                {
+                    onBeforeShow: function (e) {
+                        var listacargaUpload=[];
+                        var datemodelCarga = new sap.ui.model.json.JSONModel(listacargaUpload);
+                        that.getView().setModel(datemodelCarga, "dataUpload");
+
+                        var dataUploadPorcentaje={};
+                        dataUploadPorcentaje.valor=0;
+                        var datemodelUploadPorcentaje = new sap.ui.model.json.JSONModel(dataUploadPorcentaje);
+                        that.getView().setModel(datemodelUploadPorcentaje, "dataUploadPorcentaje");
+                    }
+                },that
+            );
+        }
+    });
+}, /* bExport= */true);
