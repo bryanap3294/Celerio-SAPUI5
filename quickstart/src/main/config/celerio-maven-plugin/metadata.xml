@@ -21,6 +21,7 @@
       </columns>
       <indexes>
         <indexe columnName="id_parametria" indexName="app_parametria_pkey" nonUnique="false"/>
+
       </indexes>
       <importedKeys/>
       <primaryKeys>
