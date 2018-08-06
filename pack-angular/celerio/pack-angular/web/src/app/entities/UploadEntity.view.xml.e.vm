@@ -1,4 +1,4 @@
-$output.file("web/src/app/entities/${entity.model.var}/Upload${entity}.view.xml")##
+$output.file("web/src/app/entities/${entity.model.var}/view/${entity.model.var}/Upload${entity}.view.xml")##
 <mvc:View xmlns:mvc="sap.ui.core.mvc"
           controllerName="portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Upload${entity}"
           xmlns:m="sap.m"

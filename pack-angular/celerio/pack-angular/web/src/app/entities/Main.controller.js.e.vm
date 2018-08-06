@@ -1,4 +1,4 @@
-$output.file("web/src/app/entities/${entity.model.var}/Main.controller.js")##
+$output.file("web/src/app/entities/${entity.model.var}/controller/Main.controller.js")##
 sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "../js/utilities",
@@ -146,7 +146,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var that = this;
             this.mBindingOptions = {};
             this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            this.oRouter.getTarget("MantenimientoTablas").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+            this.oRouter.getTarget("Main").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
             this.getView().addDelegate(
                 {
                     onBeforeShow: function (e) {

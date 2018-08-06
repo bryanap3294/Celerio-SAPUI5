@@ -1,4 +1,4 @@
-$output.file("web/src/app/entities/${entity.model.var}/Service.js")##
+$output.file("web/src/app/entities/${entity.model.var}/service/Service.js")##
 sap.ui.define([
     "./Service",
     "sap/m/MessageBox",
@@ -18,7 +18,12 @@ sap.ui.define([
                     }
                 },
                 error: function(e){
-                    MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                    if(e.responseJSON !== undefined){
+                        MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                    }else{
+                        MessageBox.alert("Hubo un Error, por favor comuníquese con el administrador del sistema");
+                        console.log(e);
+                    }
                 }
             });
         },
@@ -41,8 +46,12 @@ sap.ui.define([
                     this.doGet(context, uriModel, nameModel, callFunction, fn, value);
                 },
                 error: function (e) {
-                    console.log(e);
-                    MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                    if(e.responseJSON !== undefined){
+                        MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                    }else{
+                        MessageBox.alert("Hubo un Error, por favor comuníquese con el administrador del sistema");
+                        console.log(e);
+                    }
                 },
                 complete: function() {
                     context.getView().setBusy(false);
@@ -79,8 +88,12 @@ sap.ui.define([
                     context.getView().setBusy(false);
                 },
                 error: function (e) {
-                    console.log("Error:" + e);
-                    MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                    if(e.responseJSON !== undefined){
+                        MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                    }else{
+                        MessageBox.alert("Hubo un Error, por favor comuníquese con el administrador del sistema");
+                        console.log(e);
+                    }
                 }
             });
         },
@@ -108,8 +121,12 @@ sap.ui.define([
                     }
                 },
                 error: function (e) {
-                    console.log("Error:" + e);
-                    MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                    if(e.responseJSON !== undefined){
+                        MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                    }else{
+                        MessageBox.alert("Hubo un Error, por favor comuníquese con el administrador del sistema");
+                        console.log(e);
+                    }
                 },
                 complete: function() {
                     context.getView().setBusy(false);
@@ -140,8 +157,12 @@ sap.ui.define([
                     }
                 },
                 error: function (e) {
-                    console.log("Error:" + e);
-  			        MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                    if(e.responseJSON !== undefined){
+                        MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                    }else{
+                        MessageBox.alert("Hubo un Error, por favor comuníquese con el administrador del sistema");
+                        console.log(e);
+                    }
                 },
                 complete: function() {
                     context.getView().setBusy(false);

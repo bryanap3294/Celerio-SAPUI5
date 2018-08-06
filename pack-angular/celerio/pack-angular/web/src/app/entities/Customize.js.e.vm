@@ -1,4 +1,4 @@
-$output.file("web/src/app/entities/${entity.model.var}/Customize.js")##
+$output.file("web/src/app/entities/${entity.model.var}/customize/Customize.js")##
 sap.ui.define([
     "./customize",
     "sap/m/MessageBox",

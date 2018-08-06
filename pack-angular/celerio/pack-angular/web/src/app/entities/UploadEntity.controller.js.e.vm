@@ -1,4 +1,4 @@
-$output.file("web/src/app/entities/${entity.model.var}/Upload${entity}.controller.js")##
+$output.file("web/src/app/entities/${entity.model.var}/controller/${entity.model.var}/Upload${entity}.controller.js")##
 sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "../../js/utilities",

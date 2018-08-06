@@ -1,4 +1,4 @@
-$output.file("web/src/app/entities/${entity.model.var}/Detail${entity}.view.xml")##
+$output.file("web/src/app/entities/${entity.model.var}/view/${entity.model.var}/Detail${entity}.view.xml")##
 <mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Detail${entity}" xmlns:uxap="sap.uxap" xmlns:m="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="false" showAnchorBar="true" showFooter="true" subSectionLayout="TitleOnTop">
         <uxap:headerTitle>
