@@ -1,0 +1,6 @@
+$output.file("web/src/app/entities/${entity.model.var}/webapp/i18n/i18n_en.properties")##
+# XTIT:Application name
+appTitle=${entity}
+
+# YDES:Application description
+appDescription=${entity}

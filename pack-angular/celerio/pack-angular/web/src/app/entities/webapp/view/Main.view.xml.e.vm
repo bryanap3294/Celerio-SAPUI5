@@ -1,0 +1,139 @@
+$output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml")##
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+          controllerName="portal.valorizacion.${entity.model.var.toLowerCase()}.controller.Main"
+          xmlns:m="sap.m"
+          xmlns:l="sap.ui.layout"
+          xmlns:form="sap.ui.layout.form"
+          xmlns="sap.ui.table"
+          xmlns:core="sap.ui.core"
+          xmlns:u="sap.ui.unified"
+          xmlns:html="http://www.w3.org/1999/xhtml" >
+    <m:Page showHeader="false" showFooter="true" showNavButton="false" navButtonPress="atras">
+        <m:content>
+            <html:style>
+                .sapMListTblCell.cellBorderRight, .cellBorderRight {
+                border-right: 1px solid lightgray;
+                }
+
+                .sapMListTblCell.cellBorderLeft, .cellBorderLeft {
+                border-left: 1px solid lightgray;
+                }
+            </html:style>
+            <m:Toolbar width="auto" height="46px" design="Transparent" visible="true" enabled="true">
+                <m:content>
+                    <m:Button text="" type="Transparent" icon="sap-icon://expense-report" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                    <m:Title text="$entity" level="H2" icon="sap-icon://appointment"/>
+                    <m:ToolbarSpacer/>
+                    <m:HBox justifyContent="End">
+                        <m:Button id="btnVersion${entity}" type="Transparent" icon="sap-icon://expense-report" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                    </m:HBox>
+                </m:content>
+                <m:tooltip/>
+            </m:Toolbar>
+            <form:Form editable="true" id="idFormSearch${entity}" visible="false">
+                <form:formContainers>
+					#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+						#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+							#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+
+							<form:FormContainer>
+								<form:formElements>
+									<form:FormElement>
+										<form:label>
+											<m:Label text="${attribute.var}"/>
+										</form:label>
+										<form:fields>
+											<m:Input id="txt${entity}${attribute.var}" placeholder="Ingresar ${attribute.var}"/>
+										</form:fields>
+									</form:FormElement>
+								</form:formElements>
+							</form:FormContainer>
+							#end
+						#end
+					#end
+
+                </form:formContainers>
+                <form:layout>
+                    <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                </form:layout>
+            </form:Form>
+            <form:Form>
+                <form:formContainers>
+                    <form:FormContainer visible="true">
+                        <form:title>
+                            <!--<core:Title text="Lista de Coordinadores de Viaje" level="Auto" icon="sap-icon://legend"/>-->
+                        </form:title>
+                        <form:formElements>
+                            <form:FormElement visible="true">
+                                <Table id="idTbl${entity}"
+                                       rows="{path: '${entity}List>/'}"
+                                       visibleRowCountMode="Interactive"
+                                       visibleRowCount="10"
+                                       minAutoRowCount="10"
+                                       fixedColumnCount="2"
+                                       enableColumnReordering="true"
+                                       enableColumnFreeze="true"
+                                       selectionMode="None"
+                                       filter="filterByCell">
+                                    <toolbar>
+                                        <m:Toolbar>
+                                            <m:Label text="Filtro Avanzado :"/>
+                                            <m:HBox justifyContent="Start">
+                                                <m:Switch id="idSwitch${entity}" state="false" customTextOff="Off" customTextOn="On" type="Default" enabled="true" visible="true" change="closeFormSearch${entity}"/>
+                                            </m:HBox>
+                                            <m:ToolbarSpacer/>
+                                            <m:HBox justifyContent="End">
+                                                <m:Button hAlign="Right" icon="sap-icon://upload" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="uploadExcel${entity}"/>
+                                                <m:Button hAlign="Right" icon="sap-icon://download" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="downloadExcel${entity}"/>
+
+                                                <m:Button hAlign="Right" icon="sap-icon://add" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="add${entity}"/>
+                                                <m:Button id="idBtnSearch${entity}" icon="sap-icon://search" type="Accept" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false" text="Buscar" press="filter$entity"/>
+                                                <m:Button icon="sap-icon://clear-filter" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" text="Limpiar" press="clearFilter$entity"/>
+                                            </m:HBox>
+                                        </m:Toolbar>
+                                    </toolbar>
+                                    <columns>
+										#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+											#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+												#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+
+												<Column width="10rem"
+														hAlign="Left">
+													<multiLabels>
+														<m:ObjectStatus
+																icon=""
+																text="${attribute.var}"
+																state="none" />
+													</multiLabels>
+													<template>
+														<m:Text text="{${entity}List>${attribute.var}}" />
+													</template>
+												</Column>
+												#end
+											#end
+										#end
+
+                                    </columns>
+                                </Table>
+                            </form:FormElement>
+                        </form:formElements>
+                    </form:FormContainer>
+                </form:formContainers>
+                <form:layout>
+                    <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                </form:layout>
+            </form:Form>
+        </m:content>
+        <m:footer>
+            <m:Bar design="100%">
+                <m:contentLeft/>
+                <m:contentMiddle/>
+                <m:contentRight>
+                </m:contentRight>
+            </m:Bar>
+        </m:footer>
+        <m:headerContent/>
+        <m:subHeader/>
+        <m:customHeader/>
+    </m:Page>
+</mvc:View>

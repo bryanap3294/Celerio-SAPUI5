@@ -1,0 +1,225 @@
+$output.file("web/src/app/entities/${entity.model.var}/webapp/css/style.css")##
+.openItemsImageStrip{
+	height: 100px;
+    width: 100%;
+    background-image: url(../img/open_items_strip.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: initial;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+/* se muestran los totales en la tabla con este formato */
+.formato_titulos_totales {
+	margin-right: 5px;
+	padding: 5px 8px;
+	border-radius: 2px;
+	background-color: #f1e0ff;
+	color: #a53cff !important;
+}
+
+/* background de la tabla de totales */
+.fondo_tabla_totales {
+	background-color: #f7eff9;
+	margin-bottom: 20px;
+	font-size: 0.8rem;
+	border-radius: 0px;
+}
+
+.fondo_tabla_totales.sapMPanel .sapMPanelHdr{
+	color:#6C217F;
+}
+
+.fondo_tabla_totales .sapMPanelWrappingDiv{
+	background: #f2e0f7;
+}
+
+.fondo_tabla_totales .sapMList.sapMListBGTranslucent.sapMListTblCnt .sapMLIB.sapMLIBActive {
+    background: #6C217F;
+}
+
+.fondo_tabla_totales .sapMLIBActive .sapMLIBImgNav {
+	background: #6C217F;
+}
+
+.fondo_tabla_totales :not(.sapMBtnDisabled)>.sapMBtnInner.sapMBtnActive {
+    background-image: none;
+    background-color:  #6C217F;
+    border-color:  #6C217F;
+    color: #ffffff;
+    text-shadow: none;
+}
+
+/* fondo mensaje al proveedor */
+.infoSummary.sapMMsgStripInformation {
+    background-color: rgba(108, 33, 127, 0.35);
+    border-color: rgb(185, 144, 195);
+}
+
+.infoSummary.sapMMsgStripInformation .sapMMsgStripIcon {
+    color: #ffffff;
+}
+
+.infoSummary .sapMMsgStripCloseButton:hover {
+    color: #000000;
+}
+
+.infoSummary .sapMText {
+	color: #ffffff;
+}
+
+.infoSummary .sapMMsgStripCloseButton {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* input con accion click */
+.botonProveedor .sapMInputValHelp .sapMInputValHelpInner.sapUiIcon.sapUiIconMirrorInRTL.sapUiIconPointer:hover {
+	background-color:#6C217F;
+	color: white;
+}
+
+.botonProveedor.sapMInputVH:not(.sapMInputBaseReadonly) .sapMInputValHelp>.sapMInputValHelpInner:active {
+    background-color: #6C217F;
+}
+
+.botonProveedor .sapMInputValHelp .sapMInputValHelpInner.sapUiIcon.sapUiIconMirrorInRTL.sapUiIconPointer:active {
+	background-color:#6C217F;
+	color: white;
+}
+
+.botonProveedor input .sapMInputBaseInner:focus {
+	background-color:#6C217F;
+	color: white;
+}
+
+.botonProveedor input.sapMInputVHO:active>.sapMInputValHelp>.sapMInputValHelpInner {
+    background-color: #6C217F;
+    color: #ffffff;
+}
+
+.botonProveedor .sapMInputBaseInner:not(.sapMInputBaseReadonlyInner):not(.sapMInputBaseStateInner):not(.sapMInputBaseDisabledInner):hover {
+    background: #ffffff;
+    border-color: #6C217F;
+}
+
+/* listado de proveedores */
+.listadoProveedores.sapMList.sapMListBGTranslucent.sapMListTblCnt .sapMLIB.sapMLIBActive {
+    background: #6C217F;
+}
+
+.listadoProveedores .sapMLIBActive .sapMLIBImgNav {
+	background: #6C217F;
+}
+
+.dateSelected {
+    text-align: left;
+    color: #6c217f;
+    font-weight: bold;
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+
+.infoTotals{
+    margin-right: 30px;
+    /* background-color: rgba(204, 178, 210, 0.28); */
+    /* border-radius: 16px; */
+    /* padding: 15px; */
+    /* border-style: solid; */
+    border-color: #6c217f;
+    /* border-width: 1px; */
+    margin-left: 30px;
+}
+
+.numberDocuments {
+    font-size: 14px;
+    color: #6c217f;
+}
+
+.titleTotals {
+	text-transform:uppercase;
+    font-size: 14px;
+    color: #6c217f;
+    font-weight: bold;
+}
+
+.iconTotalDocument{
+	color:#7e3c8f;
+	font-size: 40px;
+}
+
+.infoTotalsAccordion{
+	text-align: right;
+}
+
+.panelInfo h1 {
+	font-size:14px;
+	font-weight:bold;
+	color:#7e3c8f;
+}
+
+.panelInfo .sapUiIcon {
+	color:#7e3c8f;
+}
+
+.panelInfo .sapUiForm.sapUiFormM{
+	background-color: #f5f0f6;
+}
+
+.panelInfo .sapUiFormResGrid.sapUiFormBackgrTranslucent>div {
+    background-color: #f5f0f6;
+}
+
+.panelInfo .sapMPanelContent {
+    padding: 0 1rem 1rem 0;
+    box-sizing: border-box;
+    overflow: auto;
+    white-space: normal;
+    background-color: #f5f0f6;
+}
+
+.panelInfo .sapMPanelWrappingDiv {
+    background-color: #f5f0f6;
+}
+
+.panelInfo .sapMPanelHdr {
+    text-shadow: none;
+}
+
+.customGroupedTable .sapMListTbl .sapMText {
+	color:rgb(28, 150, 207);
+}
+
+.customGroupedList .sapMListTbl .sapMText {
+    color:rgb(28, 150, 207);
+}
+
+.customGroupedList .sapMListTbl th {
+    background-color: rgba(108, 33, 127, 0.28);
+}
+
+.customGroupedList.sapMListBGTranslucent .sapMLIB:not(.sapMLIBActive):not(.sapMLIBSelected):not(:hover):nth-child(even){
+	background: rgba(167, 97, 185, 0.07);
+}
+
+.customGroupedTable .sapMListTbl th {
+    background-color: rgba(108, 33, 127, 0.28);
+}
+
+.customGroupedTable.sapMListBGTranslucent .sapMLIB:not(.sapMLIBActive):not(.sapMLIBSelected):not(:hover):nth-child(even){
+	background: rgba(167, 97, 185, 0.07);
+}
+
+.decorationSubtotals {
+	font-size: 0.875rem;
+}
+
+.decorationsSubtotalsMargin {
+	margin-left: 30px;
+}
+
+.etiquetasSubtotal label {
+	white-space: normal;
+}

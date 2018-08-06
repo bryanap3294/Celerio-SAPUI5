@@ -1,0 +1,25 @@
+$output.file("web/src/app/entities/${entity.model.var}/webapp/formatter/FormatterFloatNumber0.js")##
+sap.ui.define([
+	"sap/ui/core/format/NumberFormat"
+], function() {
+	"use strict";
+
+	var Formatter = {
+
+		formatValue: function(value) {
+			value = parseFloat(value).toFixed(0);
+			var oNumberFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
+				              minFractionDigits: 0,
+							  maxFractionDigits: 0,
+							  groupingEnabled: true,
+							  groupingSeparator: ",",
+							  decimalSeparator: "."
+							});
+			return oNumberFormat.format(value);
+		}
+
+	};
+
+	return Formatter;
+
+}, /* bExport= */ true);

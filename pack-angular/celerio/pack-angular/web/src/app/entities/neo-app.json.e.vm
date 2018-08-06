@@ -1,0 +1,48 @@
+{
+  "welcomeFile": "/webapp/index.html",
+  "routes": [{
+    "path": "/IdentityProviderDestination",
+    "target": {
+      "type": "destination",
+      "name": "IdentityProviderDestination",
+      "entryPath": "/"
+    }
+  },
+    {
+      "path": "/portal/",
+      "target": {
+        "type": "destination",
+        "name": "VALORIZACION_PORTAL"
+      },
+      "description": "VALORIZACION_PORTAL"
+    },
+    {
+      "path": "/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "version": "1.54.4",
+        "entryPath": "/resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/test-resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/test-resources"
+      },
+      "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/services/userapi",
+      "target": {
+        "type": "service",
+        "name": "userapi"
+      }
+    }
+
+  ],
+  "sendWelcomeFileRedirect": true
+}

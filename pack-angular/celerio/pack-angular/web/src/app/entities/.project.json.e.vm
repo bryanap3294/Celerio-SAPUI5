@@ -1,0 +1,7 @@
+{
+  "hcpdeploy": {
+    "account": "dd8fca8ff",
+    "name": "valoracionportal${entity}",
+    "lastVersionWeTriedToDeploy": "1.0.40"
+  }
+}

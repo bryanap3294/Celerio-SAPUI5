@@ -1,0 +1,155 @@
+$output.file("web/src/app/entities/${entity.model.var}/webapp/controller/${entity.model.var}/Detail${entity}.controller.js")##
+sap.ui.define(["sap/ui/core/mvc/Controller",
+    "sap/m/MessageBox",
+    "../../js/utilities",
+	"../../service/Service",
+	"../../customize/Customize",
+    "sap/ui/core/routing/History",
+    "portal/valorizacion/${entity.model.var.toLowerCase()}/js/moment",
+], function(BaseController, MessageBox, Utilities, Service, Customize, History) {
+    "use strict";
+
+    return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Detail${entity}", {
+        handleRouteMatched: function (oEvent) {
+
+            var oParams = {};
+
+            if (oEvent.mParameters.data.context) {
+                this.sContext = oEvent.mParameters.data.context;
+                var oPath;
+                if (this.sContext) {
+                    oPath = {path: "/" + this.sContext, parameters: oParams};
+                    this.getView().bindObject(oPath);
+                }
+            }
+        },
+        putFields: function(arg1,arg2, f){
+            debugger;
+			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+
+			this.getView().byId("txt${attribute.var}").setValue(arg1.${attribute.var});
+					#end
+				#end
+			#end
+        },
+        removerEstilos: function() {
+			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+
+			Utilities.removerStateError(this.getView().byId("txt${attribute.var}"));
+					#end
+				#end
+			#end
+        },
+		validarDatos: function(oArg){
+            debugger;
+            var requiredEmpty = 0;
+            var validar = true;
+
+            /* Removiendo estilos */
+            this.removerEstilos();
+
+            /* Realizando validaciones */
+			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+						#if(${attribute.isNotNullable()})
+
+			validar = Utilities.validarRequerido(this.getView().byId("txt${attribute.var}"),'T');
+			if (!validar)
+				requiredEmpty =1;
+						#end
+					#end
+				#end
+			#end
+
+            return requiredEmpty;
+        },
+        saveData: function(evt){
+			var validar = this.validarDatos();
+            if(validar  === 0){
+                var json={};
+				#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+
+				json["${attribute.var}"]=this.getView().byId("txt${attribute.var}").getValue();
+					#end
+				#end
+				#end
+
+                json["fechaCreacion"]=1526533200000;
+                json["usuarioCreacion"]="Bryan Aguilar";
+
+                var s = sessionStorage.getItem("update");
+                if(s==="1"){
+                    debugger;
+                    var id = sessionStorage.getItem("idRow${entity}");
+                    json["id"]= id;
+                    var myJSON = JSON.stringify(json);
+                    Service.doPostPost(this, json,"${entity.model.var}/save","${entity.model.var}/findAll","${entity}List");
+                }else{
+                    json["usuarioCreacion"]="Bryan Aguilar";
+                    debugger;
+                    var myJSON = JSON.stringify(json);
+                    Service.doPostPost(this, json,"${entity.model.var}/create","${entity.model.var}/findAll","${entity}List");
+                }
+            }else{
+                MessageBox.alert("Debe llenar todos los campos requeridos", {title: "Ventana de Aviso"});
+            }
+        },
+        goBack: function(evt){
+            this.oRouter.navTo("Main");
+        },
+        clearData: function(){
+			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+					#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+
+				this.getView().byId("txt${attribute.var}").setValue(null);
+					#end
+				#end
+			#end
+        },
+        onInit: function () {
+            var that = this;
+            this.mBindingOptions = {};
+            this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            this.oRouter.getTarget("Detalle").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+
+            this.getView().addDelegate(
+                {
+                    onBeforeShow: function (e) {
+                        this.removerEstilos();
+                        var typeForm${entity} = sessionStorage.getItem("typeForm${entity}");
+                        Service.doGet(this,"appParametria/_getListaPais","ListaPais");
+                        Service.doGet(this,"appParametria/_getListaCategoria","ListaCategoria");
+                        Service.doGet(this,"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
+                        Service.doGet(this,"appParametria/_getListaVersion","ListaVersion");
+                        Service.doGet(this,"appParametria/_getListaMes","ListaMes");
+
+						switch(typeForm${entity}){
+							case "0":
+							that.clearData();
+							Customize.doBeforeNew(this, "${entity}");
+							break;
+							case "1":
+							Service.doGetLoading(this,
+                                "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", "putFields");
+                            sessionStorage.setItem("typeForm${entity}",0);
+                            sessionStorage.setItem("update",1);
+							break;
+							case "2":
+							that.clearData();
+							Customize.doBeforeDetail(this, "${entity}");
+							break;
+						}
+                    }
+                },that
+            );
+        }
+    });
+}, /* bExport= */true);
