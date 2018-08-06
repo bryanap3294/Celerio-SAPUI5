@@ -93,7 +93,7 @@ $output.file("web/src/app/entities/${entity.model.var}/manifest.json")##
 					"uri": "css/styles.css"
 				},
 				{
-					"uri": "css/belcorp.css"
+					"uri": "css/customize.css"
 				}
 			]
 		},

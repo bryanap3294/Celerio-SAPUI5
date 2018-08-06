@@ -1,0 +1,112 @@
+$output.file("web/src/app/entities/${entity.model.var}/js/utilities.js")##
+sap.ui.define([
+    "./utilities",
+    "sap/m/MessageBox",
+], function(MessageBox) {
+    "use strict";
+    return {
+        getDomain: function (){
+            //return "/portal/api/";
+            return "http://localhost:8080/api/";
+        },
+        removerStateError(objeto) {
+            objeto.setValueState("None");
+            objeto.setValueStateText("");
+        },
+        validarRequerido(objeto, tipo) {
+            if (tipo ==='C')  {
+                if (objeto.getSelectedKey() === undefined ||
+                    objeto.getSelectedKey() === null ||
+                    objeto.getSelectedKey() === "") {
+                    objeto.setValueState("Error");
+                    objeto.setValueStateText("Valor Requerido");
+                    return false;
+                }
+            }
+            if (tipo ===undefined ||tipo === null || tipo === 'T')  {
+                if(objeto.getValue()===undefined ||
+                    objeto.getValue()===null ||
+                    objeto.getValue()==="") {
+                    objeto.setValueState("Error");
+                    objeto.setValueStateText("Valor Requerido");
+                    return false;
+                }
+            }
+            if (tipo ==='D')  {
+                if (objeto.getValue() === undefined ||
+                    objeto.getValue() === null ||
+                    objeto.getValue() === "") {
+                    objeto.setValueState("Error");
+                    objeto.setValueStateText("Valor Requerido");
+                    return false;
+                }
+            }
+            return true;
+        },
+        validarValorMinimoMaximo(objeto, valorMinimo, valorMaximo) {
+            debugger;
+            var valor = objeto.getValue();
+            if (valor === undefined || valor === null || valor === '') return true;
+            var valorNumerico = new Number(valor);
+            if (valorNumerico > valorMaximo) {
+                objeto.setValueState("Error");
+                objeto.setValueStateText("Valor no puede exceder de " + valorMaximo );
+                return false;
+            }
+            if (valor.length < valorMinimo) {
+                objeto.setValueState("Error");
+                objeto.setValueStateText("Valor debe ser mayor que " + valorMinimo );
+                return false;
+            }
+            return true;
+        },
+        validarLongitudNumerico(objeto, longitudMinima, longitudMaxima) {
+            var valor = objeto.getValue();
+            if (valor === undefined || valor === null || valor === '') return true;
+            if (valor.length > longitudMaxima) {
+                objeto.setValueState("Error");
+                objeto.setValueStateText("Valor debe contener máximo " + longitudMaxima + " dígitos");
+                return false;
+            }
+            if (valor.length <= longitudMinima) {
+                objeto.setValueState("Error");
+                objeto.setValueStateText("Valor debe contener más de " + longitudMinima + " dígitos");
+                return false;
+            }
+            return true;
+        },
+
+        validarInteger(objeto) {
+            var valor = objeto.getValue();
+            if (valor === undefined || valor === null || valor === '') return true;
+            if (this.contieneDecimales(valor)) {
+                objeto.setValueState("Error");
+                objeto.setValueStateText("Valor debe ser Entero, no debe contener decimales");
+                return false;
+            }
+            if (!this.validarValorPositivo(valor)) {
+                objeto.setValueState("Error");
+                objeto.setValueStateText("Valor debe ser Positivo, mayor igual a Cero");
+                return false;
+            }
+            return true;
+        },
+        validarValorPositivo(valor) {
+            if (valor === undefined || valor === null || valor === '') return true;
+            var valorNumerico = new sap.ui.model.type.Integer(valor);
+            var existeNegativo = valorNumerico.oFormatOptions.lastIndexOf('-');
+            if (existeNegativo < 0) {
+                return true;
+            }
+            return false;
+        },
+        contieneDecimales(valor) {
+            var valorNumerico = new sap.ui.model.type.Integer(valor);
+            var existeDecimal = valorNumerico.oFormatOptions.lastIndexOf('.');
+            if (existeDecimal > 0) {
+                return true;
+            }
+            return false;
+        }
+    };
+});

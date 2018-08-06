@@ -1,3 +1,4 @@
+$output.file("web/src/app/entities/${entity.model.var}/formatter/FormatterFloatNumber3.js")##
 sap.ui.define([
 	"sap/ui/core/format/NumberFormat"
 ], function() {

@@ -1,0 +1,388 @@
+$output.file("web/src/app/entities/${entity.model.var}/css/customize.css")##
+.bold {
+	font-weight: bold !important;
+}
+
+.italic {
+	font-style: italic;
+}
+
+.underlined{
+	text-decoration: underline;
+}
+
+.uppercase {
+	text-transform: uppercase;
+}
+
+.tinyPadding {
+	padding: 0.5rem;
+}
+
+.capitalize{
+	text-transform: lowercase;
+}
+
+.float-right{
+	float: right;
+}
+
+.expandTitle{
+	width: 95%;
+}
+
+.fontWhite {
+	color: #fff;
+}
+
+.fontLightGray {
+	color: #aaa !important;
+}
+
+.fontDarkGray {
+	color: #666 !important;
+}
+
+.p-0{
+	padding: 0px;
+}
+
+.sapUiFormResGridCont{
+	padding-bottom: 0px !important;
+}
+
+.fontBelcorpADark {
+	color: #6C217F;
+}
+
+.fontBelcorpBDark {
+	color: #535193;
+}
+
+.fontBelcorpBLight {
+	color: #73d0f5;
+}
+
+.padding-10-5{
+	    padding: 10px 5px;
+}
+
+.m-r-20{
+	margin-right: 20px;
+}
+
+.m-r-10{
+	margin-right: 10px;
+}
+
+.m-t-15{
+	margin-top: 15px;
+}
+
+.m-b-20{
+	margin-bottom: 20px;
+}
+.m-b-10{
+	margin-bottom: 10px;
+}
+
+.fontMediumTiny {
+    font-size: 0.6rem;
+}
+
+.fontMediumSize {
+	font-size: 1.2rem;
+}
+
+.fontLargeSize {
+	font-size: 2rem;
+}
+
+.fontGiantSize {
+	font-size: 3rem;
+}
+
+.backgroundLightBlue div.sapContrastPlus, .backgroundLightBlue h1 {
+	color: white;
+	background-color: #009de0 !important;
+}
+
+.inputRequired .sapMInputBaseInner{
+	/*border-color: red  !important;*/
+	border: 1px solid red;
+}
+.inputRequiredCmb{
+	/*border-color: red  !important;*/
+	border: 1px solid red;
+}
+
+.redBackground {
+	background-color: red !important;
+}
+.strongColor{
+	/*font-weight: bold;*/
+	color: red;
+	/*font-size: 30px;*/
+}
+.inputBold{
+	/*border-color: red  !important;*/
+	color: red;
+
+}
+.iconColor{
+	background-color: #7D398D;
+	color: #7D398D;
+}
+
+/* Label */
+.span {
+	color: #6C217F;
+}
+ /*ancho de elementos de tabla*/
+.sapMListTblCell{
+	padding: 0;
+}
+
+/* Label - Titulo */
+.sapMTB-Transparent-CTX>.sapMTitleTB.sapMTitleStyleAuto {
+	font-size: 1.125rem;
+	color: #6C217F;
+}
+
+/*.sapMListTblHighlightCol + .sapMListTblHeaderCell, .sapMListTblHighlightCell + .sapMListTblCell {*/
+	/*padding-left: 1rem;*/
+	/*background-color: beige;*/
+/*}*/
+
+/* Label - Label de los Forms */
+.sapMLabel {
+	color: #666666;
+	font-size: 0.875rem;
+	font-family: Arial,Helvetica,sans-serif;
+	font-family: Tahoma;
+	font-weight: normal;
+	display: inline-block;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	cursor: text;
+}
+
+/* Label - Header superior */
+.sapMIBar>.sapMBarLeft>.sapMBarChild:last-child, .sapMIBar .sapMBarPH>.sapMBarChild:last-child {
+	margin-right: 0;
+	/* font-weight: bold; */
+	color: #F7F7F7;
+	font-size: 18px;
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+/*!* Base del iconTab Bar*!*/
+.sapMITBSelected.sapMITBFilterPositive>.sapMITBContentArrow{
+	border-bottom-color: #7D398D;
+}
+
+/*!* Borde de los botones tipo Accept*!*/
+span.sapMBtnInner.sapMBtnAccept{
+	border-color: #73d0f5;
+	color: #7D398D;
+	margin-left: 4px;
+}
+
+/*!*Panel del IconTabBar*!*/
+/*.sapMITH{*/
+	/*background-color: #d9bdd2;*/
+	/*box-shadow: none;*/
+/*}*/
+
+/* Label - Titulo de la Cabecera Forms section */
+.sapUiFormM .sapUiFormContainerTitle>.sapUiFormTitle {
+	height: 3rem;
+	line-height: 3rem;
+	color: #D6C1DB;
+	color: #7E3C8F;
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+/* Grilla - Header de las columnas impares */
+.sapUiTableCol:nth-child(even)
+{
+	background-color: #D6C1DB;
+	color: #73d0f5;
+}
+
+/* Grilla - Header de las columnas pares */
+.sapUiTableCol:nth-child(odd)
+{
+	background-color: #D6C1DB;
+	color: white;
+}
+
+/* Grilla - Icono de los Header */
+ .sapUiFormM:not(.sapUiFormEdit) .sapUiFormResGridCont>div .sapUiIcon:not(.sapMBtnIcon), .sapUiFormM:not(.sapUiFormEdit) .sapUiFormResGridCont>div .sapMCbBg {
+	font-size: 16px;
+	color: deeppink;
+	color: black;
+}
+
+/* Grilla - Letra de los Header (Estandar)*/
+.sapMObjStatusNone .sapMObjStatusText, .sapMObjStatus .sapMObjStatusIcon {
+	text-shadow: none;
+	/*color: aliceblue;*/
+	font-weight: normal;
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+/* Grilla - Letra de los Header (Success)*/
+.sapMObjStatusSuccess .sapMObjStatusText, .sapMObjStatus .sapMObjStatusIcon {
+	text-shadow: none;
+	/*font-weight: bold;*/
+	font-family: Arial,Helvetica,sans-serif;
+
+}
+
+/* Grilla - Letra de los Header (Error)*/
+.sapMObjStatusError .sapMObjStatusText, .sapMObjStatus .sapMObjStatusIcon {
+	text-shadow: none;
+	/*font-weight: bold;*/
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+/* Grilla - Letra de los Header usando label */
+.sapUiTableCell .sapMLabel, .sapUiTableColCell>.sapMLabel {
+	color: #333333;
+	background-color: #73d0f5;
+	background-color: #EEEEEE;
+	font-weight: bold;
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+/*Que se vea todo el texto de los iconos*/
+.sapMITBFilter .sapMITBText{
+	overflow: visible;
+}
+
+/*Primer icono sobreescribir padding*/
+.sapMITBFilter:first-child {
+	 padding-left: 1.5rem;
+}
+
+/*Espacio entre iconos filter*/
+.sapMITBFilter{
+	padding-right: 1.5rem;
+	padding-left: 1.5rem;
+}
+
+/* Grilla - Columna final donde van los botones */
+.sapUiTableRAct:not(.sapUiTableVScr) .sapUiTableRowActionHeader {
+	width: 4rem;
+	margin-right: 0;
+	background-color: #D6C1DB;
+	background-color: #EEEEEE;
+	background-color: white;
+}
+
+/* Grilla - Celdas */
+.sapUiTableCell .sapMText {
+	vertical-align: middle;
+	font-size: 12px;
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+/* Grilla - Columnas que han sido fijadas */
+.sapUiTableCtrlScrFixed {
+	float: left;
+	max-width: 100%;
+	overflow: hidden;
+	background-color: #FEF0DB;
+	background-color: #FAFAFA;
+	background-color:#F0F0F0;
+}
+
+/* Input - PlaceHolder */
+.sapMInputBaseInner:not(.sapMInputBaseReadonlyInner), .sapMInputBaseInner:not(.sapMInputBaseReadonlyInner) {
+	outline: none;
+	font-family: sans-serif;
+}
+
+/* Input - PlaceHolder (Buscar)*/
+.sapMSFI[type='search'] {
+	font-size: 0.875rem;
+	font-family: sans-serif;
+}
+
+/* Tab - Container */
+html .sapMITBScrollContainer, html:not(.sapUiMedia-Std-Phone) .sapMSplitContainer:not(.sapMSplitContainerHideMode) .sapMITB .sapMITBScrollContainer {
+	margin: 0 1.75rem;
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+/* Tab - Seleccion de Tab */
+.sapMITBSelected .sapMITBFilterPositive {
+	background: #2b7d2b;
+	color: #ffffff;
+	background-color: #6c217f;
+	background-color: #7E3C8F;
+}
+
+/* Tab - Positive */
+.sapMITBFilterPositive {
+
+	border-color: #CCB2D2;
+	color: #CCB2D2;
+	border-color: #7D398D;
+	color: #7E3C8F;
+}
+
+/* Botones  - Color */
+:not(.sapMBtnDisabled):not(.sapMSBActive)>span.sapMBtnInner.sapMBtnAccept:not(.sapMBtnActive):not(.sapMToggleBtnPressed)>.sapMBtnIcon {
+	color: #2b7d2b;
+	color: #7E3C8F;
+}
+
+/* Container */
+/*.sapMBarContainer {*/
+	/*white-space: nowrap;*/
+	/*overflow: hidden;*/
+	/*text-overflow: ellipsis;*/
+	/*background-color: white;*/
+/*}*/
+
+/* Container - Cabecera */
+.sapMIBar.sapMHeader-CTX {
+	background-color: white;
+}
+
+/* Container - Footer Pantalla Busqueda*/
+.sapContrast .sapMIBar.sapMFooter-CTX, html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX {
+	background-color: #2f3c48;
+	border-top: 1px solid #475b6d;
+}
+
+/* Container - Cabecera Mantenimientos */
+.sapUxAPObjectPageHeaderIdentifier {
+	padding-left: 3rem;
+	background-color: aquamarine;
+	background-color: white;
+	background-color: #D6C1DB;
+}
+
+/* Container - Cabecera Mantenimientos  - Letra*/
+.sapUxAPObjectPageHeaderTitleTextWrappable {
+	white-space: normal;
+	color: aliceblue;
+}
+
+/* Container - Cabecera Mantenimientos*/
+.sapUiSizeCompact .sapUxAPObjectPageHeaderIdentifier {
+    min-height: 2.5625rem;
+    background-color: darkgoldenrod;
+    background-color: #D6C1DB;
+}
+
+.sapMITH {
+    box-shadow: inset 0 -0.25rem 0 -0.125rem #ebebeb;
+    background-color: #fff;
+    border-bottom: .125rem solid #fff;
+    background-color: #EFF4F9;
+}
