@@ -1,6 +1,6 @@
-$output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.view.xml")##
+$output.file("web/src/app/entities/${entity.model.var}/Main.view.xml")##
 <mvc:View xmlns:mvc="sap.ui.core.mvc"
-          controllerName="portal.valorizacion.${entity.model.var.toLowerCase()}.controller.MantenimientoTablas"
+          controllerName="portal.valorizacion.${entity.model.var.toLowerCase()}.controller.Main"
           xmlns:m="sap.m"
           xmlns:l="sap.ui.layout"
           xmlns:form="sap.ui.layout.form"

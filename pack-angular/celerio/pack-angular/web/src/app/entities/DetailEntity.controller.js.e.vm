@@ -102,7 +102,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
         },
         goBack: function(evt){
-            this.oRouter.navTo("MantenimientoTablas");
+            this.oRouter.navTo("Main");
         },
         clearData: function(){
 			#foreach (${attribute} in ${entity.nonCpkAttributes.list})

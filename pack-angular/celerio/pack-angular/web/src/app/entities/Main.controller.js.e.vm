@@ -1,4 +1,4 @@
-$output.file("web/src/app/entities/${entity.model.var}/MantenimientoTablas.controller.js")##
+$output.file("web/src/app/entities/${entity.model.var}/Main.controller.js")##
 sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "../js/utilities",
@@ -13,7 +13,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 ], function(BaseController, MessageBox, Utilities, Service, Customize, FormatterFloatNumber2, FormatterFloatNumber5 , History, Moment, Filter, FilterOperator) {
     "use strict";
 
-    return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.MantenimientoTablas", {
+    return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.Main", {
         fieldsList: [],
 		handleRouteMatched: function (oEvent) {
             var oParams = {};

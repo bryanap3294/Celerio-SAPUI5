@@ -146,7 +146,7 @@ $output.file("web/src/app/entities/${entity.model.var}/Upload${entity}.view.xml"
                 <m:contentLeft/>
                 <m:contentMiddle/>
                 <m:contentRight>
-                    <m:Button text="Guardar" type="Accept" icon="sap-icon://save" id="ButonSiguiente" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="saveAll"/>
+                    <m:Button text="Guardar" type="Accept" icon="sap-icon://save" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="saveAll"/>
                     <m:Button text="Regresar" type="Reject" icon="sap-icon://undo" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="goBack"/>
                 </m:contentRight>
             </m:Bar>

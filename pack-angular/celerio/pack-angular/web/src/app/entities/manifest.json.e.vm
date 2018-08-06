@@ -107,22 +107,15 @@ $output.file("web/src/app/entities/${entity.model.var}/manifest.json")##
 				"controlAggregation": "pages",
 				"bypassed": {
 					"target": [
-						"MantenimientoTablas"
+						"Main"
 					]
 				}
 			},
 			"targets": {
-				"MantenimientoTablas": {
+				"Main": {
 					"controlAggregation": "pages",
-					"viewName": "MantenimientoTablas",
-					"viewId": "MantenimientoTablas",
-					"viewLevel": 1,
-					"transition": "slide"
-				},
-				"Detalle": {
-					"controlAggregation": "pages",
-					"viewName": "Detalle",
-					"viewId": "Detalle",
+					"viewName": "Main",
+					"viewId": "Main",
 					"viewLevel": 1,
 					"transition": "slide"
 				},
@@ -146,7 +139,7 @@ $output.file("web/src/app/entities/${entity.model.var}/manifest.json")##
 					"pattern": "",
 					"name": "default",
 					"target": [
-						"MantenimientoTablas"
+						"Main"
 					]
 				},
 				{

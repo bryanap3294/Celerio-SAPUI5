@@ -9,7 +9,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 ], function(BaseController, MessageBox, Utilities, Service, History, Filter, FilterOperator) {
     "use strict";
 
-    return BaseController.extend("portal.valorizacion.tipocambio.controller.tipoCambio.UploadTipoCambio", {
+    return BaseController.extend("portal.valorizacion.tipocambio.controller.${entity.model.var}.Upload${entity}", {
         handleRouteMatched: function (oEvent) {
             var oParams = {};
             if (oEvent.mParameters.data.context) {
@@ -22,7 +22,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
         },
         saveAll: function(evt){
-            var oModel = this.getView().getModel("uploadTipoCambio");
+            var oModel = this.getView().getModel("upload${entity}");
             var jsonModel = oModel.getData();
             var objParameter=[];
             debugger;
@@ -36,7 +36,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
             debugger;
             var myJSON = JSON.stringify(objParameter);
-            this.doPostPost(objParameter,"tipoCambio/saveMasivo","tipoCambio/findAll","tipoCambio");
+            this.doPostPost(objParameter,"tipoCambio/saveMasivo","tipoCambio/findAll","Detail${entity}");
         },
         uploadStart: function(evt) {
             var tblCatalogos = this.byId('idTblUploadTipoCambio');
@@ -103,8 +103,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         },
         goBack: function(evt){
             this.model = new sap.ui.model.json.JSONModel ({});
-            this.getView().setModel(this.model, "uploadTipoCambio");
-            this.oRouter.navTo("MantenimientoTablas");
+            this.getView().setModel(this.model, "Upload${entity}");
+            this.oRouter.navTo("Main");
             //sessionStorage.setItem("idRowTablaConfigPeriodo","null");
         },
         clearData: function(){
