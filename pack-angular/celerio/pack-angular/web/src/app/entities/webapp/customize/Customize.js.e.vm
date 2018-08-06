@@ -7,6 +7,9 @@ sap.ui.define([
 ], function(Customize, MessageBox, Utilities, Service) {
     "use strict";
     return {
+        doRun: function(context){
+
+        },
         callRest: function(context, entity, nameModel, arg1, arg2){
             debugger;
             var jsonVersion= {

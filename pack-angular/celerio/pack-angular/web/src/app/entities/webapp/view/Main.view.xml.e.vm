@@ -129,6 +129,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml
                 <m:contentLeft/>
                 <m:contentMiddle/>
                 <m:contentRight>
+                	<m:Button text="Ejecutar" type="Accept" icon="sap-icon://media-play" id="btnRun" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="run"/>
                 </m:contentRight>
             </m:Bar>
         </m:footer>

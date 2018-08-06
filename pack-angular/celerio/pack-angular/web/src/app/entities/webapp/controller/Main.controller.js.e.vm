@@ -141,6 +141,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 );
             }
         },
+        run: function(){
+            Customize.doRun(this);
+        },
         onInit: function () {
             //debugger;
             var that = this;
