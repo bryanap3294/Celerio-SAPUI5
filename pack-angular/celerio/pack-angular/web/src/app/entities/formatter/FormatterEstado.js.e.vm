@@ -1,0 +1,28 @@
+sap.ui.define(function() {
+  "use strict";
+
+  var Formatter = {
+
+
+    HREstado :  function (HRE) {
+
+        if (HRE == "Pendiente") {
+          return "Warning";
+        } else if (HRE == "Realizado") {
+          return "Success";
+        } else if (HRE == "Reprogramado") {
+          return "Warning";
+        } else if (HRE == "Cancelado") {
+          return "Error";
+        } else{
+            return "none";
+        }
+    }
+
+  };
+
+
+
+  return Formatter;
+
+}, /* bExport= */ true);

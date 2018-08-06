@@ -1,0 +1,23 @@
+sap.ui.define([
+	"sap/ui/core/format/NumberFormat"
+], function() {
+	"use strict";
+
+	var Formatter = {
+
+		formatValue: function(value) {
+			value = parseFloat(value).toFixed(5);
+			var oNumberFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
+							  maxFractionDigits: 5,
+							  groupingEnabled: true,
+							  groupingSeparator: ",",
+							  decimalSeparator: "."
+							});
+			return oNumberFormat.format(value);
+		}
+
+	};
+
+	return Formatter;
+
+}, /* bExport= */ true);
