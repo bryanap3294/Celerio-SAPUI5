@@ -1,3 +1,4 @@
+$output.file("web/src/app/entities/${entity.model.var}/.project.json")##
 {
   "hcpdeploy": {
     "account": "dd8fca8ff",
