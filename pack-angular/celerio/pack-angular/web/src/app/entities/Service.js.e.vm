@@ -3,7 +3,7 @@ sap.ui.define([
     "./Service",
     "sap/m/MessageBox",
     "../js/utilities"
-], function(MessageBox, Service, Utilities) {
+], function(Service, MessageBox, Utilities) {
     "use strict";
     return {
         doDelete: function(context, uri, index, updateModel, uriModel, nameModel, callFunction, nameFunc, arg){
