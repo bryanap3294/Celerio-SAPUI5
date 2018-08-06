@@ -67,6 +67,38 @@ sap.ui.define([
                 dataType: "json",
                 contentType:"application/json",
                 headers:{"Accept": "application/json"},
+                success: function(result){
+                    console.log(result);
+                    if(callFunction==="Y"){
+                        this.model = new sap.ui.model.json.JSONModel (result);
+                        context.getView().setModel(this.model, name);
+                        var fun= "context."+namefunct+"(arg1,result)";
+                        eval(fun);
+                    }
+                    else{
+                        this.model = new sap.ui.model.json.JSONModel (result);
+                        context.getView().setModel(this.model, name);
+                    }
+                },
+                error: function (e) {
+                    if(e.responseJSON !== undefined){
+                        MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
+                    }else{
+                        console.log("Error:")
+                        console.log(e);
+                    }
+                }
+            });
+        },
+        doPostGetLoading: function (context, model, uri, name, callFunction, namefunct, arg1){
+            jQuery.ajax({
+                context: this,
+                url: Utilities.getDomain() + uri,
+                type:"POST",
+                data: JSON.stringify(model),
+                dataType: "json",
+                contentType:"application/json",
+                headers:{"Accept": "application/json"},
                 beforeSend: function() {
                     context.getView().setBusyIndicatorDelay(0);
                     context.getView().setBusy(true);
@@ -104,10 +136,6 @@ sap.ui.define([
                 contentType : "application/json",
                 url : Utilities.getDomain()+ uri,
                 dataType : "json",
-                beforeSend: function() {
-                    context.getView().setBusyIndicatorDelay(0);
-                    context.getView().setBusy(true);
-                },
                 success : function(data) {
                     if(callFunction==="Y"){
                         this.model = new sap.ui.model.json.JSONModel (data);
@@ -124,12 +152,10 @@ sap.ui.define([
                     if(e.responseJSON !== undefined){
                         MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
                     }else{
-                        MessageBox.alert("Hubo un Error, por favor comuníquese con el administrador del sistema");
+                        //MessageBox.alert("Hubo un Error, por favor comuníquese con el administrador del sistema");
+                        console.log("Error:");
                         console.log(e);
                     }
-                },
-                complete: function() {
-                    context.getView().setBusy(false);
                 }
             });
         },
