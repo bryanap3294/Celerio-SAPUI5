@@ -1,4 +1,4 @@
-$output.file("web/src/app/entities/${entity.model.var}/webapp/css/style.css")##
+$output.file("web/src/app/entities/${entity.model.var}/webapp/css/styles.css")##
 .openItemsImageStrip{
 	height: 100px;
     width: 100%;
