@@ -30,10 +30,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var fnPressEdit${entity} = this.editRow${entity}.bind(this); // Edita
             var fnPressDelete${entity} = this.deleteRow${entity}.bind(this); // Elimina
 			var fnPressDetail${entity} = this.detailRow${entity}.bind(this); // Vista Previa
+			//Verificar porque no permite que agregue >=3 rowAction
 			var itemsRowAction=[];
 			itemsRowAction.push(new sap.ui.table.RowActionItem({icon: "sap-icon://edit", text: "Editar", press: fnPressEdit${entity}});
 			itemsRowAction.push(new sap.ui.table.RowActionItem({icon: "sap-icon://delete", text: "Eliminar", press: fnPressDelete${entity}}));
-			itemsRowAction.push(new sap.ui.table.RowActionItem({icon: "sap-icon://detail-view", text: "Vista Previa", press: fnPressDetail${entity}}));
+			//itemsRowAction.push(new sap.ui.table.RowActionItem({icon: "sap-icon://detail-view", text: "Vista Previa", press: fnPressDetail${entity}}));
             var oTemplate = new sap.ui.table.RowAction({items: itemsRowAction});
             this.byId("idTbl${entity}").setRowActionTemplate(oTemplate);
             this.byId("idTbl${entity}").setRowActionCount(3);
