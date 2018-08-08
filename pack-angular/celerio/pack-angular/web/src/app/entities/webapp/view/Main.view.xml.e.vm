@@ -57,6 +57,43 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml
                     <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
                 </form:layout>
             </form:Form>
+			<form:Form editable="true" visible="true">
+                <form:formContainers>
+                    <form:FormContainer>
+                        <form:formElements>
+                            <form:FormElement>
+                              <html:div>
+                              	<m:HBox>
+                              		<m:VBox justifyContent="Center">
+                              			<m:Label text="Filtro Avanzado :"/>
+                              		</m:VBox>
+                                	<m:HBox justifyContent="Start">
+                                        <m:Switch id="idSwitch${entity}" state="false" customTextOff="Off" customTextOn="On" type="Default" enabled="true" visible="true" change="closeFormSearch${entity}"/>
+                                    </m:HBox>
+                              	</m:HBox>
+                              </html:div>
+                              <html:div>
+                              	<m:HBox justifyContent="Center">
+                              	</m:HBox>
+                              </html:div>
+                              <html:div>
+                              	<m:HBox justifyContent="End">
+                                   <m:Button hAlign="Right" icon="sap-icon://upload" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="uploadExcel${entity}"/>
+                                   <m:Button hAlign="Right" icon="sap-icon://download" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="downloadExcel${entity}"/>
+
+                                   <m:Button hAlign="Right" icon="sap-icon://add" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="add${entity}"/>
+                                   <m:Button id="idBtnSearch${entity}" icon="sap-icon://search" type="Accept" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false" text="Buscar" press="filter$entity"/>
+                                   <m:Button icon="sap-icon://clear-filter" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" text="Limpiar" press="clearFilter$entity"/>
+                                </m:HBox>
+                              </html:div>
+                            </form:FormElement>
+                        </form:formElements>
+                    </form:FormContainer>
+                </form:formContainers>
+                <form:layout>
+                    <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                </form:layout>
+            </form:Form>
             <form:Form>
                 <form:formContainers>
                     <form:FormContainer visible="true">
@@ -75,23 +112,6 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml
                                        enableColumnFreeze="true"
                                        selectionMode="None"
                                        filter="filterByCell">
-                                    <toolbar>
-                                        <m:Toolbar>
-                                            <m:Label text="Filtro Avanzado :"/>
-                                            <m:HBox justifyContent="Start">
-                                                <m:Switch id="idSwitch${entity}" state="false" customTextOff="Off" customTextOn="On" type="Default" enabled="true" visible="true" change="closeFormSearch${entity}"/>
-                                            </m:HBox>
-                                            <m:ToolbarSpacer/>
-                                            <m:HBox justifyContent="End">
-                                                <m:Button hAlign="Right" icon="sap-icon://upload" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="uploadExcel${entity}"/>
-                                                <m:Button hAlign="Right" icon="sap-icon://download" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="downloadExcel${entity}"/>
-
-                                                <m:Button hAlign="Right" icon="sap-icon://add" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="add${entity}"/>
-                                                <m:Button id="idBtnSearch${entity}" icon="sap-icon://search" type="Accept" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false" text="Buscar" press="filter$entity"/>
-                                                <m:Button icon="sap-icon://clear-filter" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" text="Limpiar" press="clearFilter$entity"/>
-                                            </m:HBox>
-                                        </m:Toolbar>
-                                    </toolbar>
                                     <columns>
 										#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 											#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
