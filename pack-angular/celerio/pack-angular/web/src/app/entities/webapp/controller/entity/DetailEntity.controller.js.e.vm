@@ -3,7 +3,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "../../js/utilities",
 	"../../service/Service",
-	"../../customize/Customize",
+	"../../customize/customize",
     "sap/ui/core/routing/History",
     "portal/valorizacion/${entity.model.var.toLowerCase()}/js/moment",
 ], function(BaseController, MessageBox, Utilities, Service, Customize, History) {
