@@ -70,6 +70,11 @@ sap.ui.define([
             };
             Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doPagination", "Y");
         },
+        callDelete: function(context, idRow){
+            var cmbPagination = context.getView().byId("idCmbPagination${entity}");
+            var keySelected = cmbPagination.getSelectedKey();
+            Service.doDelete(context, this.nameEntityVar, idRow, "Y", this, "goPage", keySelected)
+        },
         doPagination: function(context, result, nameModel, arg1){
             var cmbPagination = context.getView().byId("idCmbPagination${entity}");
             cmbPagination.removeAllItems();
@@ -81,22 +86,21 @@ sap.ui.define([
             }
             this.doBefore(context, result, this.nameModel);
         },
-        goPage: function(context, arg){
+        goPage: function(context, selectedKey){
             var that = this;
             var cmbPagination = context.getView().byId("idCmbPagination${entity}");
-            var idSelected = arg.mParameters.selectedItem.mProperties.key;
             var jsonFilter= {};
             jsonFilter = this.getFilters(context);
 
             var jsonPaginated={
                 "example": jsonFilter,
                 "lazyLoadEvent": {
-                    "first": idSelected*10,
+                    "first": selectedKey*10,
                     "rows":10
                 }
             };
             //console.log(JSON.stringify(jsonPaginated));
-            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doBefore", arg);
+            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doBefore");
 
         },
         doBefore: function(context, result, nameModel){

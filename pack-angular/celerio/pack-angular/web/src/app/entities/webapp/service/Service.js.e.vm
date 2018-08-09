@@ -6,15 +6,16 @@ sap.ui.define([
 ], function(Service, MessageBox, Utilities) {
     "use strict";
     return {
-        doDelete: function(context, uri, index, updateModel, uriModel, nameModel, callFunction, nameFunc, arg){
+        doDelete: function(context, uri, idRow, callFunction, contextFunction, nameFunction, arg){
             jQuery.ajax({
                 context : this,
-                url: Utilities.getDomain() + uri +'/'+index,
+                url: Utilities.getDomain() + uri +'/'+idRow,
                 type: 'DELETE',
                 success: function(result) {
-                    console.log("Se eliminó correctamente id:"+index);
-                    if(updateModel==="Y"){
-                        this.doGet(context,uriModel,nameModel, callFunction, nameFunc, arg);
+                    console.log("Se eliminó correctamente id:"+idRow);
+                    if(callFunction==="Y"){
+                        var fun= "contextFunction."+nameFunction+"(context, arg)";
+                        eval(fun);
                     }
                 },
                 error: function(e){

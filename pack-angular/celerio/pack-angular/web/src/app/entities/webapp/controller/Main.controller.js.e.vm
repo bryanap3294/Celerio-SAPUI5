@@ -68,7 +68,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 function(oAction){
                     switch(oAction){
                         case 'YES':
-                            Service.doDelete("${entity.model.var}",idRow,"Y","${entity.model.var}/findAll","${entity}List");
+                            Customize.callDelete(that, idRow);
                         case 'NO':
                             break;
                     }
@@ -136,7 +136,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
         },
         onSelectPage: function(arg){
-            Customize.goPage(this, arg);
+            //debugger;
+            var selectedKey= arg.mParameters.selectedItem.mProperties.key;
+            Customize.goPage(this, selectedKey);
         },
         run: function(){
             Customize.doRun(this);
