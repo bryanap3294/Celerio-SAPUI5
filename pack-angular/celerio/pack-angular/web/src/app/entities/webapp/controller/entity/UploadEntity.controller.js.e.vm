@@ -10,6 +10,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "use strict";
 
     return BaseController.extend("portal.valorizacion.tipocambio.controller.${entity.model.var}.Upload${entity}", {
+        nameEntity: "${entity}",
+        nameEntityVar: "${entity.model.var}",
+        nameModel: "${entity}List",
+        nameModelUpload: "Upload${entity}List",
         handleRouteMatched: function (oEvent) {
             var oParams = {};
             if (oEvent.mParameters.data.context) {

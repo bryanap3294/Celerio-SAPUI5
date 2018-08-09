@@ -15,6 +15,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
     return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.Main", {
         fieldsList: [],
+        nameEntity: "${entity}",
+        nameEntityVar: "${entity.model.var}",
+        nameModel: "${entity}List",
+        nameModelUpload: "Upload${entity}List",
 		handleRouteMatched: function (oEvent) {
             var oParams = {};
             if (oEvent.mParameters.data.context) {
@@ -142,6 +146,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 );
             }
         },
+        onSelectPage: function(arg){
+            Customize.goPage(this, arg);
+        },
         run: function(){
             Customize.doRun(this);
         },
@@ -157,7 +164,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						#set( $listFields = [] )
 						#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 							#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-								#set(${listFields} = ${listFields.add(${attribute.var})})
+							    #if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+								    #set(${listFields} = ${listFields.add(${attribute.var})})
+								#end
 							#end
 						#end
 
@@ -175,7 +184,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						Service.doGet(this,"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "getVersion",this.fieldList);
 						#else
 
-						Customize.callRest(this, "${entity.model.var}", "${entity}List", this.fieldList);
+						Customize.callRest(this, "${entity.model.var}", this.nameModel, this.fieldList);
 						console.log(this.getView());
 						#end
 
