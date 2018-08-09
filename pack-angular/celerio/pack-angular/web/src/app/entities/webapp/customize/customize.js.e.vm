@@ -12,13 +12,33 @@ sap.ui.define([
         },
         callRest: function(context, entity, nameModel, arg1, arg2){
             debugger;
-            var jsonVersion= {
-                "version":"R"
-            };
-            Service.doPostGet(context, jsonVersion, entity+"/find", nameModel);
+            //var jsonVersion= {
+            //    "version":"R"
+            //};
+            var jsonPaginated={
+                "example": {
+                },
+                "lazyLoadEvent": {
+                    "first": 0,
+                    "rows":10
+                    }
+                };
+            //Service.doPostGet(context, jsonVersion, entity+"/find", nameModel);
+            Service.doPostGetLoading(context, jsonPaginated, entity+"/findPaginated", nameModel, "Y", this, "doPagination", arg1);
         },
         callFilter: function(context, jsonFilter){
             //No olvidar que si la tabla tiene versión, los filtros tambien la deben tener
+
+        },
+        doPagination: function(context, result, nameModel, arg1){
+            var cmbPagination = context.getView().byId("idCmbPagination${entity}");
+            for(var i=0; i<result["totalPages"]; i++){
+                cmbPagination.addItem(new sap.ui.core.Item({key:i,text:i+1}));
+            }
+            this.model = new sap.ui.model.json.JSONModel (result.content);
+            context.getView().setModel(this.model, nameModel);
+        },
+        doBefore: function(context, nameEntity){
 
         },
         doBeforeNew: function(context, entity){

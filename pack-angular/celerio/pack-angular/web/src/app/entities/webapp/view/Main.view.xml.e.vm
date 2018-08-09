@@ -73,8 +73,21 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml
                               	</m:HBox>
                               </html:div>
                               <html:div>
-                              	<m:HBox justifyContent="Center">
-                              	</m:HBox>
+                              	<m:HBox justifyContent="Start">
+                                    <m:VBox justifyContent="Center">
+                                    	<m:Label text="Pagina :"/>
+                                    </m:VBox>
+                                    <m:HBox justifyContent="Start">
+                                    	<m:ComboBox id="idCmbPagination${entity}"
+                                    				selectionChange="onSelectPage"
+                                    				editable="true"
+                                    				enabled="true"
+                                    				visible="true"
+                                    				width="50%"
+                                    				valueState="None">
+                                    	</m:ComboBox>
+                                    </m:HBox>
+                                </m:HBox>
                               </html:div>
                               <html:div>
                               	<m:HBox justifyContent="End">

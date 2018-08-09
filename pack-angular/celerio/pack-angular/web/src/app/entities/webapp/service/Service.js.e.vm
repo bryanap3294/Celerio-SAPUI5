@@ -90,7 +90,7 @@ sap.ui.define([
                 }
             });
         },
-        doPostGetLoading: function (context, model, uri, name, callFunction, namefunct, arg1){
+        doPostGetLoading: function (context, model, uri, nameModel, callFunction, contextFunction, nameFunction, arg1){
             jQuery.ajax({
                 context: this,
                 url: Utilities.getDomain() + uri,
@@ -107,13 +107,13 @@ sap.ui.define([
                     console.log(result);
                     if(callFunction==="Y"){
                         this.model = new sap.ui.model.json.JSONModel (result);
-                        context.getView().setModel(this.model, name);
-                        var fun= "context."+namefunct+"(arg1,result)";
+                        context.getView().setModel(this.model, nameModel);
+                        var fun= "contextFunction."+nameFunction+"(context, result, nameModel, arg1)";
                         eval(fun);
                     }
                     else{
                         this.model = new sap.ui.model.json.JSONModel (result);
-                        context.getView().setModel(this.model, name);
+                        context.getView().setModel(this.model, nameModel);
                     }
                 },
                 complete: function() {
