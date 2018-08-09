@@ -99,21 +99,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 this.getView().byId("idBtnSearch${entity}").setVisible(false);
             }
         },
-		filter${entity}: function(oEvent){
-			debugger;
-            var jsonFilter = {};
-			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
-				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-				    #if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
-
-			jsonFilter["${attribute.var}"]=this.getView().byId("txt${entity}${attribute.var}").getValue();
-					#end
-				#end
-			#end
-
-            console.log(jsonFilter);
-			Customize.callFilter(this, jsonFilter);
-            //Service.doPostGet(this.getView(),json,"${entity.model.var}/find", "${entity}List");
+		filter${entity}: function(){
+			Customize.callFilter(this);
         },
         getVersion: function (arg1, arg2){
 			sessionStorage.setItem("idVersion", arg1.version);
