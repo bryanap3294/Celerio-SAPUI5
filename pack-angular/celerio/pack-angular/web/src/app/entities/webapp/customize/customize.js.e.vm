@@ -49,10 +49,34 @@ sap.ui.define([
         },
         callFilter: function(context, jsonFilter){
             //No olvidar que si la tabla tiene versión, los filtros tambien la deben tener
+            var that = this;
+            var jsonExample= {};
 
+            this.fieldList.map(function(f){
+                var nameField = "txt"+that.nameEntity+f;
+                var objectField= context.getView().byId(nameField);
+                if(objectField !== undefined){
+                    if(objectField.getValue()===""){
+                        jsonExample[f]=null;
+                    }else{
+                        jsonExample[f]=objectField.getValue();
+                    }
+                }
+            });
+            jsonExample["version"]=sessionStorage.getItem("idVersion");
+
+            var jsonPaginated={
+                "example": jsonExample,
+                "lazyLoadEvent": {
+                    "first": 0,
+                    "rows":10
+                }
+            };
+            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doPagination");
         },
         doPagination: function(context, result, nameModel, arg1){
             var cmbPagination = context.getView().byId("idCmbPagination${entity}");
+            cmbPagination.removeAllItems();
             for(var i=0; i<result["totalPages"]; i++){
                 cmbPagination.addItem(new sap.ui.core.Item({key:i,text:i+1}));
             }

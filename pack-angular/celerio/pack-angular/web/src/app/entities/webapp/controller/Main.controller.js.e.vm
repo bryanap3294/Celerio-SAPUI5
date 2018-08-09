@@ -104,12 +104,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var jsonFilter = {};
 			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+				    #if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 
-					jsonFilter["${attribute.var}"]=this.getView().byId("txt${entity}${attribute.var}").getValue();
+			jsonFilter["${attribute.var}"]=this.getView().byId("txt${entity}${attribute.var}").getValue();
+					#end
 				#end
 			#end
 
-            console.log(json);
+            console.log(jsonFilter);
 			Customize.callFilter(this, jsonFilter);
             //Service.doPostGet(this.getView(),json,"${entity.model.var}/find", "${entity}List");
         },
