@@ -15,6 +15,22 @@ sap.ui.define([
         doRun: function(context){
 
         },
+        getFilters: function(context){
+            var that = this;
+            var jsonFilter={};
+            this.fieldList.map(function(f){
+                var nameField = "txt"+that.nameEntity+f;
+                var objectField= context.getView().byId(nameField);
+                if(objectField !== undefined){
+                    if(objectField.getValue()===""){
+                        jsonFilter[f]=null;
+                    }else{
+                        jsonFilter[f]=objectField.getValue();
+                    }
+                }
+            });
+            return jsonFilter;
+        },
         callRest: function(context, nameEntityVar, nameModel, arg1, arg2){
             var that = this;
             this.fieldList= arg1;
@@ -23,18 +39,7 @@ sap.ui.define([
             //    "version":"R"
             //};
             var jsonExample= {};
-
-            this.fieldList.map(function(f){
-                var nameField = "txt"+that.nameEntity+f;
-                var objectField= context.getView().byId(nameField);
-                if(objectField !== undefined){
-                    if(objectField.getValue()===""){
-                        jsonExample[f]=null;
-                    }else{
-                        jsonExample[f]=objectField.getValue();
-                    }
-                }
-            });
+            jsonExample = this.getFilters(context);
 
             var jsonPaginated={
                 "example": jsonExample,
@@ -51,18 +56,7 @@ sap.ui.define([
             //No olvidar que si la tabla tiene versión, los filtros tambien la deben tener
             var that = this;
             var jsonExample= {};
-
-            this.fieldList.map(function(f){
-                var nameField = "txt"+that.nameEntity+f;
-                var objectField= context.getView().byId(nameField);
-                if(objectField !== undefined){
-                    if(objectField.getValue()===""){
-                        jsonExample[f]=null;
-                    }else{
-                        jsonExample[f]=objectField.getValue();
-                    }
-                }
-            });
+            jsonExample = this.getFilters(context);
             jsonExample["version"]=sessionStorage.getItem("idVersion");
 
             var jsonPaginated={
@@ -87,17 +81,7 @@ sap.ui.define([
             var cmbPagination = context.getView().byId("idCmbPagination${entity}");
             var idSelected = arg.mParameters.selectedItem.mProperties.key;
             var jsonExample= {};
-            this.fieldList.map(function(f){
-                var nameField = "txt"+that.nameEntity+f;
-                var objectField= context.getView().byId(nameField);
-                if(objectField !== undefined){
-                    if(objectField.getValue()===""){
-                        jsonExample[f]=null;
-                    }else{
-                        jsonExample[f]=objectField.getValue();
-                    }
-                }
-            });
+            jsonExample = this.getFilters(context);
 
             var jsonPaginated={
                 "example": jsonExample,
