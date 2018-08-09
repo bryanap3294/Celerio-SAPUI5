@@ -102,6 +102,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		filter${entity}: function(){
 			Customize.callFilter(this);
         },
+        clearFilterAppParametria: function(){
+            Customize.clearFilter(this);
+        },
         getVersion: function (arg1, arg2){
 			sessionStorage.setItem("idVersion", arg1.version);
         	var descVersion="";

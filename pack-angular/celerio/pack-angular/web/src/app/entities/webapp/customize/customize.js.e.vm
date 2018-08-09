@@ -70,6 +70,27 @@ sap.ui.define([
             };
             Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doPagination", "Y");
         },
+        clearFilter: function(context){
+            var that = this;
+            this.fieldList.map(function(f){
+                var nameField = "txt"+that.nameEntity+f;
+                var objectField= context.getView().byId(nameField);
+                if(objectField !== undefined){
+                    objectField.setValue(null);
+                }
+            });
+            var jsonFilter= {};
+            jsonFilter = this.getFilters(context);
+            jsonFilter["version"]=sessionStorage.getItem("idVersion");
+            var jsonPaginated={
+                "example": jsonFilter,
+                "lazyLoadEvent": {
+                    "first": 0,
+                    "rows":10
+                }
+            };
+            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doPagination", "Y");
+        },
         callDelete: function(context, idRow){
             var cmbPagination = context.getView().byId("idCmbPagination${entity}");
             var keySelected = cmbPagination.getSelectedKey();
