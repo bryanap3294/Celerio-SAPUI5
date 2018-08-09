@@ -40,11 +40,13 @@ sap.ui.define([
             //};
             var jsonExample= {};
             jsonExample = this.getFilters(context);
+            var cmbPagination = context.getView().byId("idCmbPagination${entity}");
+            var selectedKey= cmbPagination.getSelectedKey();
 
             var jsonPaginated={
                 "example": jsonExample,
                 "lazyLoadEvent": {
-                    "first": 0,
+                    "first": selectedKey*10,
                     "rows":10
                     }
                 };
@@ -66,13 +68,16 @@ sap.ui.define([
                     "rows":10
                 }
             };
-            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doPagination");
+            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doPagination", "Y");
         },
         doPagination: function(context, result, nameModel, arg1){
             var cmbPagination = context.getView().byId("idCmbPagination${entity}");
             cmbPagination.removeAllItems();
             for(var i=0; i<result["totalPages"]; i++){
                 cmbPagination.addItem(new sap.ui.core.Item({key:i,text:i+1}));
+            }
+            if(arg1==="Y"){
+                cmbPagination.setSelectedItem(null);
             }
             this.doBefore(context, result, this.nameModel);
         },
