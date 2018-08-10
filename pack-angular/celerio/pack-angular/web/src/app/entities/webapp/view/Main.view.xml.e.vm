@@ -110,9 +110,6 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml
             <form:Form>
                 <form:formContainers>
                     <form:FormContainer visible="true">
-                        <form:title>
-                            <!--<core:Title text="Lista de Coordinadores de Viaje" level="Auto" icon="sap-icon://legend"/>-->
-                        </form:title>
                         <form:formElements>
                             <form:FormElement visible="true">
                                 <Table id="idTbl${entity}"

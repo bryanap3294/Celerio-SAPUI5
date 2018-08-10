@@ -52,7 +52,7 @@ sap.ui.define([
                 };
             //console.log(JSON.stringify(jsonPaginated));
             //Service.doPostGet(context, jsonVersion, nameEntityVar+"/find", nameModel);
-            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doPagination", arg1);
+            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doPagination", selectedKey);
         },
         callFilter: function(context){
             //No olvidar que si la tabla tiene versión, los filtros tambien la deben tener
@@ -104,6 +104,8 @@ sap.ui.define([
             }
             if(arg1==="Y"){
                 cmbPagination.setSelectedItem(null);
+            }else{
+                cmbPagination.setSelectedKey(arg1);
             }
             this.doBefore(context, result, this.nameModel);
         },
