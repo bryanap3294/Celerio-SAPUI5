@@ -10,6 +10,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "use strict";
 
     return BaseController.extend("portal.valorizacion.tipocambio.controller.${entity.model.var}.Upload${entity}", {
+        fieldList: [],
         nameEntity: "${entity}",
         nameEntityVar: "${entity.model.var}",
         nameModel: "${entity}List",

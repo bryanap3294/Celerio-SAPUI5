@@ -7,7 +7,7 @@ sap.ui.define([
 ], function(Customize, MessageBox, Utilities, Service) {
     "use strict";
     return {
-        fieldsList: [],
+        fieldList: [],
         nameEntity: "${entity}",
         nameEntityVar: "${entity.model.var}",
         nameModel: "${entity}List",

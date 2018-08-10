@@ -14,7 +14,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "use strict";
 
     return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.Main", {
-        fieldsList: [],
+        fieldList: [],
         nameEntity: "${entity}",
         nameEntityVar: "${entity.model.var}",
         nameModel: "${entity}List",
@@ -158,7 +158,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						#set( $listFields = [] )
 						#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 							#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-							    #if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+							    #if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 								    #set(${listFields} = ${listFields.add(${attribute.var})})
 								#end
 							#end

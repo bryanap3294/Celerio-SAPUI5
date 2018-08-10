@@ -10,6 +10,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "use strict";
 
     return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Detail${entity}", {
+        fieldList: [],
         nameEntity: "${entity}",
         nameEntityVar: "${entity.model.var}",
         nameModel: "${entity}List",
