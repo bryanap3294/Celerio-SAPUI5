@@ -28,26 +28,30 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 }
             }
         },
+        getObjectFields: function(context){
+            var that = this;
+            var jsonFieldList=[];
+            this.fieldList.map(function(f){
+                var idField = "txt"+f;
+                var objectField= context.getView().byId(idField);
+                if(objectField !== undefined){
+                    jsonFieldList.push({"nameField": f, "objectField": objectField});
+                }
+            });
+            return jsonFieldList;
+        },
         putFields: function(arg1,arg2, f){
             debugger;
-			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
-				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-					#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
-
-			this.getView().byId("txt${attribute.var}").setValue(arg1.${attribute.var});
-					#end
-				#end
-			#end
+            var jsonFieldList = this.getObjectFields(this);
+            jsonFieldList.map(function(o){
+                o["objectField"].setValue(arg1[o["nameField"]]);
+            });
         },
         removerEstilos: function() {
-			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
-				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-					#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
-
-			Utilities.removerStateError(this.getView().byId("txt${attribute.var}"));
-					#end
-				#end
-			#end
+			var jsonFieldList = this.getObjectFields(this);
+            jsonFieldList.map(function(o){
+                Utilities.removerStateError(o["objectField"]);
+            });
         },
 		validarDatos: function(oArg){
             debugger;
@@ -58,36 +62,24 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.removerEstilos();
 
             /* Realizando validaciones */
-			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
-				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-					#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
-						#if(${attribute.isNotNullable()})
-
-			validar = Utilities.validarRequerido(this.getView().byId("txt${attribute.var}"),'T');
-			if (!validar)
-				requiredEmpty =1;
-						#end
-					#end
-				#end
-			#end
-
+			var jsonFieldList = this.getObjectFields(this);
+            jsonFieldList.map(function(o){
+                validar = Utilities.validarRequerido(o["objectField"],'T');
+                if (!validar)
+                    requiredEmpty =1;
+            });
             return requiredEmpty;
         },
         saveData: function(evt){
 			var validar = this.validarDatos();
             if(validar  === 0){
                 var json={};
-				#foreach (${attribute} in ${entity.nonCpkAttributes.list})
-				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-					#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
-
-				json["${attribute.var}"]=this.getView().byId("txt${attribute.var}").getValue();
-					#end
-				#end
-				#end
-
+				var jsonFieldList = this.getObjectFields(this);
+                jsonFieldList.map(function(o){
+                    json[o["nameField"]]=o["objectField"].getValue();
+                });
                 json["fechaCreacion"]=1526533200000;
-                json["usuarioCreacion"]="Bryan Aguilar";
+                json["usuarioCreacion"]="USUARIO";
 
                 var s = sessionStorage.getItem("update");
                 if(s==="1"){
@@ -97,7 +89,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     var myJSON = JSON.stringify(json);
                     Service.doPostPost(this, json,"${entity.model.var}/save","${entity.model.var}/findAll","${entity}List");
                 }else{
-                    json["usuarioCreacion"]="Bryan Aguilar";
+                    json["usuarioCreacion"]="USUARIO";
                     debugger;
                     var myJSON = JSON.stringify(json);
                     Service.doPostPost(this, json,"${entity.model.var}/create","${entity.model.var}/findAll","${entity}List");
@@ -110,14 +102,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.oRouter.navTo("Main");
         },
         clearData: function(){
-			#foreach (${attribute} in ${entity.nonCpkAttributes.list})
-				#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-					#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
-
-				this.getView().byId("txt${attribute.var}").setValue(null);
-					#end
-				#end
-			#end
+			var jsonFieldList = this.getObjectFields(this);
+            jsonFieldList.map(function(o){
+                o["objectField"].setValue(null);
+            });
         },
         onInit: function () {
             var that = this;
@@ -127,6 +115,20 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.getView().addDelegate(
                 {
                     onBeforeShow: function (e) {
+                        #set( $listFields = [] )
+                        #foreach (${attribute} in ${entity.nonCpkAttributes.list})
+                        	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+                        	    #if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+                        		    #set(${listFields} = ${listFields.add(${attribute.var})})
+                        		#end
+                        	#end
+                        #end
+
+                        var listFields = "${listFields}";
+                        var sizeFields = listFields.length;
+                        listFields = listFields.substr(1, sizeFields-2);
+                        listFields = listFields.split(", ");
+                        this.fieldList = listFields;
                         this.removerEstilos();
                         var typeForm${entity} = sessionStorage.getItem("typeForm${entity}");
                         Service.doGet(this,"appParametria/_getListaPais","ListaPais");
@@ -136,19 +138,21 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                         Service.doGet(this,"appParametria/_getListaMes","ListaMes");
 
 						switch(typeForm${entity}){
-							case "0":
+							case "0": //New
 							that.clearData();
 							Customize.doBeforeNew(this, "${entity}");
+                            sessionStorage.setItem("update",0);
+                            sessionStorage.setItem("typeFormAppParametria",0);
 							break;
-							case "1":
+							case "1": //Detail Update
 							Service.doGetLoading(this,
                                 "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", "putFields");
                             sessionStorage.setItem("typeForm${entity}",0);
                             sessionStorage.setItem("update",1);
 							break;
-							case "2":
-							that.clearData();
+							case "2": // Detail
 							Customize.doBeforeDetail(this, "${entity}");
+							sessionStorage.setItem("typeFormAppParametria",0);
 							break;
 						}
                     }

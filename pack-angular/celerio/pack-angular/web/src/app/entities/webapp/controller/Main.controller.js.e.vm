@@ -44,6 +44,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.byId("idTbl${entity}").setRowActionCount(3);
         },
 		add${entity}: function(oEvent){
+		    sessionStorage.setItem("typeFormAppParametria",0);
             this.oRouter.navTo("Detail${entity}");
         },
 		editRow${entity}: function(oArg){
