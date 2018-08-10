@@ -132,6 +132,13 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/manifest.json")##
                 	"viewId": "Upload${entity}",
                 	"viewLevel": 1,
                 	"transition": "slide"
+                },
+                "Result${entity}": {
+                	"controlAggregation": "pages",
+                	"viewName": "${entity.model.var}.Result${entity}",
+                	"viewId": "Result${entity}",
+                	"viewLevel": 1,
+                	"transition": "slide"
                 }
 			},
 			"routes": [
@@ -161,6 +168,13 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/manifest.json")##
                 	"name": "Upload${entity}",
                 	"target": [
                 		"Upload${entity}"
+                	]
+                },
+                {
+                	"pattern": "Result${entity}/:context:",
+                	"name": "Result${entity}",
+                	"target": [
+                		"Result${entity}"
                 	]
                 }
 			]

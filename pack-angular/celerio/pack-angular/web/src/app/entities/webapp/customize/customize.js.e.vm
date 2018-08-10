@@ -13,7 +13,7 @@ sap.ui.define([
         nameModel: "${entity}List",
         nameModelUpload: "Upload${entity}List",
         doRun: function(context){
-
+            context.oRouter.navTo("Result${entity}");
         },
         getFilters: function(context){
             var that = this;
