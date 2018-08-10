@@ -28,10 +28,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 }
             }
         },
-        getObjectFields: function(context){
+        getObjectFields: function(context, fieldList){
             var that = this;
             var jsonFieldList=[];
-            this.fieldList.map(function(f){
+            fieldList.map(function(f){
                 var idField = "txt"+f;
                 var objectField= context.getView().byId(idField);
                 if(objectField !== undefined){
@@ -42,13 +42,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         },
         putFields: function(arg1,arg2, f){
             debugger;
-            var jsonFieldList = this.getObjectFields(this);
+            var jsonFieldList = this.getObjectFields(this, this.fieldList);
             jsonFieldList.map(function(o){
                 o["objectField"].setValue(arg1[o["nameField"]]);
             });
         },
         removerEstilos: function() {
-			var jsonFieldList = this.getObjectFields(this);
+			var jsonFieldList = this.getObjectFields(this, this.fieldList);
             jsonFieldList.map(function(o){
                 Utilities.removerStateError(o["objectField"]);
             });
@@ -60,9 +60,24 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
             /* Removiendo estilos */
             this.removerEstilos();
+            #set( $listFieldsNotNull = [] )
+            #foreach (${attribute} in ${entity.nonCpkAttributes.list})
+            	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+            	    #if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+            		    #if(${attribute.isNotNullable()})
+            		        #set(${listFieldsNotNull} = ${listFieldsNotNull.add(${attribute.var})})
+            		    #end
+            		#end
+            	#end
+            #end
+
+            var listFieldsNotNull = "${listFieldsNotNull}";
+            var sizeFieldsNotNull = listFieldsNotNull.length;
+            listFieldsNotNull = listFieldsNotNull.substr(1, sizeFieldsNotNull-2);
+            listFieldsNotNull = listFieldsNotNull.split(", ");
 
             /* Realizando validaciones */
-			var jsonFieldList = this.getObjectFields(this);
+			var jsonFieldList = this.getObjectFields(this, listFieldsNotNull);
             jsonFieldList.map(function(o){
                 validar = Utilities.validarRequerido(o["objectField"],'T');
                 if (!validar)
@@ -74,7 +89,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var validar = this.validarDatos();
             if(validar  === 0){
                 var json={};
-				var jsonFieldList = this.getObjectFields(this);
+				var jsonFieldList = this.getObjectFields(this, this.fieldList);
                 jsonFieldList.map(function(o){
                     json[o["nameField"]]=o["objectField"].getValue();
                 });
@@ -102,7 +117,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.oRouter.navTo("Main");
         },
         clearData: function(){
-			var jsonFieldList = this.getObjectFields(this);
+			var jsonFieldList = this.getObjectFields(this, this.fieldList);
             jsonFieldList.map(function(o){
                 o["objectField"].setValue(null);
             });
