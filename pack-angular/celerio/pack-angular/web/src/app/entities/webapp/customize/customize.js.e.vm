@@ -107,9 +107,8 @@ sap.ui.define([
             Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "timeFormat", "Y");
         },
         callDelete: function(context, idRow){
-            //var cmbPagination = context.getView().byId("idCmbPagination${entity}");
-            //var keySelected = cmbPagination.getSelectedKey();
-            //Service.doDelete(context, this.nameEntityVar, idRow, "Y", this, "goPage", keySelected)
+            var txtPage=context.getView().byId("txtPage");
+            Service.doDelete(context, this.nameEntityVar, idRow, "Y", this, "goPage")
         },
         goPage: function(context, numberPage){
             var jsonFilter= {};

@@ -165,7 +165,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         goPage: function(arg){;
             var lblNumPages = this.getView().byId("lblNumPages");
         	var txtPage = this.getView().byId("txtPage");
-        	if(txtPage.getValue()<0 || txtPage.getValue()>lblNumPages.getText()){
+        	if(txtPage.getValue()<0 || +(txtPage.getValue())>+(lblNumPages.getText())){
             	MessageBox.alert("No se puede ir a la pagina que usted desea");
             	txtPage.setValue(1);
             	var numberPage = txtPage.getValue();
@@ -209,7 +209,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.getView().addDelegate(
                 {
                     onBeforeShow: function (e) {
-
 						var listFields = "${listFields}";
 						var sizeFields = listFields.length;
 						listFields = listFields.substr(1, sizeFields-2);
@@ -219,16 +218,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						Service.doGet(this,"appParametria/_getListaCategoria","ListaCategoria");
 						Service.doGet(this,"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
 						Service.doGet(this,"appParametria/_getListaMes","ListaMes");
-						#if (${listFields.contains("version")})
-
-						Service.doGet(this,"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "getVersion",this.fieldList);
-						#else
-
-						Customize.callRest(this, "${entity.model.var}", this.nameModel, this.fieldList);
+						#if (${listFields.contains("version")})##
+#*				      *#Service.doGet(this,"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "getVersion",this.fieldList);
+						#else##
+#*					  *#Customize.callRest(this, "${entity.model.var}", this.nameModel, this.fieldList);
 						console.log(this.getView());
-						#end
-
-                    }
+						#end##
+#*                *#}
                 },that
             );
 
