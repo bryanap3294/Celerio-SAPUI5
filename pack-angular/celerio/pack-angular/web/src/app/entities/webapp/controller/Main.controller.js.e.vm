@@ -162,7 +162,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         	txtPage.setValue(numberPage);
         	Customize.goPage(this, numberPage);
         },
-        goPage: function(arg){;
+        goPage: function(arg){
             var lblNumPages = this.getView().byId("lblNumPages");
         	var txtPage = this.getView().byId("txtPage");
         	if(txtPage.getValue()<0 || +(txtPage.getValue())>+(lblNumPages.getText())){

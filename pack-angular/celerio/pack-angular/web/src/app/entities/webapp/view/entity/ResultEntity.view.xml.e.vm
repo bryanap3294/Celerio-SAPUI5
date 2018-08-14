@@ -34,9 +34,9 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                 <form:formContainers>
 					#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 						#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-							#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+							#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))##
 
-							<form:FormContainer>
+                            <form:FormContainer>##
 								<form:formElements>
 									<form:FormElement>
 										<form:label>
@@ -50,7 +50,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
 							</form:FormContainer>
 							#end
 						#end
-					#end
+					#end##
 
                 </form:formContainers>
                 <form:layout>
@@ -73,26 +73,191 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                        selectionMode="None"
                                        filter="filterByCell">
                                     <columns>
-										#foreach (${attribute} in ${entity.nonCpkAttributes.list})
-											#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-												#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
-
-												<Column width="10rem"
-														hAlign="Left">
-													<multiLabels>
-														<m:ObjectStatus
-																icon=""
-																text="${attribute.var}"
-																state="none" />
-													</multiLabels>
-													<template>
-														<m:Text text="{${entity}List>${attribute.var}}" />
-													</template>
-												</Column>
-												#end
-											#end
-										#end
-
+										<Column width="7rem"
+										        mergeDuplicates="true"
+                                                sortProperty="nroRegistrosRFC">
+                                            <multiLabels>
+                                            	<m:Label text=""/>
+                                                <m:ObjectStatus
+                                                        text="Registros RFC"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/nroRegistrosRFC}" textDirection="RTL"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="9rem"
+                                                mergeDuplicates="true"
+                                                sortProperty="nroRegistrosErroresRFC">
+                                            <multiLabels>
+                                            	<m:Label text=""/>
+                                                <m:ObjectStatus
+                                                        text="Registros con errores RFC"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/nroRegistrosErroresRFC}" textDirection="RTL"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="9rem"
+                                                mergeDuplicates="true"
+                                                sortProperty="nroRegistrosGrabadosSCP">
+                                            <multiLabels>
+                                            	<m:Label text=""/>
+                                                <m:ObjectStatus
+                                                        text="Registros grabados en SCP"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/nroRegistrosGrabadosSCP}" textDirection="RTL"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="10rem"
+                                                mergeDuplicates="true"
+                                                sortProperty="nroRegistrosErroresSCP">
+                                            <multiLabels>
+                                            	<m:Label text=""/>
+                                                <m:ObjectStatus
+                                                        text="Registros con errores SCP"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>resultado/nroRegistrosErroresSCP}" textDirection="RTL"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="6rem"
+                                        		mergeDuplicates="true"
+                                        		id="multiheaderRFC"
+                                                sortProperty="fechaInicioRFC">
+                                            <multiLabels>
+                                            	<m:Label text="Función RFC" textAlign="Center" width="100%"/>
+                                                <m:ObjectStatus
+                                                        text="Inicio RFC"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/fechaInicioRFC}"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="6rem"
+                                                mergeDuplicates="true"
+                                                sortProperty="fechaFinRFC">
+                                            <multiLabels>
+                                            	<m:Label text=""/>
+                                                <m:ObjectStatus
+                                                        text="Fin RFC"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/fechaFinRFC}"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="7rem"
+                                                mergeDuplicates="true"
+                                                sortProperty="duracionRFC">
+                                            <multiLabels>
+                                            	<m:Label text=""/>
+                                                <m:ObjectStatus
+                                                        text="Duración RFC (seg)"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/duracionRFC}" textDirection="RTL"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="6rem"
+                                        		mergeDuplicates="true"
+                                        		id="multiheaderSCP"
+                                                sortProperty="fechaInicioSCP">
+                                            <multiLabels>
+                                            	<m:Label text="SAP SCP" textAlign="Center" width="100%"/>
+                                                <m:ObjectStatus
+                                                        text="Inicio SCP"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/fechaInicioSCP}"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="6rem"
+                                                mergeDuplicates="true"
+                                                sortProperty="fechaFinSCP">
+                                            <multiLabels>
+                                            	<m:Label text=""/>
+                                                <m:ObjectStatus
+                                                        text="Fin SCP"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/fechaFinSCP}"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="7rem"
+                                                mergeDuplicates="true"
+                                                sortProperty="duracionSCP">
+                                            <multiLabels>
+                                            	<m:Label text=""/>
+                                                <m:ObjectStatus
+                                                        text="Duracion SCP (seg)"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/duracionSCP}" textDirection="RTL"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="7rem"
+                                        		mergeDuplicates="true"
+                                        		id="multiheaderStoreSCP"
+                                                sortProperty="fechaInicioStoreSP">
+                                            <multiLabels>
+                                            	<m:Label text="Store Procedure" textAlign="Center" width="100%"/>
+                                                <m:ObjectStatus
+                                                        text="Inicio Store SP"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/fechaInicioStoreSP}"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="7rem"
+                                                mergeDuplicates="true"
+                                                sortProperty="fechaFinStoreSP">
+                                            <multiLabels>
+                                            	<m:Label text=""/>
+                                                <m:ObjectStatus
+                                                        text="Fin Store SP"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/fechaFinStoreSP}"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="9rem"
+                                                mergeDuplicates="true"
+                                                sortProperty="duracionStoreSP">
+                                            <multiLabels>
+                                            	<m:Label text=""/>
+                                                <m:ObjectStatus
+                                                        text="Duracion Store SP (seg)"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/duracionStoreSP}" textDirection="RTL"/>
+                                            </template>
+                                        </Column>
+                                        <Column width="15rem"
+                                                mergeDuplicates="true"
+                                                sortProperty="mensaje">
+                                            <multiLabels>
+                                            	<m:Label text=""/>
+                                                <m:ObjectStatus
+                                                        text="Mensaje"
+                                                        state="none" />
+                                            </multiLabels>
+                                            <template>
+                                                <m:Text text="{ValorTransaccionalResultList>/resultado/mensaje}"/>
+                                            </template>
+                                        </Column>
                                     </columns>
                                 </Table>
                             </form:FormElement>
