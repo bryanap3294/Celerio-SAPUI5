@@ -161,6 +161,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							break;
 							case "1": //Detail Update
 							that.clearData();
+							Customize.doBeforeUpdate(this, this.fieldList);
 							Service.doGetLoading(this,
                                 "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", "putFields");
                             sessionStorage.setItem("typeForm${entity}",0);

@@ -51,7 +51,6 @@ sap.ui.define([
             	txtPage.setValue(1);
             }
             var numberPage= txtPage.getValue()-1;
-
             var jsonPaginated={
                 "example": jsonFilter,
                 "lazyLoadEvent": {
@@ -73,6 +72,8 @@ sap.ui.define([
             jsonFilter["version"]=sessionStorage.getItem("idVersion");
             #end
 
+            var txtPage=context.getView().byId("txtPage");
+            txtPage.setValue(1);
             var jsonPaginated={
                 "example": jsonFilter,
                 "lazyLoadEvent": {
@@ -94,6 +95,8 @@ sap.ui.define([
             var jsonFilter= {};
             jsonFilter = this.getFilters(context);
             jsonFilter["version"]=sessionStorage.getItem("idVersion");
+            var txtPage=context.getView().byId("txtPage");
+            txtPage.setValue(1);
             var jsonPaginated={
                 "example": jsonFilter,
                 "lazyLoadEvent": {

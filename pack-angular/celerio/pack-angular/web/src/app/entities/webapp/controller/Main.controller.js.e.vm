@@ -112,7 +112,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		filter${entity}: function(){
 			Customize.callFilter(this);
         },
-        clearFilterAppParametria: function(){
+        clearFilter${entity}: function(){
             Customize.clearFilter(this);
         },
         #if (${listFields.contains("version")})
