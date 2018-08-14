@@ -6,7 +6,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/controller/Main.co
 		    #set(${listFields} = ${listFields.add(${attribute.var})})
 		#end
 	#end
-#end
+#end##
 
 sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
@@ -115,8 +115,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         clearFilter${entity}: function(){
             Customize.clearFilter(this);
         },
-        #if (${listFields.contains("version")})
-        getVersion: function (arg1, arg2){
+        #if (${listFields.contains("version")})##
+#*    *#getVersion: function (arg1, arg2){
 			sessionStorage.setItem("idVersion", arg1.version);
         	var descVersion="";
         	switch(arg1.version){
@@ -150,7 +150,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
         },
         #end##
-        goFirstPage: function(arg){
+#*    *#goFirstPage: function(arg){
         	var txtPage = this.getView().byId("txtPage");
         	txtPage.setValue(1);
         	Customize.goPage(this, 1);
@@ -163,8 +163,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         	Customize.goPage(this, numberPage);
         },
         goPage: function(arg){;
+            var lblNumPages = this.getView().byId("lblNumPages");
         	var txtPage = this.getView().byId("txtPage");
-        	if(txtPage.getValue()<0){
+        	if(txtPage.getValue()<0 || txtPage.getValue()>lblNumPages.getText()){
             	MessageBox.alert("No se puede ir a la pagina que usted desea");
             	txtPage.setValue(1);
             	var numberPage = txtPage.getValue();
@@ -187,9 +188,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         },
         goNextPage: function(arg){
         	var txtPage = this.getView().byId("txtPage");
-        	var numberPage = (+txtPage.getValue())+1;
-        	txtPage.setValue(numberPage);
-        	Customize.goPage(this, numberPage);
+            var lblNumPages = this.getView().byId("lblNumPages");
+            var numberPage = (+txtPage.getValue())+1;
+            if(txtPage.getValue()===lblNumPages.getText()){
+                MessageBox.alert("No se puede ir mas adelante");
+            }else{
+                txtPage.setValue(numberPage);
+                Customize.goPage(this, numberPage);
+            }
         },
         run: function(){
             Customize.doRun(this);
