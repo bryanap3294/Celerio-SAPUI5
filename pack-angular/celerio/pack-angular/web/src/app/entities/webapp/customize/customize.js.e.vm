@@ -1,4 +1,13 @@
 $output.file("web/src/app/entities/${entity.model.var}/webapp/customize/customize.js")##
+#set( $listFields = [] )
+#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+	    #if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+		    #set(${listFields} = ${listFields.add(${attribute.var})})
+		#end
+	#end
+#end
+
 sap.ui.define([
     "./customize",
     "sap/m/MessageBox",
@@ -35,31 +44,34 @@ sap.ui.define([
             var that = this;
             this.fieldList= arg1;
             debugger;
-            //var jsonVersion= {
-            //    "version":"R"
-            //};
             var jsonFilter= {};
             jsonFilter = this.getFilters(context);
-            var cmbPagination = context.getView().byId("idCmbPagination${entity}");
-            var selectedKey= cmbPagination.getSelectedKey();
+            var txtPage=context.getView().byId("txtPage");
+            if(txtPage.getValue()===''){
+            	txtPage.setValue(1);
+            }
+            var numberPage= txtPage.getValue()-1;
 
             var jsonPaginated={
                 "example": jsonFilter,
                 "lazyLoadEvent": {
-                    "first": selectedKey*10,
+                    "first": numberPage*10,
                     "rows":10
                     }
                 };
             //console.log(JSON.stringify(jsonPaginated));
             //Service.doPostGet(context, jsonVersion, nameEntityVar+"/find", nameModel);
-            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doPagination", selectedKey);
+            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "timeFormat");
         },
         callFilter: function(context){
             //No olvidar que si la tabla tiene versión, los filtros tambien la deben tener
             var that = this;
             var jsonFilter= {};
             jsonFilter = this.getFilters(context);
+            #if (${listFields.contains("version")})
+
             jsonFilter["version"]=sessionStorage.getItem("idVersion");
+            #end
 
             var jsonPaginated={
                 "example": jsonFilter,
@@ -68,7 +80,7 @@ sap.ui.define([
                     "rows":10
                 }
             };
-            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doPagination", "Y");
+            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "timeFormat", "Y");
         },
         clearFilter: function(context){
             var that = this;
@@ -89,52 +101,72 @@ sap.ui.define([
                     "rows":10
                 }
             };
-            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doPagination", "Y");
+            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "timeFormat", "Y");
         },
         callDelete: function(context, idRow){
-            var cmbPagination = context.getView().byId("idCmbPagination${entity}");
-            var keySelected = cmbPagination.getSelectedKey();
-            Service.doDelete(context, this.nameEntityVar, idRow, "Y", this, "goPage", keySelected)
+            //var cmbPagination = context.getView().byId("idCmbPagination${entity}");
+            //var keySelected = cmbPagination.getSelectedKey();
+            //Service.doDelete(context, this.nameEntityVar, idRow, "Y", this, "goPage", keySelected)
         },
-        doPagination: function(context, result, nameModel, arg1){
-            var cmbPagination = context.getView().byId("idCmbPagination${entity}");
-            cmbPagination.removeAllItems();
-            for(var i=0; i<result["totalPages"]; i++){
-                cmbPagination.addItem(new sap.ui.core.Item({key:i,text:i+1}));
-            }
-            if(arg1==="Y"){
-                cmbPagination.setSelectedItem(null);
-            }else{
-                cmbPagination.setSelectedKey(arg1);
-            }
-            this.doBefore(context, result, this.nameModel);
-        },
-        goPage: function(context, selectedKey){
-            var that = this;
-            var cmbPagination = context.getView().byId("idCmbPagination${entity}");
+        goPage: function(context, numberPage){
             var jsonFilter= {};
             jsonFilter = this.getFilters(context);
-
+            jsonFilter["version"]=sessionStorage.getItem("idVersion");
+            var txtPage=context.getView().byId("txtPage");
+            if(txtPage.getValue()==='' || txtPage.getValue()==="0"){
+            	txtPage.setValue(1);
+            }
+            var numberPage= txtPage.getValue()-1;
             var jsonPaginated={
                 "example": jsonFilter,
                 "lazyLoadEvent": {
-                    "first": selectedKey*10,
+                    "first": numberPage*10,
                     "rows":10
                 }
             };
             //console.log(JSON.stringify(jsonPaginated));
-            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doBefore");
-
+            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "timeFormat");
         },
-        doBefore: function(context, result, nameModel){
+        doBefore: function(context, result){
+            var lblNumPages= context.getView().byId("lblNumPages");
+            lblNumPages.setText(result.totalPages);
             this.model = new sap.ui.model.json.JSONModel (result.content);
-            context.getView().setModel(this.model, nameModel);
+            context.getView().setModel(this.model, this.nameModel);
         },
-        doBeforeNew: function(context, entity){
-
+        doBeforeUpdate: function(context, fieldList){
+            var jsonFieldList = context.getObjectFields(context, fieldList);
+            jsonFieldList.map(function(f){
+                f["objectField"].setEnabled(true);
+            });
         },
-        doBeforeDetail: function(context, entity){
-
-        }
+        doBeforeNew: function(context, fieldList){
+            var jsonFieldList = context.getObjectFields(context, fieldList);
+            jsonFieldList.map(function(f){
+                f["objectField"].setEnabled(true);
+            });
+        },
+        doBeforeDetail: function(context, fieldList){
+            var jsonFieldList = context.getObjectFields(context, fieldList);
+            jsonFieldList.map(function(f){
+                f["objectField"].setEnabled(false);
+            });
+        },
+        timeFormat: function(context, result, nameModel){
+        	var values = result.content;
+        	debugger;
+        	values.map(function(v){
+        		if(v["fechaEntrega"]!==undefined){
+        		v["fechaEntrega"]=moment.utc(v["fechaEntrega"]).format('DD/MM/YYYY');
+        		}
+        		if(v["fechaDespacho"]!==undefined){
+        		v["fechaDespacho"]=moment.utc(v["fechaDespacho"]).format('DD/MM/YYYY');
+        		}
+        		if(v["fechaCambio"]!==undefined){
+        		v["fechaCambio"]=moment.utc(v["fechaCambio"]).format('DD/MM/YYYY');
+        		}
+        	})
+        	result.content= values;
+        	this.doBefore(context,result,this.nameModel);
+        },
     };
 });

@@ -1,4 +1,13 @@
 $output.file("web/src/app/entities/${entity.model.var}/webapp/controller/${entity.model.var}/Detail${entity}.controller.js")##
+#set( $listFields = [] )
+#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+	    #if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+		    #set(${listFields} = ${listFields.add(${attribute.var})})
+		#end
+	#end
+#end
+
 sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "../../js/utilities",
@@ -130,15 +139,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.getView().addDelegate(
                 {
                     onBeforeShow: function (e) {
-                        #set( $listFields = [] )
-                        #foreach (${attribute} in ${entity.nonCpkAttributes.list})
-                        	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-                        	    #if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
-                        		    #set(${listFields} = ${listFields.add(${attribute.var})})
-                        		#end
-                        	#end
-                        #end
-
                         var listFields = "${listFields}";
                         var sizeFields = listFields.length;
                         listFields = listFields.substr(1, sizeFields-2);
@@ -155,19 +155,23 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						switch(typeForm${entity}){
 							case "0": //New
 							that.clearData();
-							Customize.doBeforeNew(this, "${entity}");
+							Customize.doBeforeNew(this, this.fieldList);
                             sessionStorage.setItem("update",0);
-                            sessionStorage.setItem("typeFormAppParametria",0);
+                            sessionStorage.setItem("typeForm${entity}",0);
 							break;
 							case "1": //Detail Update
+							that.clearData();
 							Service.doGetLoading(this,
                                 "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", "putFields");
                             sessionStorage.setItem("typeForm${entity}",0);
                             sessionStorage.setItem("update",1);
 							break;
 							case "2": // Detail
-							Customize.doBeforeDetail(this, "${entity}");
-							sessionStorage.setItem("typeFormAppParametria",0);
+							that.clearData();
+                            Customize.doBeforeDetail(this, this.fieldList);
+                            Service.doGetLoading(this,
+                                "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", "putFields");
+                            sessionStorage.setItem("typeForm${entity}",0);
 							break;
 						}
                     }

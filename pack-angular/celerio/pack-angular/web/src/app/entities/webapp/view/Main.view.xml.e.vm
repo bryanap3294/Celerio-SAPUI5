@@ -75,17 +75,23 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml
                               <html:div>
                               	<m:HBox justifyContent="Start">
                                     <m:VBox justifyContent="Center">
+                                    	<m:Label text="Cantidad de Paginas :"/>
+                                    </m:VBox>
+                                    <m:HBox justifyContent="Start">
+                                    	<m:Label id="lblNumPages"/>
+                                    </m:HBox>
+                                </m:HBox>
+                              	<m:HBox justifyContent="Start">
+                                    <m:VBox justifyContent="Center">
                                     	<m:Label text="Pagina :"/>
                                     </m:VBox>
                                     <m:HBox justifyContent="Start">
-                                    	<m:ComboBox id="idCmbPagination${entity}"
-                                    				selectionChange="onSelectPage"
-                                    				editable="true"
-                                    				enabled="true"
-                                    				visible="true"
-                                    				width="50%"
-                                    				valueState="None">
-                                    	</m:ComboBox>
+                                    	<m:Input id="txtPage" type="Number" width="7rem"></m:Input>
+                                    	<m:Button text="Ir" press="goPage"></m:Button>
+                                    	<m:Button icon="sap-icon://media-rewind" press="goFirstPage"></m:Button>
+                                    	<m:Button icon="sap-icon://navigation-left-arrow" press="goBackPage"></m:Button>
+                                    	<m:Button icon="sap-icon://navigation-right-arrow" press="goNextPage"></m:Button>
+                                    	<m:Button icon="sap-icon://media-forward" press="goFinalPage"></m:Button>
                                     </m:HBox>
                                 </m:HBox>
                               </html:div>

@@ -1,4 +1,13 @@
 $output.file("web/src/app/entities/${entity.model.var}/webapp/controller/Main.controller.js")##
+#set( $listFields = [] )
+#foreach (${attribute} in ${entity.nonCpkAttributes.list})
+	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
+	    #if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+		    #set(${listFields} = ${listFields.add(${attribute.var})})
+		#end
+	#end
+#end
+
 sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "../js/utilities",
@@ -106,6 +115,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         clearFilterAppParametria: function(){
             Customize.clearFilter(this);
         },
+        #if (${listFields.contains("version")})
         getVersion: function (arg1, arg2){
 			sessionStorage.setItem("idVersion", arg1.version);
         	var descVersion="";
@@ -139,10 +149,47 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 );
             }
         },
-        onSelectPage: function(arg){
-            //debugger;
-            var selectedKey= arg.mParameters.selectedItem.mProperties.key;
-            Customize.goPage(this, selectedKey);
+        #end##
+        goFirstPage: function(arg){
+        	var txtPage = this.getView().byId("txtPage");
+        	txtPage.setValue(1);
+        	Customize.goPage(this, 1);
+        },
+        goFinalPage: function(arg){
+        	var lblNumPages = this.getView().byId("lblNumPages");
+        	var txtPage = this.getView().byId("txtPage");
+        	var numberPage= lblNumPages.getText();
+        	txtPage.setValue(numberPage);
+        	Customize.goPage(this, numberPage);
+        },
+        goPage: function(arg){;
+        	var txtPage = this.getView().byId("txtPage");
+        	if(txtPage.getValue()<0){
+            	MessageBox.alert("No se puede ir a la pagina que usted desea");
+            	txtPage.setValue(1);
+            	var numberPage = txtPage.getValue();
+        		Customize.goPage(this, numberPage);
+            }else{
+                var numberPage = txtPage.getValue();
+        	    Customize.goPage(this, numberPage);
+            }
+        },
+        goBackPage: function(arg){
+        	debugger;
+        	var txtPage = this.getView().byId("txtPage");
+        	if(txtPage.getValue()==='' || txtPage.getValue()==1 || txtPage.getValue()<1){
+            	MessageBox.alert("No se puede ir mas atras");
+            }else{
+            	var numberPage = (+txtPage.getValue())-1;
+            	txtPage.setValue(numberPage);
+        		Customize.goPage(this, numberPage);
+            }
+        },
+        goNextPage: function(arg){
+        	var txtPage = this.getView().byId("txtPage");
+        	var numberPage = (+txtPage.getValue())+1;
+        	txtPage.setValue(numberPage);
+        	Customize.goPage(this, numberPage);
         },
         run: function(){
             Customize.doRun(this);
@@ -156,14 +203,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.getView().addDelegate(
                 {
                     onBeforeShow: function (e) {
-						#set( $listFields = [] )
-						#foreach (${attribute} in ${entity.nonCpkAttributes.list})
-							#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-							    #if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
-								    #set(${listFields} = ${listFields.add(${attribute.var})})
-								#end
-							#end
-						#end
 
 						var listFields = "${listFields}";
 						var sizeFields = listFields.length;
