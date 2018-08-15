@@ -1,12 +1,16 @@
 $output.file("web/src/app/entities/${entity.model.var}/webapp/controller/Main.controller.js")##
 #set( $listFields = [] )
+#set( $dateFieldsList=[])
 #foreach (${attribute} in ${entity.nonCpkAttributes.list})
 	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
 	    #if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 		    #set(${listFields} = ${listFields.add(${attribute.var})})
 		#end
+		#if(${attribute.type}=='Date')
+		    #set(${dateFieldsList} = ${dateFieldsList.add(${attribute.var})})
+        #end
 	#end
-#end##
+#end
 
 sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
@@ -24,6 +28,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
     return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.Main", {
         fieldList: [],
+        dateFieldsList: [],
         nameEntity: "${entity}",
         nameEntityVar: "${entity.model.var}",
         nameModel: "${entity}List",
@@ -133,7 +138,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 sessionStorage.setItem("typeForm${entity}",0);
                 this.byId("btnVersion${entity}").setText("Versión: "+descVersion);
                 var jsonVersion= {};
-                Customize.callRest(this, "${entity.model.var}", "${entity}List", arg1, arg2);
+                Customize.callRest(this, "${entity.model.var}", "${entity}List", this.fieldList, this.dateFieldsList);
                 console.log(this.getView());
             }else{
                 MessageBox.show(
@@ -214,14 +219,21 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						listFields = listFields.substr(1, sizeFields-2);
 						listFields = listFields.split(", ");
 						this.fieldList = listFields;
-						Service.doGet(this,"appParametria/_getListaPais","ListaPais");
+						#if (!(${dateFieldsList.isEmpty()}))##
+#*					  *#var dateFieldsList = "${dateFieldsList}";
+                        var sizeDateFields = dateFieldsList.length;
+                        dateFieldsList = dateFieldsList.substr(1, sizeDateFields-2);
+                        dateFieldsList = dateFieldsList.split(", ");
+                        this.dateFieldsList = dateFieldsList;
+						#end##
+#*					  *#Service.doGet(this,"appParametria/_getListaPais","ListaPais");
 						Service.doGet(this,"appParametria/_getListaCategoria","ListaCategoria");
 						Service.doGet(this,"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
 						Service.doGet(this,"appParametria/_getListaMes","ListaMes");
 						#if (${listFields.contains("version")})##
 #*				      *#Service.doGet(this,"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "getVersion",this.fieldList);
 						#else##
-#*					  *#Customize.callRest(this, "${entity.model.var}", this.nameModel, this.fieldList);
+#*					  *#Customize.callRest(this, "${entity.model.var}", this.nameModel, this.fieldList, this.dateFieldsList);
 						console.log(this.getView());
 						#end##
 #*                *#}
