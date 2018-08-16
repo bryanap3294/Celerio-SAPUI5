@@ -75,7 +75,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml
                               <html:div>
                               	<m:HBox justifyContent="Start">
                                     <m:VBox justifyContent="Center">
-                                    	<m:Label text="Cantidad de Paginas :"/>
+                                    	<m:Label text="Cantidad de Páginas :"/>
                                     </m:VBox>
                                     <m:HBox justifyContent="Start">
                                     	<m:Label id="lblNumPages"/>
@@ -83,7 +83,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml
                                 </m:HBox>
                               	<m:HBox justifyContent="Start">
                                     <m:VBox justifyContent="Center">
-                                    	<m:Label text="Pagina :"/>
+                                    	<m:Label text="Página :"/>
                                     </m:VBox>
                                     <m:HBox justifyContent="Start">
                                     	<m:Input id="txtPage" type="Number" width="7rem"></m:Input>

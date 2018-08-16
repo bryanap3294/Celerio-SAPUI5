@@ -54,17 +54,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             });
             return jsonFieldList;
         },
-        putFields: function(arg1,arg2, f){
+        putFields: function(context, result, arg1, arg2){
             debugger;
             #if (!(${dateFieldsList.isEmpty()}))##
 
-            var formatTime = Customize.formatTimeBefore(this, [arg1], this.dateFieldsList);
-            arg1 = formatTime[0];
+            var formatTime = Customize.formatTimeBefore(this, [result], this.dateFieldsList);
+            result = formatTime[0];
             #end
 
             var jsonFieldList = this.getObjectFields(this, this.fieldList);
             jsonFieldList.map(function(o){
-                o["objectField"].setValue(arg1[o["nameField"]]);
+                o["objectField"].setValue(result[o["nameField"]]);
             });
         },
         removerEstilos: function() {
@@ -181,7 +181,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							that.clearData();
 							Customize.doBeforeUpdate(this, this.fieldList);
 							Service.doGetLoading(this,
-                                "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", "putFields");
+                                "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", this, "putFields");
                             sessionStorage.setItem("typeForm${entity}",0);
                             sessionStorage.setItem("update",1);
 							break;
@@ -189,7 +189,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							that.clearData();
                             Customize.doBeforeDetail(this, this.fieldList);
                             Service.doGetLoading(this,
-                                "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", "putFields");
+                                "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", this, "putFields");
                             sessionStorage.setItem("typeForm${entity}",0);
 							break;
 						}

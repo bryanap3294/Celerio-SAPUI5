@@ -22,10 +22,12 @@ sap.ui.define([
     return {
         fieldList: [],
         dateFieldsList: [],
+        dateFieldsResultList: ["fechaInicioRFC", "fechaFinRFC", "fechaInicioSCP", "fechaFinSCP", "fechaInicioStoreSP", "fechaFinStoreSP", ],
         nameEntity: "${entity}",
         nameEntityVar: "${entity.model.var}",
         nameModel: "${entity}List",
         nameModelUpload: "Upload${entity}List",
+        nameModelResult: "Result${entity}List",
         callRest: function(context, nameEntityVar, nameModel, arg1, arg2){
             var that = this;
             this.fieldList= arg1;
@@ -55,6 +57,17 @@ sap.ui.define([
             Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doBefore");
         },
         doRun: function(context){
+            this.navTo(context);
+            #if (${listFields.contains("version")})##
+
+            //var idVersion = sessionStorage.getItem("idVersion");
+            //Service.doGetLoading(context,this.nameEntityVar+"/_ejecutar/"+idVersion, this.nameModelResult, "Y", this, "navTo", "Result${entity}");
+            #end
+
+        },
+        navTo: function(context, result){//
+        	//this.model = new sap.ui.model.json.JSONModel (result);
+            //sap.ui.getCore().setModel(this.model, this.nameModelResult);
             context.oRouter.navTo("Result${entity}");
         },
         getFilters: function(context){
@@ -180,6 +193,15 @@ sap.ui.define([
             jsonFieldList.map(function(f){
                 f["objectField"].setEnabled(false);
             });
+        },
+        doBeforeResult: function(context, result){
+        	debugger;
+        	var formatTime = this.formatTimeBefore(context, [result], this.dateFieldsResultList);
+        	if(formatTime[0]["duracionStoreSP"]!==undefined){
+            	formatTime[0]["duracionStoreSP"]= formatTime[0]["duracionStoreSP"]/1000;
+            }
+        	var formatTimeModel = new sap.ui.model.json.JSONModel(formatTime[0]);
+            context.getView().setModel(formatTimeModel, this.nameModelResult);
         },
         formatTimeBefore: function(context, values, dateFieldsList){
         	debugger;

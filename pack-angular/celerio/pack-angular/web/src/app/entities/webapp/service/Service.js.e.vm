@@ -160,7 +160,7 @@ sap.ui.define([
                 }
             });
         },
-        doGetLoading: function (context, uri, name, callFunction, namefunct, arg1, arg2){
+        doGetLoading: function (context, uri, name, callFunction, contextFunction, namefunct, arg1, arg2){
             jQuery.ajax({
                 context: this,
                 type : "GET",
@@ -171,15 +171,15 @@ sap.ui.define([
                     context.getView().setBusyIndicatorDelay(0);
                     context.getView().setBusy(true);
                 },
-                success : function(data) {
+                success : function(result) {
                     if(callFunction==="Y"){
-  				        this.model = new sap.ui.model.json.JSONModel (data);
+        		        this.model = new sap.ui.model.json.JSONModel (result);
                         context.getView().setModel(this.model, name);
-                        var fun= "context."+namefunct+"(data,arg1)";
+                        var fun= "contextFunction."+namefunct+"(context, result, arg1, arg2)";
                         eval(fun);
                     }
                     else{
-                        this.model = new sap.ui.model.json.JSONModel (data);
+                        this.model = new sap.ui.model.json.JSONModel (result);
                         context.setModel(this.model, name);
                     }
                 },

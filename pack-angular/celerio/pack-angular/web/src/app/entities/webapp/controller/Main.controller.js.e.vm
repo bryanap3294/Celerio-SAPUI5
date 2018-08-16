@@ -195,7 +195,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         	var txtPage = this.getView().byId("txtPage");
             var lblNumPages = this.getView().byId("lblNumPages");
             var numberPage = (+txtPage.getValue())+1;
-            if(txtPage.getValue()===lblNumPages.getText()){
+            if(+(txtPage.getValue())===+(lblNumPages.getText()) || +(txtPage.getValue())>+(lblNumPages.getText())){
                 MessageBox.alert("No se puede ir mas adelante");
             }else{
                 txtPage.setValue(numberPage);

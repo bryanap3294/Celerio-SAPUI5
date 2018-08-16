@@ -14,11 +14,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "use strict";
 
     return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Result${entity}", {
-        fieldList: [],
+        dateFieldsResultList: ["fechaInicioRFC", "fechaFinRFC", "fechaInicioSCP", "fechaFinSCP", "fechaInicioStoreSP", "fechaFinStoreSP", ],
         nameEntity: "${entity}",
         nameEntityVar: "${entity.model.var}",
         nameModel: "${entity}List",
         nameModelUpload: "Upload${entity}List",
+        nameModelResult: "Result${entity}List",
 		handleRouteMatched: function (oEvent) {
             var oParams = {};
             if (oEvent.mParameters.data.context) {
@@ -35,6 +36,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.byId("multiheaderSCP").setHeaderSpan([3,1]);
             this.byId("multiheaderStoreSCP").setHeaderSpan([3,1]);
         },
+        goBack: function(evt){
+            this.oRouter.navTo("Main");
+        },
         onInit: function () {
             //debugger;
             var that = this;
@@ -44,7 +48,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.getView().addDelegate(
                 {
                     onBeforeShow: function (e) {
-
+                        //var resultModel = sap.ui.getCore().getModel(this.nameModelResult);
+                        //Customize.doBeforeResult(this, resultModel.oData);
                     }
                 },that
             );
