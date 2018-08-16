@@ -5,10 +5,10 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/controller/Main.co
 	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
 	    #if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 		    #set(${listFields} = ${listFields.add(${attribute.var})})
+		    #if(${attribute.type}=='Date')
+                #set(${dateFieldsList} = ${dateFieldsList.add(${attribute.var})})
+            #end
 		#end
-		#if(${attribute.type}=='Date')
-		    #set(${dateFieldsList} = ${dateFieldsList.add(${attribute.var})})
-        #end
 	#end
 #end
 

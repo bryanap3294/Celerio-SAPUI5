@@ -23,21 +23,31 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                         #foreach (${attribute} in ${entity.nonCpkAttributes.list})
                                         	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
                                         		#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
-												#set( $notNull = "false" )
-												#if(${attribute.isNotNullable()})
-												#set( $notNull = "true")
-												#end
+												    #set( $notNull = "false" )
+												    #if(${attribute.isNotNullable()})
+												        #set( $notNull = "true")
+												    #end
 
                                         		<form:FormElement visible="true">
                                                     <form:label>
                                                         <m:Label wrapping="true" text="${attribute.var}"   design="Standard" width="100%" required="${notNull}" textAlign="Begin" textDirection="Inherit"/>
                                                     </form:label>
+                                                    #if(${attribute.type}=='Date')
+
+                                                        <m:DatePicker id="date${attribute.var}"
+                                                                      valueFormat="dd/MM/yy"
+                                                                      placeholder="Ingrese ${attribute.var}" enabled="true" type="DateTime"
+                                                                      visible="true" width="auto"/>
+                                                    #else
+
                                                     <form:fields>
                                                         <m:Input id="txt${attribute.var}" type="Text"
                                                                  placeholder="Ingrese ${attribute.var}"
                                                                  showValueHelp="false" enabled="true"
                                                                  visible="true" width="auto" HelpOnly="false"/>
                                                     </form:fields>
+                                                    #end
+
                                                 </form:FormElement>
                                         		#end
                                         	#end
