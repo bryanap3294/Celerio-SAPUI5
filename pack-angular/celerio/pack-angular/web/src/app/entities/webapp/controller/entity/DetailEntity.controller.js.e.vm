@@ -1,10 +1,14 @@
 $output.file("web/src/app/entities/${entity.model.var}/webapp/controller/${entity.model.var}/Detail${entity}.controller.js")##
 #set( $listFields = [] )
+#set( $dateFieldsList=[])
 #foreach (${attribute} in ${entity.nonCpkAttributes.list})
 	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
 	    #if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 		    #set(${listFields} = ${listFields.add(${attribute.var})})
 		#end
+		#if(${attribute.type}=='Date')
+		    #set(${dateFieldsList} = ${dateFieldsList.add(${attribute.var})})
+        #end
 	#end
 #end
 
@@ -20,6 +24,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
     return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Detail${entity}", {
         fieldList: [],
+        dateFieldsList: [],
         nameEntity: "${entity}",
         nameEntityVar: "${entity.model.var}",
         nameModel: "${entity}List",
@@ -51,6 +56,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         },
         putFields: function(arg1,arg2, f){
             debugger;
+            #if (!(${dateFieldsList.isEmpty()}))##
+
+            var formatTime = Customize.formatTimeBefore(this, [arg1], this.dateFieldsList);
+            arg1 = formatTime[0];
+            #end
+
             var jsonFieldList = this.getObjectFields(this, this.fieldList);
             jsonFieldList.map(function(o){
                 o["objectField"].setValue(arg1[o["nameField"]]);
@@ -144,7 +155,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                         listFields = listFields.substr(1, sizeFields-2);
                         listFields = listFields.split(", ");
                         this.fieldList = listFields;
-                        this.removerEstilos();
+						#if (!(${dateFieldsList.isEmpty()}))##
+#*					  *#var dateFieldsList = "${dateFieldsList}";
+                        var sizeDateFields = dateFieldsList.length;
+                        dateFieldsList = dateFieldsList.substr(1, sizeDateFields-2);
+                        dateFieldsList = dateFieldsList.split(", ");
+                        this.dateFieldsList = dateFieldsList;
+						#end##
+#*                    *#this.removerEstilos();
                         var typeForm${entity} = sessionStorage.getItem("typeForm${entity}");
                         Service.doGet(this,"appParametria/_getListaPais","ListaPais");
                         Service.doGet(this,"appParametria/_getListaCategoria","ListaCategoria");

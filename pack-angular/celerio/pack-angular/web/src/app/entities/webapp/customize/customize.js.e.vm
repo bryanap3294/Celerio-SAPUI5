@@ -149,7 +149,7 @@ sap.ui.define([
                 }
             };
             //console.log(JSON.stringify(jsonPaginated));
-            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "timeFormat");
+            Service.doPostGetLoading(context, jsonPaginated, this.nameEntityVar+"/findPaginated", this.nameModel, "Y", this, "doBefore");
         },
         doBefore: function(context, result){
             var lblNumPages= context.getView().byId("lblNumPages");
