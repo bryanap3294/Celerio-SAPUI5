@@ -169,7 +169,7 @@ sap.ui.define([
             lblNumPages.setText(result.totalPages);
             #if (!(${dateFieldsList.isEmpty()}))##
 
-            var formatTime = this.formatTimeBefore(context, result.content, this.dateFieldsList);
+            var formatTime = this.formatTimeBefore(context, result.content, this.dateFieldsList, "DD/MM/YYYY");
             result[content]= formatTime;
             #end
 
@@ -196,19 +196,19 @@ sap.ui.define([
         },
         doBeforeResult: function(context, result){
         	debugger;
-        	var formatTime = this.formatTimeBefore(context, [result], this.dateFieldsResultList);
+        	var formatTime = this.formatTimeBefore(context, [result], this.dateFieldsResultList, "DD/MM/YYYY");
         	if(formatTime[0]["duracionStoreSP"]!==undefined){
             	formatTime[0]["duracionStoreSP"]= formatTime[0]["duracionStoreSP"]/1000;
             }
         	var formatTimeModel = new sap.ui.model.json.JSONModel(formatTime[0]);
             context.getView().setModel(formatTimeModel, this.nameModelResult);
         },
-        formatTimeBefore: function(context, values, dateFieldsList){
+        formatTimeBefore: function(context, values, dateFieldsList, format){
         	debugger;
         	values.map(function(o){
         	    dateFieldsList.map(function(d){
         	        if(o[d]!==undefined){
-        	            o[d]=moment.utc(o[d]).format("DD/MM/YYYY");
+        	            o[d]=moment.utc(o[d]).format(format);
         	        }
         	    })
         	})

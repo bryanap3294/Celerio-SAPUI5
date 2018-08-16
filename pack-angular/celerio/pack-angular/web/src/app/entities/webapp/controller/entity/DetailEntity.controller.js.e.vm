@@ -46,11 +46,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var that = this;
             var jsonFieldList=[];
             fieldList.map(function(f){
-                var idField = "txt"+f;
-                var objectField= context.getView().byId(idField);
-                if(objectField !== undefined){
-                    jsonFieldList.push({"nameField": f, "objectField": objectField});
-                }
+                var typeofFields=["txt", "date"];
+                typeofFields.map(function(type){
+                    var idField = type+f;
+                    var objectField= context.getView().byId(idField);
+                    if(objectField !== undefined){
+                        jsonFieldList.push({"nameField": f, "objectField": objectField, "idField": idField});
+                    }
+                })
             });
             return jsonFieldList;
         },
@@ -58,7 +61,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             debugger;
             #if (!(${dateFieldsList.isEmpty()}))##
 
-            var formatTime = Customize.formatTimeBefore(this, [result], this.dateFieldsList);
+            var formatTime = Customize.formatTimeBefore(this, [result], this.dateFieldsList, "DD/MM/YY");
             result = formatTime[0];
             #end
 
