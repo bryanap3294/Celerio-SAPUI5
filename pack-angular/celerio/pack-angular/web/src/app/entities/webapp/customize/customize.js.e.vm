@@ -170,7 +170,7 @@ sap.ui.define([
             #if (!(${dateFieldsList.isEmpty()}))##
 
             var formatTime = this.formatTimeBefore(context, result.content, this.dateFieldsList, "DD/MM/YYYY");
-            result[content]= formatTime;
+            result["content"]= formatTime;
             #end
 
             this.model = new sap.ui.model.json.JSONModel (result.content);

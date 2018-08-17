@@ -51,7 +51,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     var idField = type+f;
                     var objectField= context.getView().byId(idField);
                     if(objectField !== undefined){
-                        jsonFieldList.push({"nameField": f, "objectField": objectField, "idField": idField});
+                        jsonFieldList.push({"nameField": f, "objectField": objectField, "idField": idField, "typeField": type});
                     }
                 })
             });
@@ -114,7 +114,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 var json={};
 				var jsonFieldList = this.getObjectFields(this, this.fieldList);
                 jsonFieldList.map(function(o){
-                    json[o["nameField"]]=o["objectField"].getValue();
+                    switch(o["typeField"]){
+                    case "txt":
+                        json[o["nameField"]]=o["objectField"].getValue();
+                    break;
+                    case "date":
+                        json[o["nameField"]]=moment(o["objectField"].getValue(),"DD/MM/YYYY")._d.getTime();
+                    break;
+                    }
                 });
                 json["fechaCreacion"]=1526533200000;
                 json["usuarioCreacion"]="USUARIO";
