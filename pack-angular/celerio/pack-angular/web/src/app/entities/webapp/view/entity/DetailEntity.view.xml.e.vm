@@ -75,7 +75,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                 <m:contentRight>
                     <m:OverflowToolbar >
                         <m:ToolbarSpacer/>
-                        <m:Button text="Guardar" type="Accept" icon="sap-icon://save" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="saveData">
+                        <m:Button id="btnSaveDetail${entity}" text="Guardar" type="Accept" icon="sap-icon://save" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="saveData">
                             <m:layoutData>
                                 <m:OverflowToolbarLayoutData priority="Low" />
                             </m:layoutData>

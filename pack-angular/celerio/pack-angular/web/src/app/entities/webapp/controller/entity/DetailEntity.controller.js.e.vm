@@ -183,12 +183,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						switch(typeForm${entity}){
 							case "0": //New
 							that.clearData();
+							this.getView().byId("btnSaveDetail${entity}").setVisible(true);
 							Customize.doBeforeNew(this, this.fieldList);
                             sessionStorage.setItem("update",0);
                             sessionStorage.setItem("typeForm${entity}",0);
 							break;
 							case "1": //Detail Update
 							that.clearData();
+							this.getView().byId("btnSaveDetail${entity}").setVisible(true);
 							Customize.doBeforeUpdate(this, this.fieldList);
 							Service.doGetLoading(this,
                                 "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", this, "putFields");
@@ -197,6 +199,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							break;
 							case "2": // Detail
 							that.clearData();
+							this.getView().byId("btnSaveDetail${entity}").setVisible(false);
                             Customize.doBeforeDetail(this, this.fieldList);
                             Service.doGetLoading(this,
                                 "${entity.model.var}/findById/"+sessionStorage.getItem("idRow${entity}"),"${entity}Model", "Y", this, "putFields");
