@@ -5,7 +5,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "../../service/Service",
     "sap/ui/core/routing/History",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator",
+    "sap/ui/model/FilterOperator"
 ], function(BaseController, MessageBox, Utilities, Service, History, Filter, FilterOperator) {
     "use strict";
 

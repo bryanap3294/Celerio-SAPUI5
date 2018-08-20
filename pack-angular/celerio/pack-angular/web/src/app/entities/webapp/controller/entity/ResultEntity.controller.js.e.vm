@@ -9,7 +9,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History",
     "portal/valorizacion/${entity.model.var.toLowerCase()}/js/moment",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator",
+    "sap/ui/model/FilterOperator"
 ], function(BaseController, MessageBox, Utilities, Service, Customize, FormatterFloatNumber2, FormatterFloatNumber5 , History, Moment, Filter, FilterOperator) {
     "use strict";
 

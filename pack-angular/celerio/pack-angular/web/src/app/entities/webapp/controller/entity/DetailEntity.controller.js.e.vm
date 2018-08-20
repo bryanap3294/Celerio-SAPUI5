@@ -18,7 +18,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	"../../service/Service",
 	"../../customize/customize",
     "sap/ui/core/routing/History",
-    "portal/valorizacion/${entity.model.var.toLowerCase()}/js/moment",
+    "portal/valorizacion/${entity.model.var.toLowerCase()}/js/moment"
 ], function(BaseController, MessageBox, Utilities, Service, Customize, History) {
     "use strict";
 
