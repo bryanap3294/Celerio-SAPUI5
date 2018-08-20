@@ -205,6 +205,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         run: function(){
             Customize.doRun(this);
         },
+        callDialog : function(){
+            var oView = sap.ui.xmlview({viewName: "portal.valorizacion.${entity.model.var.toLowerCase()}.view.dialog.Dialog${entity}"});
+            this.getView().addDependent(oView);
+            oView.getContent()[0].open();
+        },
         onInit: function () {
             //debugger;
             var that = this;
