@@ -144,7 +144,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/manifest.json")##
 			"routes": [
 				{
 					"pattern": "",
-					"name": "default",
+					"name": "Main",
 					"target": [
 						"Main"
 					]

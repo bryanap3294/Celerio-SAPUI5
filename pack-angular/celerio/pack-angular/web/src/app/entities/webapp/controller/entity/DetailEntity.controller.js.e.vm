@@ -139,7 +139,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         clearData: function(){
 			var jsonFieldList = this.getObjectFields(this, this.fieldList);
             jsonFieldList.map(function(o){
+            if(!(o["nameField"]=== 'version')){
                 o["objectField"].setValue(null);
+            }
             });
         },
         onInit: function () {
@@ -170,6 +172,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                         listFieldsNotNull = listFieldsNotNull.split(", ");
                         this.listFieldsNotNull = listFieldsNotNull;
 						#end##
+						#if (${listFields.contains("version")})##
+
+						var version = sessionStorage.getItem("idVersion");
+						this.getView().byId("txtversion").setValue(version);
+						this.getView().byId("txtversion").setEnabled(false);
+						#end
 #*                    *#this.removerEstilos();
                         var typeForm${entity} = sessionStorage.getItem("typeForm${entity}");
                         Service.doGet(this,"appParametria/_getListaPais","ListaPais");

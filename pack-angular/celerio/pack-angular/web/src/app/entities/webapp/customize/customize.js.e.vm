@@ -179,19 +179,25 @@ sap.ui.define([
         doBeforeUpdate: function(context, fieldList){
             var jsonFieldList = context.getObjectFields(context, fieldList);
             jsonFieldList.map(function(f){
+            if(!(f["nameField"]=== 'version')){
                 f["objectField"].setEnabled(true);
+            }
             });
         },
         doBeforeNew: function(context, fieldList){
             var jsonFieldList = context.getObjectFields(context, fieldList);
             jsonFieldList.map(function(f){
+            if(!(f["nameField"]=== 'version')){
                 f["objectField"].setEnabled(true);
+            }
             });
         },
         doBeforeDetail: function(context, fieldList){
             var jsonFieldList = context.getObjectFields(context, fieldList);
             jsonFieldList.map(function(f){
+            if(!(f["nameField"]=== 'version')){
                 f["objectField"].setEnabled(false);
+            }
             });
         },
         doBeforeResult: function(context, result){
