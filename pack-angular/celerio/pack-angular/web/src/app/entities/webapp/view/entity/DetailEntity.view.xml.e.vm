@@ -24,9 +24,13 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                         	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
                                         		#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 												    #set( $notNull = "false" )
+												    #set( $typeField = "Text" )
 												    #if(${attribute.isNotNullable()})
 												        #set( $notNull = "true")
 												    #end
+												    #if(${attribute.isBigDecimal()} || ${attribute.isBigInteger()} || ${attribute.isDouble()} || ${attribute.isFloat()} || ${attribute.isInteger()})
+                                                        #set( $typeField = "Number")
+                                                    #end
 
                                         		<form:FormElement visible="true">
                                                     <form:label>
@@ -41,7 +45,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                     #else
 
                                                     <form:fields>
-                                                        <m:Input id="txt${attribute.var}" type="Text"
+                                                        <m:Input id="txt${attribute.var}" type="$typeField"
                                                                  placeholder="Ingrese ${attribute.var}"
                                                                  showValueHelp="false" enabled="true"
                                                                  visible="true" width="auto" HelpOnly="false"/>
