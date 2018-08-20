@@ -108,9 +108,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         },
         goBack: function(evt){
             this.model = new sap.ui.model.json.JSONModel ({});
-            this.getView().setModel(this.model, "Upload${entity}");
+            this.getView().setModel(this.model, "Upload${entity}List");
             this.oRouter.navTo("Main");
-            //sessionStorage.setItem("idRowTablaConfigPeriodo","null");
         },
         clearData: function(){
             this.getView().byId("txtVersion").setValue(null);
