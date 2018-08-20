@@ -41,7 +41,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
             debugger;
             var myJSON = JSON.stringify(objParameter);
-            this.doPostPost(objParameter,"tipoCambio/saveMasivo","tipoCambio/findAll","Detail${entity}");
+            Service.doPostPost(objParameter,"tipoCambio/saveMasivo","tipoCambio/findAll","Detail${entity}");
         },
         uploadStart: function(evt) {
             var tblCatalogos = this.byId('idTblUpload${entity}');
@@ -111,14 +111,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.getView().setModel(this.model, "Upload${entity}List");
             this.oRouter.navTo("Main");
         },
-        clearData: function(){
-            this.getView().byId("txtVersion").setValue(null);
-            this.getView().byId("txtPais").setValue(null);
-        },
-
         onAfterRendering: function() {
-            //this.byId("multiheaderBase").setHeaderSpan([8,1]);
-            //this.byId("multiheader").setHeaderSpan([12,1]);
+
         },
         onInit: function () {
             var that = this;
