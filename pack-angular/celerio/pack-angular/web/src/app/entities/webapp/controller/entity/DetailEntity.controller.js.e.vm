@@ -1,12 +1,16 @@
 $output.file("web/src/app/entities/${entity.model.var}/webapp/controller/${entity.model.var}/Detail${entity}.controller.js")##
 #set( $listFields = [] )
 #set( $dateFieldsList=[])
+#set( $listFieldsNotNull = [] )
 #foreach (${attribute} in ${entity.nonCpkAttributes.list})
 	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
 	    #if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 		    #set(${listFields} = ${listFields.add(${attribute.var})})
 		    #if(${attribute.type}=='Date')
                 #set(${dateFieldsList} = ${dateFieldsList.add(${attribute.var})})
+            #end
+            #if(${attribute.isNotNullable()})
+                #set(${listFieldsNotNull} = ${listFieldsNotNull.add(${attribute.var})})
             #end
 		#end
 	#end
@@ -25,6 +29,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Detail${entity}", {
         fieldList: [],
         dateFieldsList: [],
+        listFieldsNotNull: [],
         nameEntity: "${entity}",
         nameEntityVar: "${entity.model.var}",
         nameModel: "${entity}List",
@@ -83,24 +88,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
             /* Removiendo estilos */
             this.removerEstilos();
-            #set( $listFieldsNotNull = [] )
-            #foreach (${attribute} in ${entity.nonCpkAttributes.list})
-            	#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-            	    #if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
-            		    #if(${attribute.isNotNullable()})
-            		        #set(${listFieldsNotNull} = ${listFieldsNotNull.add(${attribute.var})})
-            		    #end
-            		#end
-            	#end
-            #end
-
-            var listFieldsNotNull = "${listFieldsNotNull}";
-            var sizeFieldsNotNull = listFieldsNotNull.length;
-            listFieldsNotNull = listFieldsNotNull.substr(1, sizeFieldsNotNull-2);
-            listFieldsNotNull = listFieldsNotNull.split(", ");
 
             /* Realizando validaciones */
-			var jsonFieldList = this.getObjectFields(this, listFieldsNotNull);
+			var jsonFieldList = this.getObjectFields(this, this.listFieldsNotNull);
             jsonFieldList.map(function(o){
                 validar = Utilities.validarRequerido(o["objectField"],'T');
                 if (!validar)
@@ -171,6 +161,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                         dateFieldsList = dateFieldsList.substr(1, sizeDateFields-2);
                         dateFieldsList = dateFieldsList.split(", ");
                         this.dateFieldsList = dateFieldsList;
+						#end
+						#if (!(${listFieldsNotNull.isEmpty()}))##
+
+                        var listFieldsNotNull = "${listFieldsNotNull}";
+                        var sizeFieldsNotNull = listFieldsNotNull.length;
+                        listFieldsNotNull = listFieldsNotNull.substr(1, sizeFieldsNotNull-2);
+                        listFieldsNotNull = listFieldsNotNull.split(", ");
+                        this.listFieldsNotNull = listFieldsNotNull;
 						#end##
 #*                    *#this.removerEstilos();
                         var typeForm${entity} = sessionStorage.getItem("typeForm${entity}");

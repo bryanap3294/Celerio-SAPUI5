@@ -36,7 +36,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     jsonModel[i]["bean"]["fecha"]=moment(jsonModel[i]["bean"]["fecha"],"DD/MM/YYYY")._d.getTime();
                 }
                 jsonModel[i]["bean"]["fechaCreacion"]=1526346420000;
-                jsonModel[i]["bean"]["usuarioCreacion"]="Bryan Aguilar";
+                jsonModel[i]["bean"]["usuarioCreacion"]="USUARIO";
                 objParameter.push(jsonModel[i].bean);
             }
             debugger;
