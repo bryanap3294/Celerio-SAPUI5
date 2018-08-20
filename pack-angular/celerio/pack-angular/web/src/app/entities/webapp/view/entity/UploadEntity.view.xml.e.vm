@@ -111,7 +111,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                         </Column>
 										#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 											#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
-												#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+												#if(!(${attribute.var}=='id' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
 
 										<Column width="10rem"
 												mergeDuplicates="true">

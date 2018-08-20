@@ -27,7 +27,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
         },
         saveAll: function(evt){
-            var oModel = this.getView().getModel("upload${entity}");
+            var oModel = this.getView().getModel("Upload${entity}");
             var jsonModel = oModel.getData();
             var objParameter=[];
             debugger;
@@ -44,7 +44,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.doPostPost(objParameter,"tipoCambio/saveMasivo","tipoCambio/findAll","Detail${entity}");
         },
         uploadStart: function(evt) {
-            var tblCatalogos = this.byId('idTblUploadTipoCambio');
+            var tblCatalogos = this.byId('idTblUpload${entity}');
             tblCatalogos.setBusy(true);
         },
         uploadComplete: function(evt){
@@ -57,7 +57,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.cargarGrilla(this, objectListModel);
             console.log(this.getView());
 
-            var tblCatalogos = this.byId('idTblUploadTipoCambio');
+            var tblCatalogos = this.byId('idTblUpload${entity}');
             tblCatalogos.setBusy(false);
 
             var idUpload = this.byId('file');
@@ -66,8 +66,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         cargarGrilla: function(arg1, arg2){
             debugger;
             this.model = new sap.ui.model.json.JSONModel (arg2);
-            arg1.getView().setModel(this.model, "uploadTipoCambio");
-            var oModel = this.getView().getModel("uploadTipoCambio");
+            arg1.getView().setModel(this.model, "Upload${entity}List");
+            var oModel = this.getView().getModel("Upload${entity}List");
             var jsonModel = oModel.getData();
             var contadorOK = 0;
             var contadorError = 0;
@@ -86,7 +86,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 }
             }
             var datemodel = new sap.ui.model.json.JSONModel(jsonModel);
-            arg1.getView().setModel(datemodel, "uploadTipoCambio");
+            arg1.getView().setModel(datemodel, "Upload${entity}List");
             var listacargaUpload=[];
             var cargaUpload={};
             cargaUpload.display ="Registros OK";
