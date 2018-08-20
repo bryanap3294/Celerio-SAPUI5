@@ -27,7 +27,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
         },
         saveAll: function(evt){
-            var oModel = this.getView().getModel("Upload${entity}");
+            var oModel = this.getView().getModel("Upload${entity}List");
             var jsonModel = oModel.getData();
             var objParameter=[];
             debugger;
