@@ -9,7 +9,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 ], function(BaseController, MessageBox, Utilities, Service, History, Filter, FilterOperator) {
     "use strict";
 
-    return BaseController.extend("portal.valorizacion.tipocambio.controller.${entity.model.var}.Upload${entity}", {
+    return BaseController.extend("portal.valorizacion.${entity.model.var.toLowerCase()}.controller.${entity.model.var}.Upload${entity}", {
         fieldList: [],
         nameEntity: "${entity}",
         nameEntityVar: "${entity.model.var}",
