@@ -28,12 +28,12 @@ sap.ui.define([
                 }
             });
         },
-        doPostPost: function (context, model, uriPost, uriModel, nameModel, argModel, callFunction, fn, value){
+		doPostPost: function (context, jsonObject, uri, callFunction, contextFunction, nameFunction, arg1){
             jQuery.ajax({
-                context : this,
-                url: Utilities.getDomain() + uriPost,
+                context: this,
+                url: Utilities.getDomain() + uri,
                 type:"POST",
-                data: JSON.stringify(model),
+                data: JSON.stringify(jsonObject),
                 dataType: "json",
                 contentType:"application/json",
                 headers:{"Accept": "application/json"},
@@ -42,9 +42,15 @@ sap.ui.define([
                     context.getView().setBusy(true);
                 },
                 success: function(result){
-                    console.log(result);
-                    MessageBox.alert("Se Guardó Correctamente", {title: "Ventana de Aviso"});
-                    this.doGet(context, uriModel, nameModel, callFunction, fn, value);
+					console.log(result);
+					MessageBox.alert("Se Guardó Correctamente", {title: "Ventana de Aviso"});
+                    if(callFunction==="Y"){
+						var fun= "contextFunction."+nameFunction+"(context, result, arg1)";
+                        eval(fun);
+                    }
+                },
+                complete: function() {
+                    context.getView().setBusy(false);
                 },
                 error: function (e) {
                     if(e.responseJSON !== undefined){
@@ -53,18 +59,15 @@ sap.ui.define([
                         MessageBox.alert("Hubo un Error, por favor comuníquese con el administrador del sistema");
                         console.log(e);
                     }
-                },
-                complete: function() {
-                    context.getView().setBusy(false);
                 }
             });
         },
-        doPostGet: function (context, model, uri, name, callFunction, namefunct, arg1){
+        doPostGet: function (context, jsonObject, uri, nameModel, callFunction, contextFunction, nameFunction, arg1){
             jQuery.ajax({
                 context: this,
                 url: Utilities.getDomain() + uri,
                 type:"POST",
-                data: JSON.stringify(model),
+                data: JSON.stringify(jsonObject),
                 dataType: "json",
                 contentType:"application/json",
                 headers:{"Accept": "application/json"},
@@ -72,31 +75,31 @@ sap.ui.define([
                     console.log(result);
                     if(callFunction==="Y"){
                         this.model = new sap.ui.model.json.JSONModel (result);
-                        context.getView().setModel(this.model, name);
-                        var fun= "context."+namefunct+"(arg1,result)";
+                        context.getView().setModel(this.model, nameModel);
+                        var fun= "contextFunction."+nameFunction+"(context, result, nameModel, arg1)";
                         eval(fun);
                     }
                     else{
                         this.model = new sap.ui.model.json.JSONModel (result);
-                        context.getView().setModel(this.model, name);
+                        context.getView().setModel(this.model, nameModel);
                     }
                 },
                 error: function (e) {
                     if(e.responseJSON !== undefined){
                         MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
                     }else{
-                        console.log("Error:")
+                        MessageBox.alert("Hubo un Error, por favor comuníquese con el administrador del sistema");
                         console.log(e);
                     }
                 }
             });
         },
-        doPostGetLoading: function (context, model, uri, nameModel, callFunction, contextFunction, nameFunction, arg1){
+        doPostGetLoading: function (context, jsonObject, uri, nameModel, callFunction, contextFunction, nameFunction, arg1){
             jQuery.ajax({
                 context: this,
                 url: Utilities.getDomain() + uri,
                 type:"POST",
-                data: JSON.stringify(model),
+                data: JSON.stringify(jsonObject),
                 dataType: "json",
                 contentType:"application/json",
                 headers:{"Accept": "application/json"},
@@ -130,22 +133,22 @@ sap.ui.define([
                 }
             });
         },
-        doGet: function (context, uri, name, callFunction, namefunct, arg1){
+        doGet: function (context, uri, name, callFunction, contextFunction, namefunct, arg1, arg2){
             jQuery.ajax({
                 context: this,
                 type : "GET",
                 contentType : "application/json",
                 url : Utilities.getDomain()+ uri,
                 dataType : "json",
-                success : function(data) {
+                success : function(result) {
                     if(callFunction==="Y"){
-                        this.model = new sap.ui.model.json.JSONModel (data);
+        		        this.model = new sap.ui.model.json.JSONModel (result);
                         context.getView().setModel(this.model, name);
-                        var fun= "context."+namefunct+"(data,arg1)";
+                        var fun= "contextFunction."+namefunct+"(context, result, arg1, arg2)";
                         eval(fun);
                     }
                     else{
-                        this.model = new sap.ui.model.json.JSONModel (data);
+                        this.model = new sap.ui.model.json.JSONModel (result);
                         context.getView().setModel(this.model, name);
                     }
                 },
@@ -153,8 +156,7 @@ sap.ui.define([
                     if(e.responseJSON !== undefined){
                         MessageBox.alert("Hubo un Error :"+e.responseJSON.message, {title: "Ventana de Aviso"});
                     }else{
-                        //MessageBox.alert("Hubo un Error, por favor comuníquese con el administrador del sistema");
-                        console.log("Error:");
+                        MessageBox.alert("Hubo un Error, por favor comuníquese con el administrador del sistema");
                         console.log(e);
                     }
                 }
@@ -180,7 +182,7 @@ sap.ui.define([
                     }
                     else{
                         this.model = new sap.ui.model.json.JSONModel (result);
-                        context.setModel(this.model, name);
+                        context.getView().setModel(this.model, name);
                     }
                 },
                 error: function (e) {

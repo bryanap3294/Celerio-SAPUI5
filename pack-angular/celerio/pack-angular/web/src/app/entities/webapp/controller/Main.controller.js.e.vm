@@ -120,47 +120,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         clearFilter${entity}: function(){
             Customize.clearFilter(this);
         },
-        #if (${listFields.contains("version")})##
-#*    *#getVersion: function (arg1, arg2){
-			sessionStorage.setItem("idVersion", arg1.version);
-        	var descVersion="";
-        	switch(arg1.version){
-        		case "R":
-        			descVersion= "Real";
-        			sessionStorage.setItem("descVersion", descVersion);
-        		break;
-        		case "S":
-        			descVersion= "Simulación";
-        			sessionStorage.setItem("descVersion", descVersion);
-        		break;
-        	}
-        	if(arg1.version!==undefined){
-                sessionStorage.setItem("typeForm${entity}",0);
-                this.byId("btnVersion${entity}").setText("Versión: "+descVersion);
-                var jsonVersion= {};
-                Customize.callRest(this, "${entity.model.var}", "${entity}List", this.fieldList, this.dateFieldsList);
-                console.log(this.getView());
-            }else{
-                MessageBox.show(
-                    "Por favor seleccione una Versión para poder entrar a esta pagina.", {
-                        icon: sap.m.MessageBox.Icon.WARNING,
-                        title: "Sin Versión",
-                        styleClass: "titleMessageBox",
-                        actions: [sap.m.MessageBox.Action.CLOSE],
-                        onClose: function(oAction) {
-                            window.history.go(-1);
-                        }
-                    }
-                );
-            }
-        },
-        #end##
-#*    *#goFirstPage: function(arg){
+		goFirstPage: function(arg){
         	var txtPage = this.getView().byId("txtPage");
         	txtPage.setValue(1);
         	Customize.goPage(this, 1);
         },
-        goFinalPage: function(arg){
+		goFinalPage: function(arg){
         	var lblNumPages = this.getView().byId("lblNumPages");
         	var txtPage = this.getView().byId("txtPage");
         	var numberPage= lblNumPages.getText();
@@ -210,7 +175,42 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.getView().addDependent(oView);
             oView.getContent()[0].open();
         },
-        onInit: function () {
+        #if (${listFields.contains("version")})##
+#*    *#getVersion: function (context, arg1, arg2){
+			sessionStorage.setItem("idVersion", arg1.version);
+        	var descVersion="";
+        	switch(arg1.version){
+        		case "R":
+        			descVersion= "Real";
+        			sessionStorage.setItem("descVersion", descVersion);
+        		break;
+        		case "S":
+        			descVersion= "Simulación";
+        			sessionStorage.setItem("descVersion", descVersion);
+        		break;
+        	}
+        	if(arg1.version!==undefined){
+                sessionStorage.setItem("typeForm${entity}",0);
+                this.byId("btnVersion${entity}").setText("Versión: "+descVersion);
+                var jsonVersion= {};
+                Customize.callRest(this, "${entity.model.var}", "${entity}List", this.fieldList, this.dateFieldsList, arg1);
+                console.log(this.getView());
+            }else{
+                MessageBox.show(
+                    "Por favor seleccione una Versión para poder entrar a esta pagina.", {
+                        icon: sap.m.MessageBox.Icon.WARNING,
+                        title: "Sin Versión",
+                        styleClass: "titleMessageBox",
+                        actions: [sap.m.MessageBox.Action.CLOSE],
+                        onClose: function(oAction) {
+                            window.history.go(-1);
+                        }
+                    }
+                );
+            }
+        },
+        #end##
+#*    *#onInit: function () {
             //debugger;
             var that = this;
             this.mBindingOptions = {};
@@ -236,7 +236,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						Service.doGet(this,"appParametria/_getListaUnidadNegocio","ListaUnidadNegocio");
 						Service.doGet(this,"appParametria/_getListaMes","ListaMes");
 						#if (${listFields.contains("version")})##
-#*				      *#Service.doGet(this,"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", "getVersion",this.fieldList);
+#*				      *#Service.doGet(this,"appParametria/_getSessionConfiguracionPeriodo","sessionVersion", "Y", this, "getVersion");
 						#else##
 #*					  *#Customize.callRest(this, "${entity.model.var}", this.nameModel, this.fieldList, this.dateFieldsList);
 						console.log(this.getView());

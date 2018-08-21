@@ -122,12 +122,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     var id = sessionStorage.getItem("idRow${entity}");
                     json["id"]= id;
                     var myJSON = JSON.stringify(json);
-                    Service.doPostPost(this, json,"${entity.model.var}/save","${entity.model.var}/findAll","${entity}List");
+                    Service.doPostPost(this, json,"${entity.model.var}/save");
                 }else{
                     json["usuarioCreacion"]="USUARIO";
                     debugger;
                     var myJSON = JSON.stringify(json);
-                    Service.doPostPost(this, json,"${entity.model.var}/create","${entity.model.var}/findAll","${entity}List");
+                    Service.doPostPost(this, json,"${entity.model.var}/create");
                 }
             }else{
                 MessageBox.alert("Debe llenar todos los campos requeridos", {title: "Ventana de Aviso"});
