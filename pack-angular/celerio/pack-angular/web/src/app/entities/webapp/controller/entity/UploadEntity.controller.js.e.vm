@@ -41,7 +41,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
             debugger;
             var myJSON = JSON.stringify(objParameter);
-            Service.doPostPost(this, objParameter,"tipoCambio/saveMasivo");
+            Service.doPostPost(this, objParameter,"${entity.model.var}/saveMasivo");
         },
         uploadStart: function(evt) {
             var tblCatalogos = this.byId('idTblUpload${entity}');
