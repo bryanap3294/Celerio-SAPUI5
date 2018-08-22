@@ -4,10 +4,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "../../js/utilities",
     "../../service/Service",
     "../../customize/customize",
-    "portal/valorizacion/appparametria/formatter/FormatterFloatNumber2",
-    "portal/valorizacion/appparametria/formatter/FormatterFloatNumber5",
+    "portal/valorizacion/${entity.model.var.toLowerCase()}/formatter/FormatterFloatNumber2",
+    "portal/valorizacion/${entity.model.var.toLowerCase()}/formatter/FormatterFloatNumber5",
     "sap/ui/core/routing/History",
-    "portal/valorizacion/appparametria/js/moment",
+    "portal/valorizacion/${entity.model.var.toLowerCase()}/js/moment",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator"
 ], function(BaseController, MessageBox, Utilities, Service, Customize, FormatterFloatNumber2, FormatterFloatNumber5 , History, Moment, Filter, FilterOperator) {
