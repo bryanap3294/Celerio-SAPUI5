@@ -65,7 +65,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml
                               <html:div>
                               	<m:HBox>
                               		<m:VBox justifyContent="Center">
-                              			<m:Label text="Filtro Avanzado :"/>
+                              			<m:Label text="Filtro Avanzado :&#160;"/>
                               		</m:VBox>
                                 	<m:HBox justifyContent="Start">
                                         <m:Switch id="idSwitch${entity}" state="false" customTextOff="Off" customTextOn="On" type="Default" enabled="true" visible="true" change="closeFormSearch${entity}"/>
@@ -75,7 +75,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml
                               <html:div>
                               	<m:HBox justifyContent="Start">
                                     <m:VBox justifyContent="Center">
-                                    	<m:Label text="Cantidad de Páginas :"/>
+                                    	<m:Label text="Cantidad de Páginas :&#160;"/>
                                     </m:VBox>
                                     <m:HBox justifyContent="Start">
                                     	<m:Label id="lblNumPages"/>
@@ -83,7 +83,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml
                                 </m:HBox>
                               	<m:HBox justifyContent="Start">
                                     <m:VBox justifyContent="Center">
-                                    	<m:Label text="Página :"/>
+                                    	<m:Label text="Página :&#160;"/>
                                     </m:VBox>
                                     <m:HBox justifyContent="Start">
                                     	<m:Input id="txtPage" type="Number" width="7rem"></m:Input>
