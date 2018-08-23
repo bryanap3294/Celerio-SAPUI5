@@ -161,7 +161,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var lblNumPages = this.getView().byId("lblNumPages");
             var numberPage = (+txtPage.getValue())+1;
             if(+(txtPage.getValue())===+(lblNumPages.getText()) || +(txtPage.getValue())>+(lblNumPages.getText())){
-                MessageBox.alert("No puede ver siguiente página debido que se encuentra en la última página.");
+                MessageBox.alert("No puede ir a la siguiente página debido que se encuentra en la última página.");
             }else{
                 txtPage.setValue(numberPage);
                 Customize.goPage(this, numberPage);
