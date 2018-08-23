@@ -22,7 +22,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History",
     "portal/valorizacion/${entity.model.var.toLowerCase()}/js/moment",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator",
+    "sap/ui/model/FilterOperator"
 ], function(BaseController, MessageBox, Utilities, Service, Customize, FormatterFloatNumber2, FormatterFloatNumber5 , History, Moment, Filter, FilterOperator) {
     "use strict";
 
@@ -136,7 +136,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var lblNumPages = this.getView().byId("lblNumPages");
         	var txtPage = this.getView().byId("txtPage");
         	if(txtPage.getValue()<0 || +(txtPage.getValue())>+(lblNumPages.getText())){
-            	MessageBox.alert("No se puede ir a la pagina que usted desea");
+            	MessageBox.alert("No se puede ir a la página que usted desea.");
             	txtPage.setValue(1);
             	var numberPage = txtPage.getValue();
         		Customize.goPage(this, numberPage);
@@ -149,7 +149,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         	debugger;
         	var txtPage = this.getView().byId("txtPage");
         	if(txtPage.getValue()==='' || txtPage.getValue()==1 || txtPage.getValue()<1){
-            	MessageBox.alert("No se puede ir mas atras");
+            	MessageBox.alert("No se puede retroceder debido que se encuentra en la 1era página.");
             }else{
             	var numberPage = (+txtPage.getValue())-1;
             	txtPage.setValue(numberPage);
@@ -161,7 +161,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var lblNumPages = this.getView().byId("lblNumPages");
             var numberPage = (+txtPage.getValue())+1;
             if(+(txtPage.getValue())===+(lblNumPages.getText()) || +(txtPage.getValue())>+(lblNumPages.getText())){
-                MessageBox.alert("No se puede ir mas adelante");
+                MessageBox.alert("No puede ver siguiente página debido que se encuentra en la última página.");
             }else{
                 txtPage.setValue(numberPage);
                 Customize.goPage(this, numberPage);
