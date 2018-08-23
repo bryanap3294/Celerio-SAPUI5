@@ -132,19 +132,37 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/Main.view.xml
 										#foreach (${attribute} in ${entity.nonCpkAttributes.list})
 											#if(!${attribute.isInFk()} || ${attribute.isSimplePk()})
 												#if(!(${attribute.var}=='id' || ${attribute.var}=='version' || ${attribute.var}=='usuarioCreacion' || ${attribute.var}=='fechaCreacion' || ${attribute.var}=='usuarioModificacion' || ${attribute.var}=='fechaModificacion'))
+												    #set( $typeField = "Text" )
+												    #if(${attribute.isBigDecimal()} || ${attribute.isBigInteger()} || ${attribute.isDouble()} || ${attribute.isFloat()} || ${attribute.isInteger()})
+                                                        #set( $typeField = "Number")
+                                                    #end
+                                                    #if($typeField == "Number")
+                                                <Column width="10rem">
+                                                	<multiLabels>
+                                                		<m:ObjectStatus
+                                                				icon=""
+                                                				text="${attribute.var}"
+                                                				state="none" />
+                                                	</multiLabels>
+                                                	<template>
+                                                		<m:Text text="{${entity}List>${attribute.var}}" textDirection="RTL"/>
+                                                	</template>
+                                                </Column>
+                                                    #else
 
-												<Column width="10rem"
-														hAlign="Left">
-													<multiLabels>
-														<m:ObjectStatus
-																icon=""
-																text="${attribute.var}"
-																state="none" />
-													</multiLabels>
-													<template>
-														<m:Text text="{${entity}List>${attribute.var}}" />
-													</template>
-												</Column>
+                                                <Column width="10rem"
+                                                		hAlign="Left">
+                                                	<multiLabels>
+                                                		<m:ObjectStatus
+                                                				icon=""
+                                                				text="${attribute.var}"
+                                                				state="none" />
+                                                	</multiLabels>
+                                                	<template>
+                                                		<m:Text text="{${entity}List>${attribute.var}}" />
+                                                	</template>
+                                                </Column>
+                                                    #end
 												#end
 											#end
 										#end

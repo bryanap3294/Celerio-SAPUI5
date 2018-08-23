@@ -38,10 +38,20 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                     </form:label>
                                                     #if(${attribute.type}=='Date')
 
+                                                    <form:fields>
                                                         <m:DatePicker id="date${attribute.var}"
                                                                       valueFormat="dd/MM/yy"
                                                                       placeholder="Ingrese ${attribute.var}" enabled="true" type="DateTime"
                                                                       visible="true" width="auto"/>
+                                                    </form:fields>
+                                                    #elseif($typeField == "Number")
+
+                                                    <form:fields>
+                                                        <m:Input id="txt${attribute.var}" type="$typeField"
+                                                                 placeholder="Ingrese ${attribute.var}"
+                                                                 showValueHelp="false" enabled="true" textAlign="Right"
+                                                                 visible="true" width="auto" HelpOnly="false"/>
+                                                    </form:fields>
                                                     #else
 
                                                     <form:fields>
