@@ -83,7 +83,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/nroRegistrosRFC}" textDirection="RTL"/>
+                                                <m:Text text="{Result${entity}List>/result/nroRegistrosRFC}" textDirection="RTL"/>
                                             </template>
                                         </Column>
                                         <Column width="9rem"
@@ -96,7 +96,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/nroRegistrosErroresRFC}" textDirection="RTL"/>
+                                                <m:Text text="{Result${entity}List>/result/nroRegistrosErroresRFC}" textDirection="RTL"/>
                                             </template>
                                         </Column>
                                         <Column width="9rem"
@@ -109,7 +109,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/nroRegistrosGrabadosSCP}" textDirection="RTL"/>
+                                                <m:Text text="{Result${entity}List>/result/nroRegistrosGrabadosSCP}" textDirection="RTL"/>
                                             </template>
                                         </Column>
                                         <Column width="10rem"
@@ -122,7 +122,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/nroRegistrosErroresSCP}" textDirection="RTL"/>
+                                                <m:Text text="{Result${entity}List>/result/nroRegistrosErroresSCP}" textDirection="RTL"/>
                                             </template>
                                         </Column>
                                         <Column width="6rem"
@@ -136,7 +136,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/fechaInicioRFC}"/>
+                                                <m:Text text="{Result${entity}List>/result/fechaInicioRFC}"/>
                                             </template>
                                         </Column>
                                         <Column width="6rem"
@@ -149,7 +149,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/fechaFinRFC}"/>
+                                                <m:Text text="{Result${entity}List>/result/fechaFinRFC}"/>
                                             </template>
                                         </Column>
                                         <Column width="7rem"
@@ -162,7 +162,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/duracionRFC}" textDirection="RTL"/>
+                                                <m:Text text="{Result${entity}List>/result/duracionRFC}" textDirection="RTL"/>
                                             </template>
                                         </Column>
                                         <Column width="6rem"
@@ -176,7 +176,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/fechaInicioSCP}"/>
+                                                <m:Text text="{Result${entity}List>/result/fechaInicioSCP}"/>
                                             </template>
                                         </Column>
                                         <Column width="6rem"
@@ -189,7 +189,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/fechaFinSCP}"/>
+                                                <m:Text text="{Result${entity}List>/result/fechaFinSCP}"/>
                                             </template>
                                         </Column>
                                         <Column width="7rem"
@@ -202,7 +202,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/duracionSCP}" textDirection="RTL"/>
+                                                <m:Text text="{Result${entity}List>/result/duracionSCP}" textDirection="RTL"/>
                                             </template>
                                         </Column>
                                         <Column width="7rem"
@@ -216,7 +216,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/fechaInicioStoreSP}"/>
+                                                <m:Text text="{Result${entity}List>/result/fechaInicioStoreSP}"/>
                                             </template>
                                         </Column>
                                         <Column width="7rem"
@@ -229,7 +229,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/fechaFinStoreSP}"/>
+                                                <m:Text text="{Result${entity}List>/result/fechaFinStoreSP}"/>
                                             </template>
                                         </Column>
                                         <Column width="9rem"
@@ -242,7 +242,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/duracionStoreSP}" textDirection="RTL"/>
+                                                <m:Text text="{Result${entity}List>/result/duracionStoreSP}" textDirection="RTL"/>
                                             </template>
                                         </Column>
                                         <Column width="15rem"
@@ -255,7 +255,7 @@ $output.file("web/src/app/entities/${entity.model.var}/webapp/view/${entity.mode
                                                         state="none" />
                                             </multiLabels>
                                             <template>
-                                                <m:Text text="{Result${entity}List>/mensaje}"/>
+                                                <m:Text text="{Result${entity}List>/result/mensaje}"/>
                                             </template>
                                         </Column>
                                     </columns>

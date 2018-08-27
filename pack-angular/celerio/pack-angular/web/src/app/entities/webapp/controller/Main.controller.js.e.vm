@@ -33,6 +33,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         nameEntityVar: "${entity.model.var}",
         nameModel: "${entity}List",
         nameModelUpload: "Upload${entity}List",
+        nameModelResult: "Result${entity}List",
 		handleRouteMatched: function (oEvent) {
             var oParams = {};
             if (oEvent.mParameters.data.context) {
@@ -168,7 +169,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
         },
         run: function(){
-            Customize.doRun(this);
+            Customize.doRun(this, this.nameModelResult);
         },
         callDialog : function(){
             var oView = sap.ui.xmlview({viewName: "portal.valorizacion.${entity.model.var.toLowerCase()}.view.dialog.Dialog${entity}"});
