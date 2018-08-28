@@ -22,7 +22,7 @@ sap.ui.define([
     return {
         fieldList: [],
         dateFieldsList: [],
-        dateFieldsResultList: ["fechaInicioRFC", "fechaFinRFC", "fechaInicioSCP", "fechaFinSCP", "fechaInicioStoreSP", "fechaFinStoreSP", ],
+        dateFieldsResultList: ["fechaInicioRFC", "fechaFinRFC", "fechaInicioSCP", "fechaFinSCP", "fechaInicioStoreSP", "fechaFinStoreSP"],
         nameEntity: "${entity}",
         nameEntityVar: "${entity.model.var}",
         nameModel: "${entity}List",
